@@ -1,0 +1,4 @@
+Design Specifications: 
+
+Primary Color: rgb(46,50,56) 
+Secondary Color: rgb(27,27,28)
