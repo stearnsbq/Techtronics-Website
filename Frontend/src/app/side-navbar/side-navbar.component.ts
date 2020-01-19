@@ -6,14 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./side-navbar.component.scss']
 })
 export class SideNavbarComponent implements OnInit {
-  public xbox_is_dropdown: boolean;
-  public ps_is_dropdown: boolean;
-  public nintendo_is_dropdown: boolean;
+  public platform_dropdown: boolean;
+  public genre_dropdown: boolean;
 
   constructor() {
-    this.xbox_is_dropdown = false;
-    this.ps_is_dropdown = false;
-    this.nintendo_is_dropdown = false;
+    this.platform_dropdown = false;
+    this.genre_dropdown = false;
    }
 
   ngOnInit() {

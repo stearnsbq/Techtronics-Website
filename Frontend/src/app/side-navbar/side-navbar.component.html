@@ -1,77 +1,47 @@
-<div>
+<div class="main">
 
   <div class="hardware">
-    <h3>Hardware</h3>
-    <div class="xbox">
-      <div id="header">
-        <span (click)="xbox_is_dropdown = !xbox_is_dropdown">Xbox
-          <img class="icon" *ngIf="xbox_is_dropdown" src="./assets/expand.png">
-          <img class="icon" *ngIf="!xbox_is_dropdown" src="./assets/collapse.png">
-        </span>
-      </div>
-      <div class="dropdown" *ngIf="xbox_is_dropdown">
-        <ul>
-          <li>Original Xbox</li>
-          <li>Xbox 360</li>
-          <li>Xbox One</li>
-        </ul>
-      </div>
+
+    <div class="section_header">
+      <h3>Hardware</h3>
     </div>
 
-    <div class="playstation">
-      <div id="header">
-        <span (click)="ps_is_dropdown = !ps_is_dropdown">Playstation
-          <img class="icon" *ngIf="ps_is_dropdown" src="./assets/expand.png">
-          <img class="icon" *ngIf="!ps_is_dropdown" src="./assets/collapse.png">
-        </span>
-      </div>
-      <div class="dropdown" *ngIf="ps_is_dropdown ">
+    <div class="content">
+
+      <div class="router">
+
         <ul>
-          <li>PS1</li>
-          <li>PS2</li>
-          <li>PSP</li>
-          <li>PS3</li>
-          <li>VITA</li>
-          <li>PS4</li>
+          <li><a [routerLink]="['hardware', 'computers']">Computers</a></li>
+          <li><a [routerLink]="['hardware', 'nintendo']">Nintendo</a></li>
+          <li><a [routerLink]="['hardware', 'playstation']">Playstation</a></li>
+          <li><a [routerLink]="['hardware', 'sega']">Sega</a></li>
+          <li><a [routerLink]="['hardware', 'xbox']">Xbox</a></li>
         </ul>
       </div>
+
     </div>
 
-    <div class="nintendo">
-      <div id="header">
-        <span (click)="nintendo_is_dropdown = !nintendo_is_dropdown">Nintendo
-          <img class="icon" *ngIf="nintendo_is_dropdown" src="./assets/expand.png">
-          <img class="icon" *ngIf="!nintendo_is_dropdown" src="./assets/collapse.png">
-        </span>
-      </div>
-      <div class="dropdown" *ngIf="nintendo_is_dropdown">
-        <ul>
-          <li>NES</li>
-          <li>Gameboy</li>
-          <li>SNES</li>
-          <li>N64</li>
-          <li>Gamecube</li>
-        </ul>
-      </div>
-    </div>
   </div>
 
 
 <div class="games">
-  
-  <h3>Games</h3>
 
-  <div class="genre">
-
+  <div class="section_header">
+    <h3>Games</h3>
   </div>
 
-  <div class="platform">
+  <div class="content">
+     <div class="platform">
+       <ul>
+         <li><a [routerLink]="['games', 'computer']">Computer</a></li>
+         <li><a [routerLink]="['games', 'nintendo']">Nintendo</a></li>
+         <li><a [routerLink]="['games', 'playstation']">Playstation</a></li>
+         <li><a [routerLink]="['games', 'sega']">Sega</a></li>
+         <li><a [routerLink]="['games', 'xbox']">Xbox</a></li>
+       </ul>
 
-  </div>
-
-</div>
-
-
-
+     </div>
+   </div>
+ </div>
 
 </div>
