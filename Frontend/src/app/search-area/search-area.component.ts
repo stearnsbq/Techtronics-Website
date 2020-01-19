@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ApiService } from '../api.service';
+
 @Component({
   selector: 'app-search-area',
   templateUrl: './search-area.component.html',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchAreaComponent implements OnInit {
 
-  constructor() { }
+
+
+
+
+
+  constructor(public api: ApiService) {
+
+  }
 
   ngOnInit() {
+
   }
+
+
+
+
 
 }
