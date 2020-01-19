@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SearchAreaComponent } from './search-area/search-area.component';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { SideNavbarComponent } from './side-navbar/side-navbar.component';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
     AppComponent,
     SearchAreaComponent,
     LoginPageComponent,
+    SideNavbarComponent,
   ],
   imports: [
     BrowserModule,
