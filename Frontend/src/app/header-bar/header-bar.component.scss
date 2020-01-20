@@ -24,6 +24,32 @@
 
 }
 
+#bar1, #bar2, #bar3{
+  width: 35px;
+  border-radius: 30px;
+  height: 5px;
+  background-color: white;
+  margin: 6px 0;
+  transition: 0.4s;
+}
+
+#sidebar_toggle{
+  padding: 5px;
+  float: left;
+  transition: 0.4s;
+}
+
+#sidebar_toggle:hover{
+  background-color: grey;
+  transition: 0.4s;
+}
+
+
+#sidebar_toggle:active{
+  background-color: black;
+  transition: 0.4s;
+}
+
 .navigation_list_option {
     width: 80px;
 

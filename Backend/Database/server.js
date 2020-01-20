@@ -22,3 +22,32 @@ app.get('/api/v1/games', (req, res) =>{
 })
 
 
+
+app.get('/api/v1/hardware', (req, res) =>{
+   
+
+
+})
+
+
+app.get('/api/v1/search', (req, res) =>{
+   
+
+
+})
+
+
+
+
+app.get('/api/v1/login', (req, res) =>{
+   
+
+
+})
+
+
+
+
+
+
+

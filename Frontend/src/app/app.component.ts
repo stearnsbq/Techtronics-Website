@@ -19,11 +19,9 @@ export class AppComponent {
     if (this.sidebar.nativeElement.style.width === '250px') {
       this.sidebar.nativeElement.style.width = '0';
       this.main.nativeElement.style.marginLeft = '0';
-      this.sidebar.nativeElement.style.border = 'none';
     } else {
       this.sidebar.nativeElement.style.width = '250px';
       this.main.nativeElement.style.marginLeft = '250px';
-      this.sidebar.nativeElement.style.border = '1px solid black';
     }
 
   }

@@ -18,7 +18,9 @@ export class MainContentComponent implements OnInit {
   ngOnInit() {
 
     this.route.url.subscribe(url => {
-      this.currentRoute = url[0].path;
+      if (url[0]) {
+        this.currentRoute = url[0].path;
+      }
     });
 
     this.route.queryParams.subscribe(params => {
