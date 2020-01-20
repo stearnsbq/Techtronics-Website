@@ -3,27 +3,51 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ProductsComponent } from './products/products.component';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SearchAreaComponent } from './search-area/search-area.component';
+import { LoginPageComponent } from './login-page/login-page.component';
+import { SideNavbarComponent } from './side-navbar/side-navbar.component';
+import { MainContentComponent } from './main-content/main-content.component';
+import { HardwareContentComponent } from './hardware-content/hardware-content.component';
+import { GamesContentComponent } from './games-content/games-content.component';
+import { FrontPageContentComponent } from './front-page-content/front-page-content.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { SearchAreaResultComponent } from './search-area-result/search-area-result.component';
+import { FooterBarComponent } from './footer-bar/footer-bar.component';
+import { HeaderBarComponent } from './header-bar/header-bar.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProductsComponent,
-    HeaderComponent,
-    FooterComponent,
-    SearchAreaComponent
+    SearchAreaComponent,
+
+    LoginPageComponent,
+    SideNavbarComponent,
+    MainContentComponent,
+    HardwareContentComponent,
+    GamesContentComponent,
+    FrontPageContentComponent,
+    NotFoundComponent,
+    SearchAreaResultComponent,
+    FooterBarComponent,
+    HeaderBarComponent
+
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
-    // RouterModule.forRoot([
-    //   {path: '', component: AboutComponent},
-    // ]),
+    RouterModule.forRoot([
+      {path: '', component: MainContentComponent},
+      {path: 'login', component: LoginPageComponent},
+      {path: 'hardware/:platform', component: MainContentComponent},
+      {path: 'games/:platform', component: MainContentComponent},
+      {path: 'search', component: SearchAreaComponent},
+      {path: '**', component: NotFoundComponent},
+    ]),
   ],
   providers: [],
   bootstrap: [AppComponent]

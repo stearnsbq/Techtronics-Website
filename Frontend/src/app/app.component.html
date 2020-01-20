@@ -1,3 +1,32 @@
-<router-outlet></router-outlet>
-<app-search-area></app-search-area>
+<div class="wrapper">
+
+  <div class="header_content">
+      <app-header-bar (sidebarToggle)="sidebarToggle()"></app-header-bar>
+  </div>
+
+  <div  class="main_content">
+
+    <div #sidebar class="side_navbar">
+      <button (click)="sidebarToggle()">X</button>
+      <app-side-navbar></app-side-navbar>
+    </div>
+
+    <div class="router-outlet" #main>
+      <router-outlet ></router-outlet>
+    </div>
+
+
+  </div>
+
+  <div class="footer_content">
+      <app-footer-bar></app-footer-bar>
+  </div>
+
+</div>
+
+
+
+
+
+
 

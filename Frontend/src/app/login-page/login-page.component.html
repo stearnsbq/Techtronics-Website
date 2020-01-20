@@ -1,0 +1,37 @@
+<div class='main_content'>
+
+  <div class="login">
+
+    <h3 id="loginTitle">Login</h3>
+
+    <form id="login_form" #form="ngForm" (ngSubmit)="onLogin(form.value)" >
+
+      <div id="username_input">
+
+        <label>Username</label>
+
+        <input id="username" type="text" placeholder="Username" ngModel name="Username" #username="ngModel" required>
+
+        <small id = "error" *ngIf="submitted && username.errors.required">Username is Required</small>
+
+      </div>
+
+      <div id ="password_input">
+
+        <label>Password</label>
+
+        <input id="password" type="password" placeholder="Password" ngModel name="Password" #password="ngModel" required>
+
+        <small id="error" *ngIf="submitted && password.errors.required">Password is Required</small>
+
+      </div>
+
+      <div id="submit_button">
+        <button id="login_button" type="submit">Login</button>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

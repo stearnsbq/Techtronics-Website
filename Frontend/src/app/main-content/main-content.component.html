@@ -1,0 +1,16 @@
+<div class="container">
+
+  <div class="front_page_content" *ngIf="currentRoute === ''">
+    <app-front-page-content></app-front-page-content>
+  </div>
+
+  <div class="hardware_content" *ngIf="currentRoute === 'hardware'">
+    <app-hardware-content></app-hardware-content>
+  </div>
+
+  <div class="games_content" *ngIf="currentRoute === 'games'">
+    <app-games-content></app-games-content>
+  </div>
+
+</div>
+
