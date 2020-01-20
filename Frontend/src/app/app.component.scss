@@ -1,3 +1,30 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: auto 0.5fr auto;
+  grid-template-rows: 0.1fr 100% auto;
+  min-height: 100vh;
+}
+
+
+.header_content{
+  grid-column: span 12;
+  border: 2px dotted red;
+  text-align: center;
+}
+
 .side_navbar{
-  float: left;
+  grid-column: span 1;
+  border: 2px dotted purple;
+}
+
+.main_content {
+  grid-column: span 11;
+  border: 2px dotted black;
+}
+
+.footer_content{
+  grid-column: span 12;
+  border: 2px dotted red;
+  margin-top: auto;
+  text-align: center;
 }

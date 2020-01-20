@@ -1,12 +1,25 @@
+<div class="wrapper">
 
+  <div class="header_content">
+      <h1>HEADER</h1>
+  </div>
 
+  <div class="side_navbar" *ngIf="router.url !== '/login'">
+    <app-side-navbar></app-side-navbar>
+  </div>
 
-<div class="side_navbar">
-  <app-side-navbar></app-side-navbar>
+  <div class="main_content">
+    <router-outlet></router-outlet>
+  </div>
+
+  <div class="footer_content">
+      <h1>FOOTER</h1>
+  </div>
+
 </div>
 
 
 
 
-<router-outlet></router-outlet>
+
 
