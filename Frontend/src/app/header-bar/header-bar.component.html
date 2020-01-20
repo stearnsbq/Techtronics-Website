@@ -1,0 +1,17 @@
+<header id="root_header_container">
+    <div id="header_content">
+        <div id="header_navigation_bar">
+          <button (click)="onSideBarToggle()">Toggle!</button>
+            <input id="product_search_bar" type="text" placeholder="search for products..." [(ngModel)]="searchQuery" (keydown)="onSearch($event)">
+            <ul id="navigation_list">
+                <li class="navigation_list_option"> <h1 class="navigation_list_option_text"> HEY1 </h1> </li>
+                <li class="navigation_list_option"> <h1 class="navigation_list_option_text"> HEY2 </h1> </li>
+                <li class="navigation_list_option"> <h1 class="navigation_list_option_text"> HEY3 </h1> </li>
+                <li class="navigation_list_option"> <h1 class="navigation_list_option_text"> HEY4 </h1> </li>
+            </ul>
+
+        </div>
+
+    </div>
+
+</header>

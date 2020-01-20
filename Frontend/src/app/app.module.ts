@@ -13,12 +13,16 @@ import { HardwareContentComponent } from './hardware-content/hardware-content.co
 import { GamesContentComponent } from './games-content/games-content.component';
 import { FrontPageContentComponent } from './front-page-content/front-page-content.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { SearchAreaResultComponent } from './search-area-result/search-area-result.component';
+import { FooterBarComponent } from './footer-bar/footer-bar.component';
+import { HeaderBarComponent } from './header-bar/header-bar.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchAreaComponent,
+
     LoginPageComponent,
     SideNavbarComponent,
     MainContentComponent,
@@ -26,6 +30,10 @@ import { NotFoundComponent } from './not-found/not-found.component';
     GamesContentComponent,
     FrontPageContentComponent,
     NotFoundComponent,
+    SearchAreaResultComponent,
+    FooterBarComponent,
+    HeaderBarComponent
+
   ],
   imports: [
     BrowserModule,
@@ -37,6 +45,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
       {path: 'login', component: LoginPageComponent},
       {path: 'hardware/:platform', component: MainContentComponent},
       {path: 'games/:platform', component: MainContentComponent},
+      {path: 'search', component: SearchAreaComponent},
       {path: '**', component: NotFoundComponent},
     ]),
   ],

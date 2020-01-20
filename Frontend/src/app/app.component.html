@@ -1,22 +1,29 @@
 <div class="wrapper">
 
   <div class="header_content">
-      <h1>HEADER</h1>
+      <app-header-bar (sidebarToggle)="sidebarToggle()"></app-header-bar>
   </div>
 
-  <div class="side_navbar" *ngIf="router.url !== '/login'">
-    <app-side-navbar></app-side-navbar>
-  </div>
+  <div  class="main_content">
 
-  <div class="main_content">
-    <router-outlet></router-outlet>
+    <div #sidebar class="side_navbar">
+      <button (click)="sidebarToggle()">X</button>
+      <app-side-navbar></app-side-navbar>
+    </div>
+
+    <div class="router-outlet" #main>
+      <router-outlet ></router-outlet>
+    </div>
+
+
   </div>
 
   <div class="footer_content">
-      <h1>FOOTER</h1>
+      <app-footer-bar></app-footer-bar>
   </div>
 
 </div>
+
 
 
 

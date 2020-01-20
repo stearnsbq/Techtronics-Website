@@ -1,0 +1,61 @@
+#root_header_container {
+    background-color:  rgb(196,196,196);
+    // #343d46 <- taking this color into consideration...
+
+    border-bottom-style: solid;
+    border-bottom-color:  rgb(170,170,170);
+    border-bottom-width: 1px;
+}
+
+#header_content {
+    overflow: hidden;
+
+    white-space: nowrap;
+}
+
+#navigation_list {
+    list-style-type: none;
+
+    overflow: hidden;
+
+    display: inline;
+
+    margin: 0px;
+
+}
+
+.navigation_list_option {
+    width: 80px;
+
+    text-align: center;
+
+    background-color: rgb(255,255,255);
+
+    border-left-style: solid;
+    border-right-style: solid;
+    border-color: rgb(170,170,170);
+    border-width: 1px;
+
+    display: inline-block;
+}
+
+.navigation_list_option_text {
+    font-size: 12px;
+}
+
+#product_search_bar {
+    border-style: solid;
+    border-color: rgb(170,170,170);
+    border-radius: 1px;
+
+    width: 600px;
+
+    padding: 10px; // arbitrary number for spacing within content.
+    margin: 2px;
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
+}

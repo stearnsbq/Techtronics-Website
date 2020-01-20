@@ -1,0 +1,29 @@
+#root_footer_container {
+    background-color:  rgb(196,196,196);
+    
+    border-top-style: solid; 
+    border-top-color:  rgb(170,170,170);
+    border-top-width: 1px; 
+
+    height: 100%;
+
+    overflow: hidden;
+
+    margin-top: 10px;
+
+    clear: right;
+}
+
+#footer_content {
+    margin-left: 10px; 
+    margin-right: 10px; 
+    
+    height: 100%;
+}
+
+p {
+    color: rgb(0,0,0); 
+
+    font-family: Arial, Helvetica, sans-serif; 
+    font-size: 12px;
+}
