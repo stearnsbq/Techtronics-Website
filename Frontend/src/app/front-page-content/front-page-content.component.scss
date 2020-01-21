@@ -1,15 +1,27 @@
 .welcome_header{
+  border-bottom-color: rgb(170,170,170);
+  border-bottom-style: solid; 
+  border-bottom-width: 1px; 
 
+  padding-left: 10px;
 }
 
 
 .news_section{
+  padding: 10px;
 
 }
 
 
 .container{
+  height: 550px;
   width: 100%;
+  
   display: flex;
   flex-direction: column;
+}
+
+h1, p {
+  font-family: Arial, Helvetica, sans-serif; 
+
 }
