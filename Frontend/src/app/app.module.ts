@@ -16,6 +16,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { SearchAreaResultComponent } from './search-area-result/search-area-result.component';
 import { FooterBarComponent } from './footer-bar/footer-bar.component';
 import { HeaderBarComponent } from './header-bar/header-bar.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { HeaderBarComponent } from './header-bar/header-bar.component';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    FontAwesomeModule,
     AppRoutingModule,
     RouterModule.forRoot([
       {path: '', component: MainContentComponent},
