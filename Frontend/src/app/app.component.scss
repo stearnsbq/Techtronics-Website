@@ -9,13 +9,21 @@
 .header_content { 
   grid-column: span 12;
   text-align: center;
+
+  position: fixed; 
+
+  width: 100%;
+  
 }
 
 .side_navbar{
+  position:fixed; 
+
   width: 0;
   height: 100%;
 
-  position: absolute;
+  top: 51px;
+
   overflow-x: hidden;
 
   transition: 0.5s;
@@ -34,6 +42,9 @@
 .footer_content{
   grid-column: span 12;
   text-align: center;
+
+  position: relative; 
+  bottom: 0px;
 }
 
 .router-outlet{

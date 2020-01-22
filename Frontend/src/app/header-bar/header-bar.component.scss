@@ -5,6 +5,8 @@
     border-bottom-style: solid;
     border-bottom-color:  rgb(170,170,170);
     border-bottom-width: 1px;
+
+    height: 50px;
 }
 
 #header_content {
@@ -13,62 +15,84 @@
     white-space: nowrap;
 }
 
-#navigation_list {
-    list-style-type: none;
-
-    overflow: hidden;
-
-    display: inline;
-
-    margin: 0px;
-
-}
-
-#bar1, #bar2, #bar3{
-  width: 35px;
+#bar1, #bar2, #bar3{ 
+  height: 5px; 
+  
   border-radius: 30px;
-  height: 5px;
+  
   background-color: white;
+  
   margin: 6px 0;
+
   transition: 0.4s;
 }
 
-#sidebar_toggle{
-  padding: 5px;
+#sidebar_toggle{ 
   float: left;
+
+
+  height: 50px;
+  width: 50px;
+
   transition: 0.4s;
 }
 
 #sidebar_toggle:hover{
   background-color: grey;
+
   transition: 0.4s;
 }
-
-
 #sidebar_toggle:active{
   background-color: black;
+
   transition: 0.4s;
 }
 
-.navigation_list_option {
-    width: 80px;
+// NAVIGATION 
+#navigation_list {
+  list-style-type: none; 
 
-    text-align: center;
+  position: absolute; 
+  left: 650px; 
 
-    background-color: rgb(255,255,255);
+  overflow: hidden;
 
-    border-left-style: solid;
-    border-right-style: solid;
-    border-color: rgb(170,170,170);
-    border-width: 1px;
+  display: inline;
 
-    display: inline-block;
+  height: 100%; 
+
+  
+
+  margin: 0px;
 }
+.navigation_list_option {
+  width: 80px; 
 
+  background-color: rgb(255,255,255);
+  text-decoration: none; 
+
+  border-left-style: solid;
+  border-left-color: rgb(179,170,170); 
+
+  border-right-style: solid;
+  border--color: rgb(179,170,170); 
+
+  border-width: 1px;
+  
+  padding: 10px; // this contributes to text being centered somehow?
+  
+  display:inline-block
+}
+.navigation_list_option:hover { 
+  transition: 0.2s; 
+
+  background-color: rgba(170,170,170,1); 
+}
 .navigation_list_option_text {
     font-size: 12px;
 }
 
+// SEARCH BAR
 #product_search_bar {
     border-style: solid;
     border-color: rgb(170,170,170);
@@ -76,9 +100,11 @@
 
     width: 600px;
 
-    padding: 10px; // arbitrary number for spacing within content.
-    margin: 2px;
+    position: absolute; 
+    left: 50px;
 
+    padding: 10px; // arbitrary number for spacing within content.
+    
     font-family: Arial, Helvetica, sans-serif;
 }
 
