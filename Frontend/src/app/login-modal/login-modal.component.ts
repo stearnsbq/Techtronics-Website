@@ -30,7 +30,6 @@ export class LoginModalComponent implements OnInit {
   public onModalOpen() {
     if (this.login_modal.nativeElement.style.display === 'none') {
       this.login_modal.nativeElement.style.display = 'block';
-      this.login_modal.nativeElement.style['background-color'] = 'black';
     } else {
       this.login_modal.nativeElement.style.display = 'none';
     }
