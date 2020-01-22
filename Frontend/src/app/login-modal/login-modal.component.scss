@@ -25,10 +25,7 @@ input {
   background-color: rgb(130,130,130);
 }
 
-
-
 .login{
-  //background-color: rgba(0, 0, 0, 0.2);
   height: 100vh;
   display: none;
   z-index: 1;
@@ -38,6 +35,11 @@ input {
 // END
 
 
+
+
+
+
+// FORM STYLING
 
 #login_title{
   position: relative;
@@ -51,9 +53,6 @@ input {
   background-color: white;
 }
 
-
-
-// FORM STYLING
 
 #login_form{
   padding: 30px;

@@ -28,7 +28,7 @@ export class LoginModalComponent implements OnInit {
 
 
   public onModalOpen() {
-    if (this.login_modal.nativeElement.style.display === 'none') {
+    if (this.login_modal.nativeElement.style.display === 'none' || this.login_modal.nativeElement.style.display === '') {
       this.login_modal.nativeElement.style.display = 'block';
     } else {
       this.login_modal.nativeElement.style.display = 'none';
