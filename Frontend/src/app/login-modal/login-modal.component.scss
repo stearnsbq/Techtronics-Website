@@ -13,7 +13,9 @@ input {
 
 
 .button {
-  background-color: #ccc;
+  background-color: rgb(150, 150, 150);
+  font-size: 20px;
+  font-weight: bold;
   padding: 10px 20px;
   color: black;
   border: none;
@@ -22,13 +24,15 @@ input {
 }
 
 .button:hover {
-  background-color: rgb(130, 130, 130);
+  background-color: rgb(120, 120, 120);
 }
 
 .login {
+  animation: fadeIn 1.5s;
+  animation-fill-mode: forwards;
   height: 100%;
   width: 100%;
-  display: none;
+  display:none;
   overflow: auto;
   position: fixed;
   z-index: 1;
@@ -41,6 +45,32 @@ input {
 // END
 
 
+// animation
+
+
+@keyframes fadeIn {
+  0% {
+       opacity: 0;
+  }
+  100% {
+       opacity: 1;
+  }
+}
+
+
+@keyframes slideDown {
+	0% {
+		transform: translateY(-100%);
+	}
+	100%{
+		transform: translateY(0%);
+	}
+
+}
+
+
+// END
+
 
 
 // FORM STYLING
@@ -48,22 +78,23 @@ input {
 
 #exit_icon {
   transition: 0.3s;
-  font-size: 50px;
+  font-size: 40px;
   width: 55px;
   height: 55px;
-  border-radius: 10px;
-  border: 2px solid black;
   text-align: center;
-  background-color: white;
   position: relative;
-  top: 70px;
+  top: 80px;
   left: 240px;
   margin: auto;
 }
 
 #exit_icon:hover {
-  background-color: red;
+  color: white;
   transition: 0.3s;
+}
+
+.login_form_parent{
+  animation: slideDown 1s;
 }
 
 #login_title {
@@ -73,6 +104,8 @@ input {
   width: 200px;
   top: 35px;
   margin: auto;
+  font-size: 20px;
+  font-weight: bolder;
   border: 1px solid black;
   border-radius: 10px;
   background-color: white;
@@ -98,14 +131,16 @@ input {
 }
 
 // main big icon on the login
-#login_icon {
-  font-size: 100px;
-  color: gray;
-}
+
 
 #splash_icon {
   text-align: center;
   padding-top: 10px;
+}
+
+#splash_icon fa-icon {
+  font-size: 100px;
+  color: gray;
 }
 
 #password_input {
@@ -142,6 +177,12 @@ input {
 #error {
   color: red;
   background-color: rgba(255, 0, 0, 0.5);
+}
+
+
+#register_box{
+  padding-top: 25px;
+  text-align: center;
 }
 
 // FORM END

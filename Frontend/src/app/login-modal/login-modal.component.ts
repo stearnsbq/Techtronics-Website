@@ -1,25 +1,25 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   FormGroup,
   FormControl,
   FormBuilder,
   Validators
-} from "@angular/forms";
+} from '@angular/forms';
 import {
   faUser,
   faLock,
   faUserCircle,
   faTimesCircle
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: "app-login-page",
-  templateUrl: "./login-modal.component.html",
-  styleUrls: ["./login-modal.component.scss"]
+  selector: 'app-login-page',
+  templateUrl: './login-modal.component.html',
+  styleUrls: ['./login-modal.component.scss']
 })
 export class LoginModalComponent implements OnInit {
-  @ViewChild("Login", undefined) login_modal;
+  @ViewChild('Login', undefined) login_modal;
   public submitted: boolean;
 
   // icons for the login
@@ -35,12 +35,12 @@ export class LoginModalComponent implements OnInit {
 
   public onModalOpen() {
     if (
-      this.login_modal.nativeElement.style.display === "none" ||
-      this.login_modal.nativeElement.style.display === ""
+      this.login_modal.nativeElement.style.display === 'none' ||
+      this.login_modal.nativeElement.style.display === ''
     ) {
-      this.login_modal.nativeElement.style.display = "block";
+      this.login_modal.nativeElement.style.display = 'block';
     } else {
-      this.login_modal.nativeElement.style.display = "none";
+      this.login_modal.nativeElement.style.display = 'none';
     }
   }
 

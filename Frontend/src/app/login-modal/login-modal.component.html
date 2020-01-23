@@ -2,7 +2,9 @@
 
 <div #Login class="login">
 
-  <h1 id="exit_icon">&times;</h1>
+  <div class="login_form_parent">
+
+    <h1 (click)="onModalOpen()" id="exit_icon">&times;</h1>
   <div id="login_title">
     <h3>Sign In</h3>
   </div>
@@ -16,7 +18,7 @@
     <!--Renders a Icon and login title-->
 
     <div id="splash_icon">
-      <fa-icon id="login_icon" [icon]="login_icon"></fa-icon>
+      <fa-icon [icon]="login_icon"></fa-icon>
     </div>
 
     <!--Username input for login-->
@@ -45,10 +47,13 @@
       <a id="forgot_password_link">Forgot Password?</a>
     </div>
 
-    <div>
+    <div id="register_box">
       <b>Not a Member?</b>
     </div>
 
   </form>
+
+  </div>
+
 
 </div>
