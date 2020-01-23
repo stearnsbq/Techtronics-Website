@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { LoginModalComponent } from './login-modal/login-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TestComponent } from './test/test.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginModalComponent
+    LoginModalComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,

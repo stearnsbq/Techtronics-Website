@@ -12,7 +12,7 @@ input {
 }
 
 
-.button{
+.button {
   background-color: #ccc;
   padding: 10px 20px;
   color: black;
@@ -21,14 +21,20 @@ input {
   transition: 0.2s;
 }
 
-.button:hover{
-  background-color: rgb(130,130,130);
+.button:hover {
+  background-color: rgb(130, 130, 130);
 }
 
-.login{
-  height: 100vh;
+.login {
+  height: 100%;
+  width: 100%;
   display: none;
+  overflow: auto;
+  position: fixed;
   z-index: 1;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.4);
   padding-top: 100px;
 }
 
@@ -37,33 +43,52 @@ input {
 
 
 
-
-
 // FORM STYLING
 
-#login_title{
+
+#exit_icon {
+  transition: 0.3s;
+  font-size: 50px;
+  width: 55px;
+  height: 55px;
+  border-radius: 10px;
+  border: 2px solid black;
+  text-align: center;
+  background-color: white;
+  position: relative;
+  top: 70px;
+  left: 240px;
+  margin: auto;
+}
+
+#exit_icon:hover {
+  background-color: red;
+  transition: 0.3s;
+}
+
+#login_title {
   position: relative;
   text-align: center;
   padding: 5px;
   width: 200px;
   top: 35px;
-  margin:auto;
+  margin: auto;
   border: 1px solid black;
   border-radius: 10px;
   background-color: white;
 }
 
 
-#login_form{
+#login_form {
   padding: 30px;
   width: 350px;
   border-radius: 15px;
   border: 2px solid grey;
-  background-color: rgba(196,196,196,0.5);
+  background-color: rgb(196, 196, 196);
   margin: auto;
 }
 
-#login{
+#login {
   width: 350px;
 }
 
@@ -73,58 +98,50 @@ input {
 }
 
 // main big icon on the login
-#login_icon{
+#login_icon {
   font-size: 100px;
   color: gray;
 }
 
-#splash_icon{
+#splash_icon {
   text-align: center;
   padding-top: 10px;
 }
 
-#password_input{
+#password_input {
   padding-bottom: 10px;
   position: relative;
 }
 
 
 // Icon inside of inputs
-#icon{
-  position:absolute;
-  left:5px;
-  top:10px;
+#icon {
+  position: absolute;
+  left: 5px;
+  top: 10px;
   transition: 0.3s;
-  color:rgb(196,196,196);
+  color: rgb(196, 196, 196);
 }
 
 
 // adds a animation to the inputs upon focus
-#password_input:focus-within fa-icon{
-  color: rgb(130,130,130);
+#password_input:focus-within fa-icon {
+  color: rgb(130, 130, 130);
 }
 
-#username_input:focus-within fa-icon{
-  color: rgb(130,130,130);
+#username_input:focus-within fa-icon {
+  color: rgb(130, 130, 130);
 }
 
-#extra_options
-{
+#extra_options {
   font-size: 15px;
   margin-top: 10px;
   text-align: left;
 }
 
-#error{
-  color:red;
+#error {
+  color: red;
   background-color: rgba(255, 0, 0, 0.5);
 }
 
 // FORM END
-
-
-
-
-
-
-
