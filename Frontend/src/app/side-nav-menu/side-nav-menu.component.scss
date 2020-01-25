@@ -6,12 +6,14 @@
 }
 
 #header_title_container {
-    padding: 2px 0px 0px 10px; // top right bottom left;
+    padding: 5px 0px 0px 10px; // top right bottom left;
 } 
 
 #header_title {
     font-size: 24px;
     color: rgb(150,147,151); 
+
+    line-height: 0px;
 }
 
 #nav_menu_options {
@@ -31,6 +33,8 @@
 }
 .menu_option:hover {
     background-color: rgba(0,0,0,0.1); 
+
+    cursor: pointer;
 }
 
 .option_link { 
