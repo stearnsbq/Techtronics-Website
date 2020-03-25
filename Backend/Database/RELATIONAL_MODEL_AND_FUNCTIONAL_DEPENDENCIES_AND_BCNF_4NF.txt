@@ -1,0 +1,151 @@
+RELATIONAL MODEL and Functional Dependencies + BNCF/4NF:
+------------------------------------------------------------------------------------
+Person (Person_ID PRIMARY KEY, username NOT NULL UNIQUE, password NOT NULL, email NOT NULL UNIQUE, first_name NOT NULL, last_name NOT NULL, birth_date NOT NULL)
+R(Person_ID, username, password, email, firt_name, last_name, birth_date); 
+F = {
+	Person_ID -> username, password, email, first_name, last_name, birth_date; 
+}
+
+
+Already in BCNF/4NF
+
+------------------------------------------------------------------------------------
+Phone_Numbers (Person_ID REFERENCES Person.Person_ID PRIMARY KEY, phone_number PRIMARY KEY)
+R(Person_ID, phone_number); 
+F = {
+	Person_ID -> phone_number 
+}
+
+Already in BCNF/4NF
+
+------------------------------------------------------------------------------------
+Employee (Employee_ID REFERENCES Person.Person_ID PRIMARY KEY, Hire_date NOT NULL)
+R(Employee_ID, Hire_date); 
+F = {
+	Employee_ID -> Hire_date; 
+}
+
+Already in BCNF/4NF
+
+------------------------------------------------------------------------------------
+Customer (Customer_ID REFERENCES Person.Person_ID PRIMARY KEY)
+R(Customer_ID)
+F = Ø
+
+Already in BCNF/4NF
+
+------------------------------------------------------------------------------------
+Company (Company_ID PRIMARY KEY, Name NOT NULL, Num_Products NOT NULL) 
+R(Company_ID, Name, Num_Products); 
+F = {
+	Company_ID -> Num_Products, Name;
+}
+
+Already in BCNF/4NF
+
+------------------------------------------------------------------------------------
+Publisher (Publisher_ID REFERENCES Company.Company_ID PRIMARY KEY)
+R(Publisher_ID); 
+F = Ø
+
+Already in BCNF/4NF
+
+------------------------------------------------------------------------------------
+Developer (Developer _ID REFERENCES Company.Company_ID PRIMARY KEY)
+R(Developer); 
+F = Ø
+
+Already in BCNF/4NF
+
+------------------------------------------------------------------------------------
+Manufacturer (Manufacturer_ID REFERENCES Company.Company_ID PRIMARY KEY)
+R(Manufacturer_ID); 
+F = Ø
+
+Already in BCNF/4NF
+
+------------------------------------------------------------------------------------
+Media (Media_ID PRIMARY KEY, Name NOT NULL, Platform NOT NULL, User_Rating , Price NOT NULL, Condition NOT NULL) 
+R(Media_ID, Name, Platform, User_Rating, Price, Condition); 
+F = {
+	Media_ID -> Name, Platform, User_Rating, Price, Condition; 
+}
+
+
+Already in BCNF/4NF
+
+
+------------------------------------------------------------------------------------
+Hardware (Hardware_ID REFERENCES Media.Media_ID PRIMARY KEY, Type NOT NULL)
+R(Hardware_ID, Type); 
+F = {
+	Hardware_ID -> Type;
+}
+
+Already in BCNF/4NF
+
+------------------------------------------------------------------------------------
+Software (Software_ID REFERENCES Media.Media_ID PRIMARY KEY, Type NOT NULL)
+R(Software_ID, Type); 
+F = {
+	Software_ID -> Type; 
+}
+
+Already in BCNF/4NF
+
+------------------------------------------------------------------------------------
+Game (Game_ID REFERENCES Media.Media_ID PRIMARY KEY, ESRB_Rating NOT NULL, Genre NOT NULL)
+R(Game_ID, ESRB_Rating, Genre); 
+F = {
+	Game_ID -> ESRB_Rating, Genre;  
+}
+
+Already in BCNF/4NF
+
+------------------------------------------------------------------------------------
+DLC (DLC_ID REFERENCES Game.Game_ID PRIMARY KEY, Game REFERENCES Game.Game_ID PRIMARY KEY)
+R(DLC_ID, Game); 
+F = {
+	DLC_ID -> Game;
+	Game -> DLC_ID; 
+}
+
+Already in BCNF/4NF
+
+------------------------------------------------------------------------------------
+Video (Video_ID REFERENCES Media.Media_ID PRIMARY KEY, MPAA_Rating NOT NULL, Genre NOT NULL)
+R(Video_ID, MPAA_Rating, Genre); 
+F = {
+	Video_ID -> MPAA_Rating, Genre; 
+}
+
+Already in BCNF/4NF
+
+------------------------------------------------------------------------------------
+Media_Companies (Media REFERENCES Media.Media_ID PRIMARY KEY, Company REFERENCES Company.Company_ID PRIMARY KEY)
+R(Media, Company); 
+F = {
+	Media -> Company; 
+	Company -> Media; 
+}
+
+Already in BCNF/4NF
+
+------------------------------------------------------------------------------------ 
+Order (Order_ID PRIMARY KEY, Customer REFERENCES Customer.Customer_ID NOT NULL, Media_Count NOT NULL, Address NOT NULL, Zip_Code NOT NULL, State NOT NULL, Country NOT NULL)
+R(Order_ID, Customer, Media_Count, Address, Zip_Code, State, Country); 
+F = {
+	Order_ID -> Customer, Media_Count, Address, Zip_Code, State, Country;
+}
+
+
+Already in BCNF/4NF
+
+------------------------------------------------------------------------------------
+Order_Items (Order REFERENCES Order.Order_ID PRIMARY KEY, Media REFERENCES Media.Media_ID PRIMARY KEY)
+R(Order, Media); 
+F = {
+	Order -> Media;
+}
+
+Already in BCNF/4NF

@@ -7,6 +7,7 @@ import { LoginModalComponent } from './login-modal/login-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TestComponent } from './test/test.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { TestComponent } from './test/test.component';
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

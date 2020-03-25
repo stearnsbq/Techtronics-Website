@@ -1,2 +1,4 @@
 Backend/Database/node_modules
 Backend/Database/package-lock.json
+Backend/Database/cred/
+Backend/Database/cred/*
