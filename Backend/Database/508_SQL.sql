@@ -2,18 +2,18 @@ CREATE SCHEMA 508_PROJECT;
 USE 508_PROJECT;
 
 CREATE TABLE `Person` (
-  `Person_ID` INT PRIMARY KEY,
-  `Username` varchar(255) UNIQUE NOT NULL,
-  `Password` varchar(255) NOT NULL,
+  `Person_ID` INT PRIMARY KEY AUTO_INCREMENT,
+  `Username` varchar(50) UNIQUE NOT NULL,
+  `Password` char(60) NOT NULL,
   `Email` varchar(255) UNIQUE NOT NULL,
-  `First_name` varchar(255) UNIQUE NOT NULL,
-  `Last_name` varchar(255) UNIQUE NOT NULL,
+  `First_name` varchar(50) NOT NULL,
+  `Last_name` varchar(50) NOT NULL,
   `Birth_date` date NOT NULL
 );
 
 CREATE TABLE `Phone_numbers` (
   `Person_ID` INT,
-  `Phone_number` varchar(255),
+  `Phone_number` char(10),
   PRIMARY KEY (`Person_ID`, `Phone_number`),
   FOREIGN KEY (`Person_ID`) REFERENCES `Person` (`Person_ID`)
 );
@@ -30,8 +30,8 @@ CREATE TABLE `Customer` (
 );
 
 CREATE TABLE `Company` (
-  `Company_ID` INT PRIMARY KEY,
-  `Name` varchar(255) NOT NULL,
+  `Company_ID` INT PRIMARY KEY AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
   `Number_of_products` INT NOT NULL
 );
 
@@ -51,10 +51,10 @@ CREATE TABLE `Developer` (
 );
 
 CREATE TABLE `Media` (
-  `Media_ID` INT PRIMARY KEY,
-  `Name` varchar(255) NOT NULL,
-  `Platform` varchar(255) NOT NULL,
-  `User_rating` INT,
+  `Media_ID` INT PRIMARY KEY AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  `Platform` varchar(50) NOT NULL,
+  `User_rating` float,
   `Price` float NOT NULL,
   `Condition` text NOT NULL
 );
@@ -80,14 +80,14 @@ CREATE TABLE `Software` (
 CREATE TABLE `Video` (
   `Video_ID` INT PRIMARY KEY,
   `Genre` varchar(255) NOT NULL,
-  `MPAA_Rating` varchar(255) NOT NULL,
+  `MPAA_Rating` varchar(5) NOT NULL,
   FOREIGN KEY (`Video_ID`) REFERENCES `Media` (`Media_ID`)
 );
 
 CREATE TABLE `Game` (
   `Game_ID` INT PRIMARY KEY,
   `Genre` varchar(255) NOT NULL,
-  `ESRB_Rating` varchar(255) NOT NULL,
+  `ESRB_Rating` varchar(5) NOT NULL,
   FOREIGN KEY (`Game_ID`) REFERENCES `Media` (`Media_ID`)
 );
 
@@ -107,13 +107,13 @@ CREATE TABLE `Media_Companies` (
 );
 
 CREATE TABLE `Order` (
-  `Order_ID` INT PRIMARY KEY,
+  `Order_ID` INT PRIMARY KEY  AUTO_INCREMENT,
   `Customer` INT,
   `Media_Count` INT NOT NULL,
   `Address` varchar(255) NOT NULL,
-  `Zip_code` varchar(255) NOT NULL,
-  `State` varchar(255) NOT NULL,
-  `Country` varchar(255) NOT NULL,
+  `Zip_code` char(5) NOT NULL,
+  `State` varchar(50) NOT NULL,
+  `Country` varchar(50) NOT NULL,
   FOREIGN KEY (`Customer`) REFERENCES `Customer` (`Customer_ID`)
 );
 
@@ -124,9 +124,23 @@ CREATE TABLE `Order_Items` (
   FOREIGN KEY (`Order`) REFERENCES `Order` (`Order_ID`),
   FOREIGN KEY (`Media`) REFERENCES `Media` (`Media_ID`)
 );
+CREATE TABLE `Shipping` (
+  `Shipping_ID` INT PRIMARY KEY AUTO_INCREMENT,
+  `Carrier` varchar(50) NOT NULL,
+  `Shipped_date` date NOT NULL,
+);
+
+CREATE TABLE `Shipped_Orders` (
+  `Order` INT,
+  `Shipping` INT,
+  PRIMARY KEY (`Order`, `Shipping`),
+  FOREIGN KEY (`Order`) REFERENCES `Order` (`Order_ID`),
+  FOREIGN KEY (`Shipping`) REFERENCES `Shipping` (`Shipping_ID`)
+);
+
 
 CREATE TABLE `Specials` (
-  `Specials_ID` INT PRIMARY KEY,
+  `Specials_ID` INT PRIMARY KEY  AUTO_INCREMENT,
   `Percentage_off` float NOT NULL,
   `Start_date` date NOT NULL,
   `End_date` date NOT NULL

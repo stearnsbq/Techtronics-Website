@@ -1,0 +1,41 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "Username": {
+        "type": "string"
+      },
+      "Password": {
+        "type": "string"
+      },
+      "Email": {
+        "type": "string"
+      },
+      "First_name": {
+        "type": "string"
+      },
+      "Last_name": {
+        "type": "string"
+      },
+      "Birth_date": {
+        "type": "string"
+      },
+      "account_level": {
+        "type": "string"
+      },
+      "phoneNumbers": {
+        "type": "array",
+        "items": {}
+      }
+    },
+    "required": [
+      "Username",
+      "Password",
+      "Email",
+      "First_name",
+      "Last_name",
+      "Birth_date",
+      "account_level",
+      "phoneNumbers"
+    ]
+  }
