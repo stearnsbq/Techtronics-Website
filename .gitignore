@@ -1,6 +1,9 @@
 Backend/Database/node_modules
 Backend/Database/package-lock.json
-Backend/Database/cred/
-Backend/Database/cred/*
-Backend/Database/config/
-Backend/Database/config/*
+Backend/API-Server/cred/
+Backend/API-Server/cred/*
+Backend/API-Server/config/
+Backend/API-Server/config/*
+Backend/API-Server/public/*
+Backend/API-Server/public/
+**/node_modules
