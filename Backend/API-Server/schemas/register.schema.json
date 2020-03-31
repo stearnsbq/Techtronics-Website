@@ -2,22 +2,22 @@
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
     "properties": {
-      "Username": {
+      "username": {
         "type": "string"
       },
-      "Password": {
+      "password": {
         "type": "string"
       },
-      "Email": {
+      "email": {
         "type": "string"
       },
-      "First_name": {
+      "first_name": {
         "type": "string"
       },
-      "Last_name": {
+      "last_name": {
         "type": "string"
       },
-      "Birth_date": {
+      "birth_date": {
         "type": "string"
       },
       "account_level": {
@@ -29,12 +29,12 @@
       }
     },
     "required": [
-      "Username",
-      "Password",
-      "Email",
-      "First_name",
-      "Last_name",
-      "Birth_date",
+      "username",
+      "password",
+      "email",
+      "first_name",
+      "last_name",
+      "birth_date",
       "account_level",
       "phoneNumbers"
     ]

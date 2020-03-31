@@ -8,14 +8,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TestComponent } from './test/test.component';
 import {NgxPaginationModule} from 'ngx-pagination';
-import { TestComponentComponent } from './test-component/test-component.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginModalComponent,
     TestComponent,
-    TestComponentComponent
   ],
   imports: [
     BrowserModule,

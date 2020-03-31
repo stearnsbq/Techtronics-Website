@@ -1,14 +1,16 @@
 var express = require('express');
 var Validator = require('jsonschema').Validator;
 var bodyParser = require('body-parser');
-var sql = require('mysql');   // used for mySQL credentials
+var sql = require('mysql'); // used for mySQL credentials
 const https = require('https');
-var crypt = require("bcrypt");   // used for hashing passwords
+var crypt = require('bcrypt'); // used for hashing passwords
 var fs = require('fs');
-const config = require('./config/config.js')
-var expJwt = require("express-jwt");
-const schemas = require('./schemas/schema.js')
-var jwt = require("jsonwebtoken");   // will need for login only endpoints
+const config = require('./config/config.js');
+var expJwt = require('express-jwt');
+const schemas = require('./schemas/schema.js');
+var jwt = require('jsonwebtoken'); // will need for login only endpoints
+const {hash_password, gen_date} = require('./util.js')
+
 // var cors = require("cors");
 var app = express();
 
@@ -17,280 +19,225 @@ const _port = 8080;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use(expJwt({secret: config.JWT.Secret ,credentialsRequired: false}))
+
+
+
 
 
 var connection = sql.createConnection(config.sql_config);
 
-app.get('/api/games', (req, res) =>{
-    connection.query('SELECT Media.Name, Media.Platform, Media.User_rating, Media.Price, Media.Condition, Game.* FROM Game LEFT JOIN Media ON Media.Media_ID = Game.Game_ID', (err, results, fi) => {
-        if(err){
-            res.send([]);
-        }else{
-            res.send(results)
-         }
-    })
-})
+var Queries = require('./queries.js')
 
-app.get('/api/software', (req, res) =>{
- })
- 
+var sql_queries = new Queries(connection);
 
-app.get('/api/hardware', (req, res) =>{
-   
-})
-
-app.get('/api/video', (req, res) =>{
-   
-})
-
-app.get('/api/specials', (req, res) =>{
-    connection.query('SELECT * FROM Specials', (err, results, fi) => {
-        if(err){
-            res.send([]);
-        }else{
-            res.send(results)
-         }
-    })
+app.get('/api/games', (req, res) => {
+	connection.query(
+		'SELECT Media.Name, Media.Platform, Media.User_rating, Media.Price, Media.Condition, Game.* FROM Game LEFT JOIN Media ON Media.Media_ID = Game.Game_ID',
+		(err, results, fi) => {
+			if (err) {
+				res.send([]);
+			} else {
+				res.send(results);
+			}
+		}
+	);
 });
 
-app.get('/api/specials/:id', (req, res) =>{
-    connection.query(`SELECT * FROM Specials WHERE Specials.Special_ID=${connection.escape(req.params['id'])}`, (err, results, fi) => {
-        if(err){
-            res.send([]);
-        }else{
-            res.send(results)
-         }
-    })
+app.get('/api/software', (req, res) => {});
+
+app.get('/api/hardware', (req, res) => {});
+
+app.get('/api/video', (req, res) => {});
+
+app.get('/api/specials', (req, res) => {
+	connection.query('SELECT * FROM Specials', (err, results, fi) => {
+		if (err) {
+			res.send([]);
+		} else {
+			res.send(results);
+		}
+	});
+});
+
+app.get('/api/specials/:id', (req, res) => {
+	connection.query(
+		`SELECT * FROM Specials WHERE Specials.Special_ID=${connection.escape(req.params['id'])}`,
+		(err, results, fi) => {
+			if (err) {
+				res.send([]);
+			} else {
+				res.send(results);
+			}
+		}
+	);
+});
+
+app.post('/api/specials',   (req, res) => {});
+
+app.post('/api/media', async (req, res) => {
+	console.log(req.user)
+	if(req.user.Account_Level !== 'Employee'){
+		res.sendStatus(401);
+		return;
+	}
+
+	const body = req.body;
+
+	req.t
+
+	var JsonValidator = new Validator();
+	var result = JsonValidator.validate(body, schemas.register_schema);
+
+		try{
+
+			if (result.errors.length <= 0) {
+				throw new Error(result.errors)
+			}
+
+			connection.beginTransaction();
+
+			await sql_queries.add_new_media(body['name'], body['platform'], body['price'], body['condition'], body['mediaType'], body['mediaFields']);
+
+			var id = await sql_queries.get_last_id();
+
+			connection.commit();
+			res.redirect(`./media/${id}`)
+		}catch(err){
+			console.log(err)
+			connection.rollback();
+			res.sendStatus(401);
+		} 
+});
+
+app.get('/api/media', async (req, res) => {
+
+	// send the result of the search back to the user
+	res.send(!req.query['search'] ? await sql_queries.search() :  await sql_queries.search( connection.escape(`%${req.query['search']}%`)))
+	
+	
+});
+
+app.get('/api/media/:id', async (req, res) => {
+	const id = req.params['id'];
+	res.send(await sql_queries.get_media_by_id(id));
 });
 
 
-app.post('/api/specials', (req, res) =>{
-    
-    
+
+app.post('/api/auth', (req, res) => {
+	const body = req.body;
+	connection.query(
+		`SELECT Password, Person_ID, Account_Level FROM Person WHERE Username=${connection.escape(body.username)}`,
+		(err, results, fields) => {
+			if (!err && results.length > 0) {
+				// compare the password sent from the user and the hash in the database
+
+				crypt.compare(body.password, results[0].Password, (err, result) => {
+					if (result && !err) {
+						var token = jwt.sign({ Person_ID: results[0].Person_ID, Account_Level: results[0].Account_Level }, config.JWT.Secret, { expiresIn: '7d' }); // send a JWT token for authentication
+						res.send({ token: token }); // send the json containing th JWT back to the user
+					} else {
+						 // incorrect password
+						 res.sendStatus(401);
+					}
+				});
+			}else{
+				// invalid username
+				res.sendStatus(401);
+			}
+		}
+	);
 });
-
-app.post('/api/media', (req, res) => {
-
-
-
-
-});
-
-
-
-app.get('/api/search', (req, res) =>{
-    const keys = Object.keys(req.query);
-
-    if(req.query['media'] === 'all'){ // if the query was for all media
-
-
-        new Promise((resolve, reject) => {
-
-            // Get all of the media in the database
-            connection.query(`SELECT Media_ID, Name, Platform, User_rating, Price, \`Condition\`, Game.Genre, ESRB_Rating, Hardware.Type, Video.Genre, MPAA_Rating, Software.Type FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID LEFT JOIN Software ON Software.Software_ID=Media.Media_ID LEFT JOIN Game ON Game.Game_ID=Media.Media_ID LEFT JOIN Hardware ON Hardware.Hardware_ID=Media.Media_ID LEFT JOIN Media_Companies ON Media_Companies.Media=Media.Media_ID;`,  (err, allMedia, fi) => {
-                var send = []
-                if(!err){
-                    for(const result of allMedia){
-                        var tmp = {}
-                        for(const prop in result){
-                            if(result[prop]){
-                                tmp[prop] = result[prop]
-                            }
-                        }
-                        send.push(tmp)
-                    }
-                    // we got the data resolve the promise
-
-
-                    return resolve(send);
-                }else{
-                    // some error reject the promise
-                    return reject(err);
-                }            
-            })
-
-
-        }).then(trimmedMedia => {
-      
-
-    
-                // get all of the DLCs for a given Game
-                connection.query("SELECT DLC_ID, DLC.Game_ID, Name, Price FROM Game JOIN DLC ON DLC.Game_ID=Game.Game_ID JOIN Media ON DLC.DLC_ID = Media.Media_ID", (err, DLCs, fi) =>{
-
-                    if(!err){
-
-                        // create a new DLC array for a game if the game as DLC
-                        for(var DLC of DLCs){
-                            trimmedMedia.forEach(element => {
-                                if(element['Media_ID'] === DLC['Game_ID']){
-                                    if(!element['DLC']){
-                                        element['DLC'] = []
-                                    }
-
-                                    element['DLC'].push(DLC);
-                                }
-                            })
-                         
-                        }
-                        res.send(trimmedMedia);
-                    }
-                })
-
-            
-      
-        })
-
-    }else{
-
-        // calls a search procedure to search by the given field
-
-        connection.query(`CALL search('${req.query['media']}', '${keys[1]}', '${req.query[keys[1]]}')`, (err, results, fi) => {
-            if(err){
-                res.send([]);
-            }else{
-                res.send(results[0])
-             }
-        })
-    }
-})
-
-
-app.post('/api/auth', (req, res) =>{
-    const body = req.body
-    connection.query(`SELECT Password, Person_ID FROM Person WHERE Username=${connection.escape(body.Username)}`, (err, results, fields) =>{
-        if(err){
-            console.log(err)
-        }else{
-            console.log(results[0])
-            crypt.compare(body.Password, results[0].Password,  (err, result) =>{
-                if(result && !err){
-                    var token = jwt.sign({ID: results[0].Person_ID}, config.JWT.Secret, { expiresIn: "7d" }) // send a JWT token for authentication
-                    res.send({ token: token }); // token
-                }else{
-                    res.sendStatus(401); // incorrect password
-                }
-            })
-
-        }
-    })
-})
-
-
 
 // TODO: DO SERVER SIDE VALIDATION
-app.post("/api/register", (req, res) =>{
-
-    var body = req.body
-
-    var JsonValidator = new Validator();
-    var result = JsonValidator.validate(body, schemas.register_schema);
-    
-    if (result.errors.length <= 0) {
-
-        crypt.hash(body.Password, 10, (err, hash) => { // hash the password with 10 salt rounds
-            if (err){
-                res.sendStatus(500); // some hashing error at the fault of the server not the user
-            }else{
-                if (hash){ // make sure hash exists
-                 
-                    new Promise(async (resolve, reject) => {  // use a promise so I can handle errors inside of callbacks
-                        
-                        // generate a sql compliant date
-                        function genDate(){
-                            const now = new Date();
-    
-                            return `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`
-                        }
-
-                        connection.beginTransaction(); 
-
-                        connection.query(`INSERT INTO Person (Username, Password, Email, First_name, Last_name, Birth_date) VALUES (${sql.escape(body.Username)}, ${sql.escape(hash)}, ${sql.escape(body.Email)}, ${sql.escape(body.First_name)}, ${sql.escape(body.Last_name)}, ${sql.escape(body.Birth_date)})` , (err, results, fields) =>{
-                            if (err){
-                                return reject(err);
-                            }
-                        })
+app.post('/api/register', async (req, res) => {
+	var body = req.body;
 
 
-                        connection.query("SELECT LAST_INSERT_ID() AS 'ID'", (err, results, fields) =>{ // get id for the last insert 
-                            if (err){
-                                return reject(err);
-                            }else{
-                                var id = results[0]['ID']; // get the id from the results
-
-                               if (body['account_level'] === 'Customer'){
-
-    
-                                connection.query(`INSERT INTO Customer (Customer_ID, Registration_Date) VALUES (?, ?)`, [id, genDate()] , (err, results, fields) =>{ // insert the person into the customer table
-                                    if (err){
-                                        return reject(err);
-                                    }
-                                })
-    
-    
-                            }else if(body['account_level'] === 'Employee'){
-
-                                connection.query(`INSERT INTO Employee (Employee_ID, Hire_date) VALUES (?, ?)`, [id, genDate()] ,(err, results, fields) =>{ // insert the person into the employee table
-                                    if (err){
-                                        return reject(err);
-                                    }
-                                })
-    
-                            }
-    
-                                body.phoneNumbers.forEach(element => {
-                                    connection.query(`INSERT INTO Phone_numbers (Person_ID, Phone_number) VALUES (${id}, ${connection.escape(element)})`, (err, results, fields) =>{ // insert all phone_numbers for a person into the phone_numbers table
-                                        if (err){ 
-                                            return reject(err);
-                                        }
-                                    })
-                                });
-
-                                return resolve();
-                            }
-                        })
+	var JsonValidator = new Validator();
+	var result = JsonValidator.validate(body, schemas.register_schema);
 
 
-    }).then(result => {
-        res.sendStatus(200);
-        connection.commit();
-    }, err => {
-        console.log(err.sqlMessage)
-        res.sendStatus(401);
-        connection.rollback();
-    })
-                }else{
-                    res.sendStatus(400);
-                }
-            }
-        })
-    }
 
-})
+		connection.beginTransaction();
+
+		try {
+			if(result.errors.length > 0){
+				throw new Error(result.errors)
+			}
+
+			// hash the password given by the user to be put into the database
+			const hash = await hash_password(body['password']);
+
+
+			// actually register the account
+			await sql_queries.register_account(body['username'], hash, body['email'], body['first_name'], body['last_name'], body['birth_date'], body['account_level']);
+
+			// get the last id from the last insert
+			const id = await sql_queries.get_last_id();
+
+			switch (body['account_level']){
+				case 'Customer':
+					await sql_queries.create_customer(id, gen_date())
+					break;
+				case 'Employee':
+					await sql_queries.create_employee(id, gen_date())
+					break;
+				default:
+					throw new Error("Invalid Account Level")
+			}
+			// add any phone numbers 
+			await sql_queries.add_phone_numbers(id, body['phoneNumbers']);
+			
+			
+			connection.commit();
+			res.sendStatus(200);
+		} catch (error) {
+			console.log(error);
+			connection.rollback();
+			res.sendStatus(400);
+		}
+
+});
+
+
+
+
+
+
+
 
 
 var httpsEnabled = false;
 
 // private key and certificate for HTTPS
-var privateKey = fs.readFileSync('./cred/api.key');
-var certificate = fs.readFileSync('./cred/api.crt');
+var privateKey = fs.readFileSync('c:/Users/quinn/Desktop/dev/CMSC508/Backend/API-Server/cred/api.key');
+var certificate = fs.readFileSync('c:/Users/quinn/Desktop/dev/CMSC508/Backend/API-Server/cred/api.crt');
 
-var credentials = {key: privateKey, cert: certificate}
+var credentials = { key: privateKey, cert: certificate };
 
-if(httpsEnabled){
-    var server = https.createServer(credentials, app);
-    server.listen(_port, ()=>{
-        console.log("HTTPs Server running on port 8080");
-    });
-}else{
-    app.listen(_port, ()=>{
-        console.log("HTTP Server running on port 8080");
-    })
+if (httpsEnabled) {
+	var server = https.createServer(credentials, app);
+	server.listen(_port, () => {
+		console.log('HTTPs Server running on port 8080');
+	});
+} else {
+	app.listen(_port, () => {
+		console.log('HTTP Server running on port 8080');
+	});
 }
 
+connection.connect((err) => {
+	if (err) throw err;
+	console.log('Database connected!');
+	connection.query('USE 508_PROJECT');
+});
 
-connection.connect(err => {
-    if (err) throw err;
-    console.log("Database connected!")
-    connection.query("USE 508_PROJECT");
-})
+app.use((err, req, res, next) => {
+	if (err.name === 'UnauthorizedError') {
+		console.log(err)
+	    res.sendStatus(401);
+	}
+});
 
