@@ -3,10 +3,18 @@
     min-height: 100%; 
 
     background-color: rgb(23,26,33); 
+
+    white-space: nowrap;
+    
+}
+
+#search_container {
+    overflow: hidden;
+
 }
 
 #search_bar {
-    position: relative; 
+    position: absolute; 
     left: 5px;
     top: 5px;
 
@@ -19,7 +27,12 @@
     min-width: 400px;
 
     border-radius: 1px;
-    border-style: solid;
-    border-color: rgb(0,0,0);
+    border-left-style: solid;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-width: 0.3px;
+
+    border-color: rgb(0,0,0); 
 
 }
+
