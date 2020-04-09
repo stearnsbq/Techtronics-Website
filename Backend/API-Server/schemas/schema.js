@@ -5,4 +5,4 @@ const Schemas = {
     media_schema: media
 }
 
-module.exports=Schemas;
+module.exports = Schemas;
