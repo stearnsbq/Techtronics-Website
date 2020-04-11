@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var sql = require('mysql'); // used for mySQL credentials
 const https = require('https');
 var fs = require('fs');
+var cors = require('cors');
 const config = require('./config/config.js');
 var expJwt = require('express-jwt');
 const argon2 = require('argon2');
@@ -15,8 +16,15 @@ var app = express();
 
 const _port = 8080;
 
+
+const cors_options = {
+	origin: '*',
+}
+
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors(cors_options))
 
 app.use(expJwt({ secret: config.JWT.Secret, credentialsRequired: false }));
 
@@ -32,6 +40,23 @@ var orders = require('./routes/orders.js')(connection);
 app.use('/api/media', media);
 app.use('/api/user', user);
 app.use('/api/orders', orders);
+
+
+
+app.get('/api/uploads/:type/:id/:filename', async (req, res) => {
+	const type = req.params['type']
+	const id = req.params['id']
+	const filename = req.params['filename']
+
+	res.sendFile(__dirname + `/uploads/${type}/${id}/${filename}`);
+
+})
+
+
+
+
+
+
 
 app.post('/api/auth', async (req, res) => {
 	const body = req.body;
@@ -119,7 +144,7 @@ if (httpsEnabled) {
 connection.connect((err) => {
 	if (err) throw err;
 	console.log('Database connected!');
-	connection.query('USE 508_PROJECT');
+	connection.query('USE project_2');
 });
 
 app.use((err, req, res, next) => {

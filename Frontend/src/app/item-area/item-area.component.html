@@ -1,11 +1,12 @@
-<div class = "item"> 
-	    <ul class = "item_attributes">
-		    <li class = "item_attr" id = "item_image"> CHICKEN <img src = ""> </li> 
-		    <li class = "item_attr" id = "item_platform"> CHICKEN 2</li> 
-		    <li class = "item_attr" id = "genre"> CHICKEN 3</li> 
-		    <li class = "item_attr" id = "item_price"> CHICKEN 4</li>
-		    <li class = "item_attr" id = "item_condition"> CHICKEN 5</li>
-		    <li class = "item_attr" id = "item_user_rating"> CHICKEN 6</li> 
+<div *ngFor="let media of allMedia" class = "item">
+	    <ul id="{{media.Media_ID}}" class = "item_attributes">
+        <li class = "item_attr" id = "item_image"> <img [src]="getImage(media.Media_ID, media.images[0])">  </li>
+        <li class = "item_attr" id = "item_name"> {{media.Name}} </li>
+		    <li class = "item_attr" id = "item_platform"> {{media.Platform}} </li>
+		    <li class = "item_attr" id = "genre"> {{media.Game_Genre}}</li>
+		    <li class = "item_attr" id = "item_price"> ${{media.Price}}</li>
+		    <li class = "item_attr" id = "item_condition"> {{media.Condition}}</li>
+        <li class = "item_attr" id = "item_user_rating">N/A</li>
 	    </ul>
 </div>
 

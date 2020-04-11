@@ -442,12 +442,14 @@ class Queries {
 	static get_all_media(connection, page = 1) {
 		return new Promise((resolve, reject) => {
 			let offset = (page - 1) * ITEMS_PER_PAGE;
-			const query = `SELECT Media_ID, Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game Genre', ESRB_Rating, Hardware.Type AS 'Hardware Type', Video.Genre AS 'Video Genre', MPAA_Rating, Software.Type AS 'Software Type'
-            FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID 
-            LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
-            LEFT JOIN Game ON Game.Game_ID=Media.Media_ID 
-            LEFT JOIN Hardware ON Hardware.Hardware_ID=Media.Media_ID 
-            LEFT JOIN Media_Companies ON Media_Companies.Media=Media.Media_ID LIMIT ${offset} , ${ITEMS_PER_PAGE}`;
+			const query = `SELECT Media.Media_ID,  Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game_Genre', ESRB_Rating, Hardware.Type AS 'Hardware_Type', Video.Genre AS 'Video_Genre', MPAA_Rating, Software.Type AS 'Software Type'
+            					FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID 
+            					LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
+            					LEFT JOIN Game ON Game.Game_ID=Media.Media_ID 
+            					LEFT JOIN Hardware ON Hardware.Hardware_ID=Media.Media_ID 
+            					LEFT JOIN Media_Companies ON Media_Companies.Media=Media.Media_ID 
+            					LIMIT ${offset} , ${ITEMS_PER_PAGE};`;
+
 
 			connection.query(query, async (err, results, fields) => {
 				var send = [];
@@ -461,6 +463,9 @@ class Queries {
 								tmp[prop] = result[prop];
 							}
 						}
+
+						const images = await this._get_images_for_media(connection, result.Media_ID);	
+						tmp['images'] = images ? images : [];
 						send.push(tmp);
 					}
 					// we got the data resolve the promise
@@ -474,15 +479,32 @@ class Queries {
 		});
 	}
 
+	static _get_images_for_media(connection, id){
+		return new Promise((resolve, reject) =>{
+			const query = `SELECT fileName FROM Media JOIN Media_Images ON Media_Images.Media_ID = Media.Media_ID WHERE Media.Media_ID=?`;
+
+			connection.query(query, [id], (err, allMedia, fi) => {
+				return err ? reject(err) : resolve(allMedia.map(item => {
+					return item['fileName']
+				}));
+			})
+
+		})
+		
+
+	}
+
+
+
 	static search(connection, page = 1, searchQuery = "'%%'") {
 		return new Promise((resolve, reject) => {
 			let offset = (page - 1) * ITEMS_PER_PAGE;
-			const query = `SELECT Media_ID, Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game Genre', ESRB_Rating, Hardware.Type AS 'Hardware Type', Video.Genre AS 'Video Genre', MPAA_Rating, Software.Type AS 'Software Type'
+			const query = `SELECT Media.Media_ID, Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game_Genre', ESRB_Rating, Hardware.Type AS 'Hardware_Type', Video.Genre AS 'Video_Genre', MPAA_Rating, Software.Type AS 'Software Type'
                                FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID 
                                LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
                                LEFT JOIN Game ON Game.Game_ID=Media.Media_ID 
                                LEFT JOIN Hardware ON Hardware.Hardware_ID=Media.Media_ID 
-                               LEFT JOIN Media_Companies ON Media_Companies.Media=Media.Media_ID 
+							   LEFT JOIN Media_Companies ON Media_Companies.Media=Media.Media_ID
                                WHERE Name LIKE ${searchQuery} 
                                OR Platform LIKE ${searchQuery}
                                OR \`Condition\` LIKE ${searchQuery}
@@ -503,8 +525,11 @@ class Queries {
 								tmp[prop] = result[prop];
 							}
 						}
+						const images = await this._get_images_for_media(connection, result.Media_ID);	
+						tmp['images'] = images ? images : [];
 						send.push(tmp);
 					}
+
 					// we got the data resolve the promise
 
 					return resolve(await this._add_DLC(connection, send).catch());

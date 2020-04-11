@@ -123,8 +123,6 @@ module.exports = function(connection) {
     });
 
 
-    router.post('/upload', )
-
 
 	router.post('/', async (req, res) => {
 		if (req.user && req.user.Account_Level !== 'Employee') {

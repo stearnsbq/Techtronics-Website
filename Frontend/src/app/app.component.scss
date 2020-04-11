@@ -10,7 +10,7 @@ app-nav-bar { // should be out of document flow.
     box-shadow: 0px 6px 10px 0 rgba(0,0,0,.4);
 }
 
-router-outlet { // in document flow.
+.router-outlet { // in document flow.
     z-index: -1;
 
     position: relative;
