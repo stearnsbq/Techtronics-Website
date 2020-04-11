@@ -125,8 +125,8 @@ app.post('/api/register', async (req, res) => {
 var httpsEnabled = false;
 
 // private key and certificate for HTTPS
-var privateKey = fs.readFileSync('c:/Users/quinn/Desktop/dev/CMSC508/Backend/API-Server/cred/api.key');
-var certificate = fs.readFileSync('c:/Users/quinn/Desktop/dev/CMSC508/Backend/API-Server/cred/api.crt');
+var privateKey = fs.readFileSync(__dirname+'/cred/api.key');
+var certificate = fs.readFileSync(__dirnam + '/cred/api.crt');
 
 var credentials = { key: privateKey, cert: certificate };
 
