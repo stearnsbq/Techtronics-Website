@@ -40,7 +40,13 @@ class Queries {
 
         })
 
-    }
+	}
+	
+	static add_new_special_to_media(connection, special_id, media_id){
+		return new Promise((resolve, reject)=>{
+			
+		})
+	}
 
 
 

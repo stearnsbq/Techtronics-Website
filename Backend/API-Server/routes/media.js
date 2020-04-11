@@ -3,7 +3,37 @@ module.exports = function(connection) {
     var router = express.Router();
     var Validator = require('jsonschema').Validator;
     var sql_queries = require('../queries.js')
+    var multer  = require('multer')
+	var {v1} = require('uuid')
+	const fs = require('fs')
 
+
+    var storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+		  const path = './uploads/media/'+ req.body.media;
+
+		  if(!fs.existsSync(path)){
+			  fs.mkdirSync(path);
+		  }
+
+          cb(null, path)
+        },
+        filename: function (req, file, cb) {
+          cb(null, v1() + '.' + file.originalname.split('.')[1])
+        }
+      })
+
+
+    var upload = multer({ storage: storage })
+
+
+    router.post('/upload', upload.fields([{name: 'media', maxCount: 1}, {name: 'media_image', maxCount: 1}]), (req, res)=>{
+		if(req.files){
+			res.send(req.files['media_image'][0].filename);
+		}else{
+			res.sendStatus(400);
+		}
+    })
 
 
 	router.get('/games', async (req, res) => {
@@ -91,6 +121,9 @@ module.exports = function(connection) {
         await sql_queries.create_new_special(connection, body['percentage_off'], body['start_date'], body['end_date']);
         res.sendStatus(200);
     });
+
+
+    router.post('/upload', )
 
 
 	router.post('/', async (req, res) => {

@@ -16,18 +16,25 @@ module.exports = function(connection) {
 
 	router.post('/', async (req, res) => {
 		const body = req.body;
-		await sql_queries.create_new_order(
-			connection,
-			body['customer_id'],
-			body['count'],
-			body['address'],
-			body['zipcode'],
-			body['state'],
-			body['country'],
-			body['items']
-		);
-		res.sendStatus(200);
+		try{
+			connection.startTransaction();
+			await sql_queries.create_new_order(
+				connection,
+				body['customer_id'],
+				body['count'],
+				body['address'],
+				body['zipcode'],
+				body['state'],
+				body['country'],
+				body['items']
+			);
+			connection.commit()
+			res.sendStatus(200);
+		}catch(error){
+			connection.rollback();
+			res.sendStatus(500);
+		}
+
     });
-    
     return router;
 };
