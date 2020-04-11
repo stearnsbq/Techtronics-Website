@@ -1,0 +1,59 @@
+<button (click)="onModalOpen()">Login</button>
+
+<div #Login class="login">
+
+  <div class="login_form_parent">
+
+    <h1 (click)="onModalOpen()" id="exit_icon">&times;</h1>
+  <div id="login_title">
+    <h3>Sign In</h3>
+  </div>
+
+
+  <!-- login form (still need to learn more about reactive form validation but whatever)-->
+
+  <form id="login_form" #form="ngForm" (ngSubmit)="onLogin(form.value)">
+
+
+    <!--Renders a Icon and login title-->
+
+    <div id="splash_icon">
+      <fa-icon [icon]="login_icon"></fa-icon>
+    </div>
+
+    <!--Username input for login-->
+
+    <label>Username</label>
+    <div id="username_input">
+      <input id="username" type="text" placeholder="Username" ngModel name="Username" #username="ngModel" required>
+
+      <fa-icon id="icon" [icon]="user"></fa-icon>
+    </div>
+
+    <!--Password input for login-->
+
+    <label>Password</label>
+    <div id="password_input">
+      <input id="password" type="password" placeholder="Password" ngModel name="Password" #password="ngModel" required>
+
+      <fa-icon id="icon" [icon]="lock"></fa-icon>
+    </div>
+
+    <div id="login_button">
+      <button class="button" id="login" type="submit">Login</button>
+    </div>
+
+    <div id="extra_options">
+      <a id="forgot_password_link">Forgot Password?</a>
+    </div>
+
+    <div id="register_box">
+      <b>Not a Member?</b>
+    </div>
+
+  </form>
+
+  </div>
+
+
+</div>
