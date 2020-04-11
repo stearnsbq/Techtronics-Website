@@ -1,40 +1,50 @@
+app-nav-bar { // should be out of document flow.
+    position: fixed;
 
-.wrapper {
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-template-rows: 0.1fr 100% auto;
-  min-height: 100vh;
+    height: 50px;
+    width: 100%;
+
+    top: 0px;
+    left: 0px;
+
+    box-shadow: 0px 6px 10px 0 rgba(0,0,0,.4);
 }
 
-.header_content{
-  grid-column: span 12;
-  text-align: center;
+router-outlet { // in document flow.
+    z-index: -1;
+
+    position: relative;
+
+    background-color: white; // just for visualization.
+
+    display: inline-block;
+
+    height: 3000px; // concerned with this really.
+    min-height: 100%;
+
+    //margin-bottom: -4px; // weird...
+    margin: 50px 0px -4px;
+
+    width: 100%;
 }
 
-.side_navbar{
-  width: 0;
-  position: absolute;
-  overflow-x: hidden;
-  transition: 0.5s;
-  background-color: rgb(196,196,196);
-  height: 100%;
+app-item-area {
+    width: 100%;
 }
 
-.main_content {
-  grid-column: span 12;
-  transition: 0.5s;
+app-footer-bar { // Out of document flow. :)
+    position: absolute;
+
+    bottom: -100px;
+    left: 0;
+
+    width: 100%;
+    max-width: 100%;
+
+    height: 100px;
+    margin-top: 0px;
+
+    min-height: 100px;
+    max-height: 100px;
 }
-
-.footer_content{
-  grid-column: span 12;
-  text-align: center;
-}
-
-.router-outlet{
-  transition: 0.5s;
-}
-
-
-
-
 

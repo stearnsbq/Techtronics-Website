@@ -47,5 +47,9 @@ testem.log
 Thumbs.db
 
 
+**/node_modules/*
+**/node_modules/
+
+./node_modules/
 
 steams_ids.json

@@ -1,0 +1,9 @@
+
+<div id="page" *ngFor="let item of items | paginate: { itemsPerPage: 15, currentPage: p }; let i = index">
+    <div id="product">
+      <h3>{{item.bleh}}</h3>
+      <p>Big item</p>
+    </div>
+</div>
+
+<pagination-controls (pageChange)="p = $event"></pagination-controls>

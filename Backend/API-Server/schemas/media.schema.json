@@ -1,0 +1,32 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "platform": {
+        "type": "string"
+      },
+      "price": {
+        "type": "string"
+      },
+      "condition": {
+        "type": "string"
+      },
+      "mediaType": {
+        "type": "string"
+      },
+      "mediaFields": {
+        "type": "object"
+      }
+    },
+    "required": [
+      "name",
+      "platform",
+      "price",
+      "condition",
+      "mediaType",
+      "mediaFields"
+    ]
+  }
