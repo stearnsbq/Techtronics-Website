@@ -260,7 +260,7 @@ class Queries {
 		});
 	}
 
-	_add_new_game(connection, id, fields) {
+	static _add_new_game(connection, id, fields) {
 		return new Promise((resolve, reject) => {
 			connection.query(
 				`INSERT INTO Game (Game_ID, Genre, ESRB_rating) VALUES (${id}, ${this.connection.escape(
@@ -273,7 +273,7 @@ class Queries {
 		});
 	}
 
-	_add_new_hardware(connection, id, fields) {
+	static _add_new_hardware(connection, id, fields) {
 		return new Promise((resolve, reject) => {
 			connection.query(
 				`INSERT INTO Hardware (Hardware_ID, Type) VALUES (${id}, ${this.connection.escape(fields['type'])})`,
@@ -284,7 +284,7 @@ class Queries {
 		});
 	}
 
-	_add_new_video(connection, id, fields) {
+	static _add_new_video(connection, id, fields) {
 		return new Promise((resolve, reject) => {
 			connection.query(
 				`INSERT INTO Video (Video_ID, Genre, MPAA_rating) VALUES (${id}, ${this.connection.escape(
@@ -297,7 +297,7 @@ class Queries {
 		});
 	}
 
-	_add_new_software(connection, id, fields) {
+	static _add_new_software(connection, id, fields) {
 		return new Promise((resolve, reject) => {
 			connection.query(
 				`INSERT INTO Software (Software_ID, Type) VALUES (${id}, ${this.connection.escape(fields['type'])})`,
@@ -308,7 +308,7 @@ class Queries {
 		});
 	}
 
-	_add_new_media_company(connection, media_id, company_id) {
+	static _add_new_media_company(connection, media_id, company_id) {
 		return new Promise((resolve, reject) => {
 			const query = `INSERT INTO Media_Companies VALUES (${media_id}, ${company_id})`;
 
@@ -430,11 +430,26 @@ class Queries {
 		});
 	}
 
-	static get_page_count(connection, page) {
+	static get_page_count(connection, serverQuery='\'%%\'') {
 		return new Promise((resolve, reject) => {
-			const query = `SELECT COUNT(Media_ID) as total FROM Media`;
+			const query = `SELECT COUNT(Media_ID) as total
+								FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID 
+								LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
+								LEFT JOIN Game ON Game.Game_ID=Media.Media_ID 
+								LEFT JOIN Hardware ON Hardware.Hardware_ID=Media.Media_ID 
+								LEFT JOIN Media_Companies ON Media_Companies.Media=Media.Media_ID
+								WHERE Name LIKE ${serverQuery} 
+								OR Platform LIKE ${serverQuery}
+								OR \`Condition\` LIKE ${serverQuery}
+								OR Game.Genre LIKE ${serverQuery} 
+								OR Video.Genre LIKE ${serverQuery}
+								OR Software.Type LIKE ${serverQuery}
+								OR Hardware.Type LIKE ${serverQuery}`;
+
+					
+
 			connection.query(query, (err, results, fields) => {
-				return err ? reject(err) : resolve(results[0]['total']);
+				return err ? reject(err) : resolve(results[0]);
 			});
 		});
 	}
@@ -442,7 +457,7 @@ class Queries {
 	static get_all_media(connection, page = 1) {
 		return new Promise((resolve, reject) => {
 			let offset = (page - 1) * ITEMS_PER_PAGE;
-			const query = `SELECT Media.Media_ID,  Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game_Genre', ESRB_Rating, Hardware.Type AS 'Hardware_Type', Video.Genre AS 'Video_Genre', MPAA_Rating, Software.Type AS 'Software Type'
+			const query = `SELECT Media.Media_ID, Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game_Genre', ESRB_Rating, Hardware.Type AS 'Hardware_Type', Video.Genre AS 'Video_Genre', MPAA_Rating, Software.Type AS 'Software Type'
             					FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID 
             					LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
             					LEFT JOIN Game ON Game.Game_ID=Media.Media_ID 
@@ -488,13 +503,8 @@ class Queries {
 					return item['fileName']
 				}));
 			})
-
 		})
-		
-
 	}
-
-
 
 	static search(connection, page = 1, searchQuery = "'%%'") {
 		return new Promise((resolve, reject) => {

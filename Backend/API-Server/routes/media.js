@@ -71,6 +71,10 @@ module.exports = function(connection) {
 		res.send(special);
 	});
 
+	router.get('/total', async (req, res) =>{
+		const query = req.query.query;
+		res.send(query ? await sql_queries.get_page_count(connection, connection.escape(`%${query}%`)) : await sql_queries.get_page_count(connection));
+	});
 
 	router.get('/search', async (req, res) => {
 		try {

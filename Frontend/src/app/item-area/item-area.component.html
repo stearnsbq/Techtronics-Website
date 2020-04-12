@@ -10,4 +10,12 @@
 	    </ul>
 </div>
 
+<br>
+
+<div class="pagination">
+  <button *ngIf="page - 1 > 0" id="back" (click)='prevPage()'>Prev</button>
+  <a *ngFor="let item of ' '.repeat(totalPages).split('') ; let i = index" [routerLink]="['/search']" [queryParams]="{page: i+1}">{{i+1}}</a>
+  <button *ngIf="page < totalPages" id="next" (click)='nextPage()'>Next</button>
+</div>
+
 

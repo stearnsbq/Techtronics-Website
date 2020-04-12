@@ -53,11 +53,6 @@ app.get('/api/uploads/:type/:id/:filename', async (req, res) => {
 })
 
 
-
-
-
-
-
 app.post('/api/auth', async (req, res) => {
 	const body = req.body;
 	const token = await sql_queries.login_person(connection, body['username'], body['password']);
@@ -126,7 +121,7 @@ var httpsEnabled = false;
 
 // private key and certificate for HTTPS
 var privateKey = fs.readFileSync(__dirname+'/cred/api.key');
-var certificate = fs.readFileSync(__dirnam + '/cred/api.crt');
+var certificate = fs.readFileSync(__dirname + '/cred/api.crt');
 
 var credentials = { key: privateKey, cert: certificate };
 

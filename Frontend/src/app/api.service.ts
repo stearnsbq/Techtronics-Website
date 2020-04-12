@@ -14,22 +14,30 @@ export class ApiService {
   constructor(private http: HttpClient ) { }
 
 
-  public getDonations(pageNum= '1'): Observable<Media[]> {
+  public getMedia(pageNum): Observable<Media[]> {
     const params = {
-    page : pageNum
+    page : pageNum + ''
     };
     return this.http.get<Media[]>(this.API_URL + 'media', {params});
   }
 
 
-  public searchDonations(pageNum= '1', searchQuery = ''): Observable<Media[]> {
+  public searchMedia(pageNum, searchQuery = ''): Observable<Media[]> {
     const params = {
-      page : pageNum,
+      page : pageNum + '',
       query: searchQuery
       };
 
     return this.http.get<Media[]>(`${this.API_URL}media/search`, {params});
 
+  }
+
+
+  public totalMedia(searchQuery = '') {
+    const params = {
+      query: searchQuery
+      };
+    return this.http.get<any>(`${this.API_URL}media/total`, {params});
   }
 
 

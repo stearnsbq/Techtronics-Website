@@ -33,7 +33,10 @@ import { SearchService } from './search.service';
     FontAwesomeModule,
     NgxPaginationModule
   ],
-  providers: [ApiService, SearchService],
+  providers: [
+    ApiService,
+    SearchService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
