@@ -12,7 +12,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TestComponent } from './test/test.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
