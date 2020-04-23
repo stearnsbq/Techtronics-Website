@@ -1,0 +1,34 @@
+TABLE Email_Username {
+
+}
+
+Table Email_Login {
+
+}
+
+Table ID_Login {
+
+ }
+
+Table Phone_Numbers {
+
+}
+
+Table Employee_Hire {
+
+}
+
+
+// Indexes: You can define a single or multi-column index 
+Table Customer {
+
+}
+
+Table Company {
+
+}
+
+Table Publisher {
+  
+}
+

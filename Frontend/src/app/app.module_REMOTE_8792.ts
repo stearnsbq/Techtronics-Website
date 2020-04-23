@@ -10,17 +10,7 @@ import { ProductPageComponent } from './product-page/product-page.component';
 import { LoginModalComponent } from './login-modal/login-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {NgxPaginationModule} from 'ngx-pagination';
-import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
-import { ApiService } from './api.service';
-import { SearchService } from './search.service';
-import { JwtModule } from '@auth0/angular-jwt';
-
-export function tokenGetter() {
-  return localStorage.getItem('token');
-}
-
+import { TestComponent } from './test/test.component';
 
 @NgModule({
   declarations: [
@@ -30,29 +20,16 @@ export function tokenGetter() {
     ItemAreaComponent,
     ProductPageComponent,
     LoginModalComponent,
-  ],
-  imports: [
+    TestComponent 
+  ], 
+  imports: [ 
     BrowserModule,
-    HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter,
-      }
-    }),
-    RouterModule.forRoot([
-      {path: 'search', component: ItemAreaComponent},
-    ]),
     ReactiveFormsModule,
-    FontAwesomeModule,
-    FontAwesomeModule,
-    NgxPaginationModule
+    FontAwesomeModule, 
   ],
-  providers: [
-    ApiService,
-    SearchService
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
