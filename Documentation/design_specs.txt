@@ -1,0 +1,12 @@
+Design Specifications: (typical specs) 
+
+Pixels should be prioritized over percentages unless for headers and footers. 
+
+Secondary Color: rgb(46,50,56); 
+Primary Color: rgb(27,27,28);
+
+Border Color: rgb(0,0,0);
+Text Color: rgb(255,255,255); 
+
+border width: 1px; 
+font family: Arial; 

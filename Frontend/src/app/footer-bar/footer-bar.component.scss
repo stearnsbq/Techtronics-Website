@@ -1,9 +1,28 @@
-#footer_content {
-    height: 100%; 
-    min-height: 100%; 
+#root_footer_container {
+    background-color:  rgb(196,196,196);
 
-    //background-color: rgb(36,39,41);  
-    
-    background-color: rgb(23,26,33); 
+    border-top-style: solid;
+    border-top-color:  rgb(170,170,170);
+    border-top-width: 1px;
+
+    height: 100%;
+
+    overflow: hidden;
+
+
+    clear: right;
 }
 
+#footer_content {
+    margin-left: 10px;
+    margin-right: 10px;
+
+    height: 100%;
+}
+
+p {
+    color: rgb(0,0,0);
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}

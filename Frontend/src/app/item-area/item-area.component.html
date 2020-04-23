@@ -1,12 +1,21 @@
-<div class = "item"> 
-	    <ul class = "item_attributes">
-		    <li class = "item_attr" id = "item_image"> slot 1 <img src = ""> </li> 
-		    <li class = "item_attr" id = "item_platform"> slot 2</li> 
-		    <li class = "item_attr" id = "genre"> slot 3</li> 
-		    <li class = "item_attr" id = "item_price"> slot 4</li>
-		    <li class = "item_attr" id = "item_condition"> slot 5</li>
-		    <li class = "item_attr" id = "item_user_rating"> slot 6</li> 
+<div *ngFor="let media of allMedia" class = "item">
+	    <ul id="{{media.Media_ID}}" class = "item_attributes">
+        <li class = "item_attr" id = "item_image"> <img [src]="getImage(media.Media_ID, media.images[0])">  </li>
+        <li class = "item_attr" id = "item_name"> {{media.Name}} </li>
+		    <li class = "item_attr" id = "item_platform"> {{media.Platform}} </li>
+		    <li class = "item_attr" id = "genre"> {{media.Game_Genre}}</li>
+		    <li class = "item_attr" id = "item_price"> ${{media.Price}}</li>
+		    <li class = "item_attr" id = "item_condition"> {{media.Condition}}</li>
+        <li class = "item_attr" id = "item_user_rating">N/A</li>
 	    </ul>
 </div> 
+
+<br>
+
+<div class="pagination">
+  <button *ngIf="page - 1 > 0" id="back" (click)='prevPage()'>Prev</button>
+  <a *ngFor="let item of ' '.repeat(totalPages).split('') ; let i = index" [routerLink]="['/search']" [queryParams]="{page: i+1}">{{i+1}}</a>
+  <button *ngIf="page < totalPages" id="next" (click)='nextPage()'>Next</button>
+</div>
 
 
