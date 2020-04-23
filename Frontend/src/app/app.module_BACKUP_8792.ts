@@ -20,17 +20,22 @@ import { TestComponent } from './test/test.component';
     AppComponent,
     NavBarComponent,
     FooterBarComponent,
+<<<<<<< HEAD
     ItemAreaComponent,
-    ProductPageComponent,
-    LoginModalComponent,
-    TestComponent 
+    ProductPageComponent
   ], 
-  imports: [ 
+=======
+    ItemAreaComponent
+    LoginModalComponent,
+    TestComponent
+  ],
+>>>>>>> 4e603d448607a98e5d61ff8f7014dbbdfe226d02
+  imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    FontAwesomeModule, 
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
