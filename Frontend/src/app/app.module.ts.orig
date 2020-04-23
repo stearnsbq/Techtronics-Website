@@ -10,11 +10,7 @@ import { ProductPageComponent } from './product-page/product-page.component';
 import { LoginModalComponent } from './login-modal/login-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {NgxPaginationModule} from 'ngx-pagination';
-import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
-import { ApiService } from './api.service';
-import { SearchService } from './search.service';
+import { TestComponent } from './test/test.component';
 
 @NgModule({
   declarations: [
@@ -26,23 +22,14 @@ import { SearchService } from './search.service';
     LoginModalComponent,
     TestComponent 
   ], 
-  imports: [
+  imports: [ 
     BrowserModule,
-    HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    RouterModule.forRoot([
-      {path: 'search', component: ItemAreaComponent},
-    ]),
     ReactiveFormsModule,
     FontAwesomeModule, 
-    FontAwesomeModule,
-    NgxPaginationModule
   ],
-  providers: [
-    ApiService,
-    SearchService
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
