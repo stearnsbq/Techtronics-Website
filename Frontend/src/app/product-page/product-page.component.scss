@@ -1,0 +1,37 @@
+#product_page_container {
+    display: flex;
+    
+} 
+
+#back_button {
+    position: absolute;    
+
+    left: 30px;
+    top: 30px;
+
+    height: 60px;
+
+    border-radius: 100%; 
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(122,122,122);
+
+    box-shadow: 0px 1px rgb(17, 17, 17); 
+}
+
+#product_content {
+    height: 800px;  
+    width: 100%;
+
+}
+
+#product_image { 
+    border-style: solid;
+    border-width: 1px; 
+
+    height: 400px; 
+    min-height: 400px; // we will need to manipulate this for product images eventually. 
+    width: 350px; // this as well. 
+
+}
+

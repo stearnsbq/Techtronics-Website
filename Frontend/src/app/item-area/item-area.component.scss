@@ -4,13 +4,15 @@
     max-height: 100px;
 
     border-bottom-style: solid; 
-    border-width: 2px;
+    border-width: 2px; 
 }
 
 .item_attributes { // associated with ul tag. 
-	list-style-type: none; 
+    list-style-type: none; 
+    
+    display: flex;
 
-    overflow: hidden; 
+    overflow: hidden;  
 
 	margin: 0px;
     padding: 0xp; 
@@ -20,21 +22,24 @@
 
     height: 100%; 
 
-    white-space: nowrap; 
+    width: 100%; 
 
-}
+    white-space: nowrap;
 
-.item_attr { 
-    text-align: justify;
-    border-right-style: solid; 
-    border-width: 2px;
+} 
+.item_attr {  
+    flex: 1px;
 
-    padding: 40px; // works for centering etc... 
+    text-align: center; 
 
-    line-height: 100%;
+    border-right-style: solid;
+    border-right-color: rgb(153, 153, 153);
+    border-right-width: 1px; 
+
+    padding: 40px; // works for centering etc...
 
     font-size: 20px;
-    
-    display: inline-block; 
+
     height: 100%;
 }
+
