@@ -7,6 +7,7 @@ export interface Media {
   User_Rating?: string;
   Game_Genre?: string;
   ESRB_Rating?: string;
+  Video_Genre?: string;
   Hardware_Type?: string;
   MPAA_Rating?: string;
   Software_Type?: string;

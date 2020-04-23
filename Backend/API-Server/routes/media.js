@@ -97,7 +97,7 @@ module.exports = function(connection) {
 				res.send(await sql_queries.search(connection));
 			}
 		} catch (err) {
-			console.log(error);
+			console.log(err);
 			res.sendStatus(500);
 		}
     });
@@ -148,12 +148,7 @@ module.exports = function(connection) {
 
 			await sql_queries.add_new_media(
 				connection,
-				body['name'],
-				body['platform'],
-				body['price'],
-				body['condition'],
-				body['mediaType'],
-				body['mediaFields']
+				body
 			);
 
 			var id = await sql_queries.get_last_id(connection);

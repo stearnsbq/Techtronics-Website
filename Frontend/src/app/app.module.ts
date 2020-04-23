@@ -13,6 +13,13 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './api.service';
 import { SearchService } from './search.service';
+import { LoginModalComponent } from './login-modal/login-modal.component';
+import { JwtModule } from '@auth0/angular-jwt';
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
+
 
 @NgModule({
   declarations: [
@@ -20,12 +27,18 @@ import { SearchService } from './search.service';
     NavBarComponent,
     FooterBarComponent,
     ItemAreaComponent,
+    LoginModalComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+      }
+    }),
     RouterModule.forRoot([
       {path: 'search', component: ItemAreaComponent},
     ]),

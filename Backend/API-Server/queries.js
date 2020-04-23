@@ -120,9 +120,7 @@ class Queries {
 	static login_person(connection, username, password) {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				`SELECT Password, Person_ID, Account_Level FROM Person WHERE Username=${connection.escape(
-					username
-				)}`,
+				`SELECT Password, Person_ID, Account_Level FROM Person WHERE Username=?`,[username],
 				async (err, results, fields) => {
 					if (!err && results.length > 0) {
 						try {
@@ -330,14 +328,11 @@ class Queries {
 		});
 	}
 
-	static add_new_media(connection, name, platform, price, condition, mediaType, mediaFields, companies) {
+	static add_new_media(connection, body, companies) {
 		return new Promise((resolve, reject) => {
+
 			connection.query(
-				`INSERT INTO Media (Name, Platform, Price, \`Condition\`) VALUES (${this.connection.escape(
-					name
-				)}, ${this.connection.escape(platform)}, ${this.connection.escape(price)}, ${this.connection.escape(
-					condition
-				)})`,
+				`INSERT INTO Media (Name, Platform, Price, \`Condition\`) VALUES (?, ?, ?, ?)`, [body['name'], body['platform'], body['price'], body['condition']],
 				async (err, results, fi) => {
 					if (err) {
 						return reject(err);
@@ -345,21 +340,21 @@ class Queries {
 						try {
 							const id = await this.get_last_id();
 
-							switch (mediaType) {
+							switch (body['mediaType']) {
 								case 'game':
-									await this._add_new_game(id, mediaFields);
+									await this._add_new_game(id, body['mediaFields']);
 									break;
 								case 'dlc':
-									await this._add_new_hardware(id, mediaFields);
+									await this._add_new_hardware(id, body['mediaFields']);
 									break;
 								case 'video':
-									await this._add_new_video(id, mediaFields);
+									await this._add_new_video(id, body['mediaFields']);
 									break;
 								case 'software':
-									await this._add_new_software(id, mediaFields);
+									await this._add_new_software(id, body['mediaFields']);
 									break;
 								case 'hardware':
-									await this._add_new_hardware(id, mediaFields);
+									await this._add_new_hardware(id, body['mediaFields']);
 									break;
 								default:
 									throw new Error('Invalid media type');
@@ -379,9 +374,7 @@ class Queries {
 		return new Promise((resolve, reject) => {
 			arr.forEach((element) => {
 				connection.query(
-					`INSERT INTO Phone_numbers (Person_ID, Phone_number) VALUES (${id}, ${connection.escape(
-						element
-					)})`,
+					`INSERT INTO Phone_numbers (Person_ID, Phone_number) VALUES (?,?)`, [id, element], 
 					(err, results, fields) => {
 						return err ? reject(err) : resolve(results);
 					}
@@ -398,33 +391,12 @@ class Queries {
 		});
 	}
 
-	static _add_DLC(connection, media) {
+	static _add_DLC(connection, id) {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				`SELECT DLC_ID, DLC.Game_ID
-                                  FROM Game JOIN DLC ON DLC.Game_ID=Game.Game_ID 
-                                  INNER JOIN Media ON DLC.DLC_ID = Media.Media_ID`,
+				`SELECT DLC_ID FROM Game JOIN DLC ON DLC.Game_ID=Game.Game_ID WHERE Game.Game_ID = ?`,[id],
 				(err, DLCs, fi) => {
-					if (!err) {
-						// create a new DLC array for a game if the game has DLC (should be O(n log(n)) can be O(n) if array index match IDs)
-						for (var DLC of DLCs) {
-							// does a binary search to search all of the trimmed media and finds the game the DLC is for
-							var index = bs(media, DLC['Game_ID'], (element, needle) => {
-								return element['Media_ID'] - needle;
-							});
-
-							if (index >= 0) {
-								if (!media[index]['DLC']) {
-									media[index]['DLC'] = [];
-								}
-
-								media[index]['DLC'].push({ DLC_ID: DLC['DLC_ID'] });
-							}
-						}
-						return resolve(media);
-					} else {
-						return reject(err);
-					}
+					return err ? reject(err) : resolve(DLCs)
 				}
 			);
 		});
@@ -481,11 +453,12 @@ class Queries {
 
 						const images = await this._get_images_for_media(connection, result.Media_ID);	
 						tmp['images'] = images ? images : [];
+						tmp['DLC'] = await this._add_DLC(connection, result.Media_ID);
 						send.push(tmp);
 					}
 					// we got the data resolve the promise
 
-					return resolve(await this._add_DLC(connection, send).catch());
+					return resolve(send);
 				} else {
 					// some error reject the promise
 					return reject(err);
@@ -508,7 +481,7 @@ class Queries {
 
 	static search(connection, page = 1, searchQuery = "'%%'") {
 		return new Promise((resolve, reject) => {
-			let offset = (page - 1) * ITEMS_PER_PAGE;
+			const offset = (page - 1) * ITEMS_PER_PAGE;
 			const query = `SELECT Media.Media_ID, Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game_Genre', ESRB_Rating, Hardware.Type AS 'Hardware_Type', Video.Genre AS 'Video_Genre', MPAA_Rating, Software.Type AS 'Software Type'
                                FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID 
                                LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
@@ -537,12 +510,13 @@ class Queries {
 						}
 						const images = await this._get_images_for_media(connection, result.Media_ID);	
 						tmp['images'] = images ? images : [];
+						tmp['DLC'] = await this._add_DLC(connection, result.Media_ID);
 						send.push(tmp);
 					}
 
 					// we got the data resolve the promise
 
-					return resolve(await this._add_DLC(connection, send).catch());
+					return resolve(send);
 				} else {
 					// some error reject the promise
 					return reject(err);

@@ -12,6 +12,8 @@ import {
   faUserCircle,
   faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
+import { ApiService } from '../api.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -27,7 +29,7 @@ export class LoginModalComponent implements OnInit {
   public lock = faLock;
   public login_icon = faUserCircle;
 
-  constructor() {
+  constructor(private auth: AuthService, private router: Router) {
     this.submitted = false;
   }
 
@@ -48,7 +50,15 @@ export class LoginModalComponent implements OnInit {
 
   public onLogin(formData) {
     this.submitted = true;
-
     console.log(formData);
+
+    this.auth.login(formData.Username, formData.Password).subscribe(result => {
+        if (result) {
+          this.onModalOpen();
+        }
+    });
+
+
+
   }
 }

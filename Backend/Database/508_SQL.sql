@@ -1,6 +1,7 @@
-USE project_2;
+CREATE SCHEMA 508_PROJECT;
+USE 508_PROJECT;
 
-CREATE TABLE IF NOT EXISTS `Person` (
+CREATE TABLE `Person` (
   `Person_ID` INT PRIMARY KEY AUTO_INCREMENT,
   `Username` varchar(50) UNIQUE NOT NULL,
   `Password` char(60) NOT NULL,
@@ -10,46 +11,46 @@ CREATE TABLE IF NOT EXISTS `Person` (
   `Birth_date` date NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS `Phone_numbers` (
+CREATE TABLE `Phone_numbers` (
   `Person_ID` INT,
   `Phone_number` char(10),
   PRIMARY KEY (`Person_ID`, `Phone_number`),
   FOREIGN KEY (`Person_ID`) REFERENCES `Person` (`Person_ID`)
 );
 
-CREATE TABLE IF NOT EXISTS `Employee` (
+CREATE TABLE `Employee` (
   `Employee_ID` INT PRIMARY KEY,
   `Hire_date` date NOT NULL,
    FOREIGN KEY (`Employee_ID`) REFERENCES `Person` (`Person_ID`)
 );
 
-CREATE TABLE IF NOT EXISTS `Customer` (
+CREATE TABLE `Customer` (
   `Customer_ID` INT PRIMARY KEY,
   FOREIGN KEY (`Customer_ID`) REFERENCES `Person` (`Person_ID`)
 );
 
-CREATE TABLE IF NOT EXISTS `Company` (
+CREATE TABLE `Company` (
   `Company_ID` INT PRIMARY KEY AUTO_INCREMENT,
   `Name` varchar(50) NOT NULL,
   `Number_of_products` INT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS `Publisher` (
+CREATE TABLE `Publisher` (
   `Publisher_ID` INT PRIMARY KEY,
   FOREIGN KEY (`Publisher_ID`) REFERENCES `Company` (`Company_ID`)
 );
 
-CREATE TABLE IF NOT EXISTS `Manufacturer` (
+CREATE TABLE `Manufacturer` (
   `Manufacturer_ID` INT PRIMARY KEY,
   FOREIGN KEY (`Manufacturer_ID`) REFERENCES `Company` (`Company_ID`)
 );
 
-CREATE TABLE IF NOT EXISTS `Developer` (
+CREATE TABLE `Developer` (
   `Developer_ID` INT PRIMARY KEY,
   FOREIGN KEY (`Developer_ID`) REFERENCES `Company` (`Company_ID`)
 );
 
-CREATE TABLE IF NOT EXISTS `Media` (
+CREATE TABLE `Media` (
   `Media_ID` INT PRIMARY KEY AUTO_INCREMENT,
   `Name` varchar(50) NOT NULL,
   `Platform` varchar(50) NOT NULL,
@@ -58,47 +59,46 @@ CREATE TABLE IF NOT EXISTS `Media` (
   `Condition` text NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS `Media_Images` (
-  `Media_ID` INT ,
-  `FileName` varchar(255) ,
-  PRIMARY KEY (`Media_ID`, `FileName`),
+CREATE TABLE `Media_Images` (
+  `Media_ID` INT PRIMARY KEY,
+  `FileName` varchar(255) PRIMARY KEY,
 FOREIGN KEY (`Media_ID`) REFERENCES `Media` (`Media_ID`)
 );
 
-CREATE TABLE IF NOT EXISTS `Hardware` (
+CREATE TABLE `Hardware` (
   `Hardware_ID` INT PRIMARY KEY,
   `Type` varchar(255) NOT NULL,
   FOREIGN KEY (`Hardware_ID`) REFERENCES `Media` (`Media_ID`)
 );
 
-CREATE TABLE IF NOT EXISTS `Software` (
+CREATE TABLE `Software` (
   `Software_ID` INT PRIMARY KEY,
   `Type` varchar(255) NOT NULL,
   FOREIGN KEY (`Software_ID`) REFERENCES `Media` (`Media_ID`)
 );
 
-CREATE TABLE IF NOT EXISTS `Video` (
+CREATE TABLE `Video` (
   `Video_ID` INT PRIMARY KEY,
   `Genre` varchar(255) NOT NULL,
   `MPAA_Rating` varchar(5) NOT NULL,
   FOREIGN KEY (`Video_ID`) REFERENCES `Media` (`Media_ID`)
 );
 
-CREATE TABLE IF NOT EXISTS `Game` (
+CREATE TABLE `Game` (
   `Game_ID` INT PRIMARY KEY,
   `Genre` varchar(255) NOT NULL,
   `ESRB_Rating` varchar(5) NOT NULL,
   FOREIGN KEY (`Game_ID`) REFERENCES `Media` (`Media_ID`)
 );
 
-CREATE TABLE IF NOT EXISTS `DLC` (
+CREATE TABLE `DLC` (
   `DLC_ID` INT PRIMARY KEY,
   `Game_ID` INT NOT NULL,
   FOREIGN KEY (`DLC_ID`) REFERENCES `Game` (`Game_ID`),
   FOREIGN KEY (`Game_ID`) REFERENCES `Game` (`Game_ID`)
 );
 
-CREATE TABLE IF NOT EXISTS `Media_Companies` (
+CREATE TABLE `Media_Companies` (
   `Media` INT,
   `Company` INT,
   PRIMARY KEY (`Media`, `Company`),
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `Media_Companies` (
   FOREIGN KEY (`Company`) REFERENCES `Company` (`Company_ID`)
 );
 
-CREATE TABLE IF NOT EXISTS `Order` (
+CREATE TABLE `Order` (
   `Order_ID` INT PRIMARY KEY  AUTO_INCREMENT,
   `Customer` INT,
   `Media_Count` INT NOT NULL,
@@ -117,20 +117,20 @@ CREATE TABLE IF NOT EXISTS `Order` (
   FOREIGN KEY (`Customer`) REFERENCES `Customer` (`Customer_ID`)
 );
 
-CREATE TABLE IF NOT EXISTS `Order_Items` (
+CREATE TABLE `Order_Items` (
   `Order` INT,
   `Media` INT,
   PRIMARY KEY (`Order`, `Media`),
   FOREIGN KEY (`Order`) REFERENCES `Order` (`Order_ID`),
   FOREIGN KEY (`Media`) REFERENCES `Media` (`Media_ID`)
 );
-CREATE TABLE IF NOT EXISTS `Shipping` (
+CREATE TABLE `Shipping` (
   `Shipping_ID` INT PRIMARY KEY AUTO_INCREMENT,
   `Carrier` varchar(50) NOT NULL,
-  `Shipped_date` date NOT NULL
+  `Shipped_date` date NOT NULL,
 );
 
-CREATE TABLE IF NOT EXISTS `Shipped_Orders` (
+CREATE TABLE `Shipped_Orders` (
   `Order` INT,
   `Shipping` INT,
   PRIMARY KEY (`Order`, `Shipping`),

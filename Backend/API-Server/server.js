@@ -54,9 +54,14 @@ app.get('/api/uploads/:type/:id/:filename', async (req, res) => {
 
 
 app.post('/api/auth', async (req, res) => {
-	const body = req.body;
-	const token = await sql_queries.login_person(connection, body['username'], body['password']);
-	res.send(token);
+	try{
+		const body = req.body;
+		const token = await sql_queries.login_person(connection, body['username'], body['password']);
+		res.send(token);
+	}catch(err){
+		res.sendStatus(401);
+	}
+
 });
 
 // TODO: DO SERVER SIDE VALIDATION
@@ -139,7 +144,7 @@ if (httpsEnabled) {
 connection.connect((err) => {
 	if (err) throw err;
 	console.log('Database connected!');
-	connection.query('USE project_2');
+	connection.query('USE 508_PROJECT');
 });
 
 app.use((err, req, res, next) => {

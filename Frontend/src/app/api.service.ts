@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  public API_URL = 'http://localhost:8080/api/';
+  public API_URL = 'http://localhost:8081/api/';
 
 
   constructor(private http: HttpClient ) { }
@@ -38,6 +38,12 @@ export class ApiService {
       query: searchQuery
       };
     return this.http.get<any>(`${this.API_URL}media/total`, {params});
+  }
+
+
+
+  public login(form) {
+    return this.http.post<any>(`${this.API_URL}auth/`, form);
   }
 
 
