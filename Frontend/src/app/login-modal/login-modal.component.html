@@ -15,10 +15,15 @@
   <form id="login_form" #form="ngForm" (ngSubmit)="onLogin(form.value)">
 
 
+
     <!--Renders a Icon and login title-->
 
     <div id="splash_icon">
       <fa-icon [icon]="login_icon"></fa-icon>
+    </div>
+
+    <div *ngIf="invalid"  id ="error" [@fadeInOut]>
+      <h3>Invalid Username or Password.</h3>
     </div>
 
     <!--Username input for login-->

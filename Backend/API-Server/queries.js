@@ -385,8 +385,31 @@ class Queries {
 
 	static get_media_by_id(connection, id) {
 		return new Promise((resolve, reject) => {
-			connection.query('SELECT * FROM Media WHERE Media.Media_ID=?', [ id ], (err, results, fields) => {
-				return err ? reject(err) : resolve(results[0]);
+			const query = `SELECT * FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID 
+			LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
+			LEFT JOIN Game ON Game.Game_ID=Media.Media_ID 
+			LEFT JOIN Hardware ON Hardware.Hardware_ID=Media.Media_ID 
+			LEFT JOIN Media_Companies ON Media_Companies.Media=Media.Media_ID WHERE Media.Media_ID=? `
+
+
+			connection.query(query, [ id ], async (err, results, fields) => {
+				if(err){
+					return reject(err);
+				}else{
+						var tmp = {};
+						for (const prop in results[0]) {
+							if (results[0][prop]) {
+								tmp[prop] = results[0][prop];
+							}
+						}
+
+						const images = await this._get_images_for_media(connection, results[0].Media_ID);	
+						tmp['images'] = images ? images : [];
+						tmp['DLC'] = await this._add_DLC(connection, results[0].Media_ID);
+					
+					return resolve(tmp);
+				}
+
 			});
 		});
 	}

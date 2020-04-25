@@ -1,4 +1,4 @@
-<div *ngFor="let media of allMedia | paginate: {  itemsPerPage: ITEMS_PER_PAGES, currentPage: page, totalItems: totalMedia}" class = "item">
+<div  *ngFor="let media of allMedia | paginate: {  itemsPerPage: ITEMS_PER_PAGES, currentPage: page, totalItems: totalMedia}"  (click)="onRowClick(media.Media_ID)" class = "item">
 	    <ul  class = "item_attributes">
         <li class = "item_attr" id = "item_image"> <img [src]="getImage(media.Media_ID, media.images[0])">  </li>
         <li class = "item_attr" id = "item_name"> {{media.Name}} </li>
@@ -9,7 +9,7 @@
 		    <li class = "item_attr" id = "item_condition"> {{media.Condition}}</li>
         <li class = "item_attr" id = "item_user_rating">N/A</li>
 	    </ul>
-</div> 
+</div>
 
 
 

@@ -12,17 +12,28 @@ import {
   faUserCircle,
   faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
+import {style, state, animate, transition, trigger} from '@angular/animations';
 import { ApiService } from '../api.service';
 import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login-page',
+  animations: [  trigger('fadeInOut', [
+    transition(':enter', [
+      style({opacity: 0}),
+      animate(500, style({opacity: 1}))
+    ]),
+    transition(':leave', [
+      animate(500, style({opacity: 0}))
+    ])
+  ])],
   templateUrl: './login-modal.component.html',
   styleUrls: ['./login-modal.component.scss']
 })
 export class LoginModalComponent implements OnInit {
   @ViewChild('Login', undefined) login_modal;
   public submitted: boolean;
+  public invalid: boolean;
 
   // icons for the login
   public user = faUser;
@@ -31,6 +42,7 @@ export class LoginModalComponent implements OnInit {
 
   constructor(private auth: AuthService, private router: Router) {
     this.submitted = false;
+    this.invalid = false;
   }
 
   ngOnInit() {}
@@ -50,14 +62,18 @@ export class LoginModalComponent implements OnInit {
 
   public onLogin(formData) {
     this.submitted = true;
-    console.log(formData);
 
     this.auth.login(formData.Username, formData.Password).subscribe(result => {
         if (result) {
           this.onModalOpen();
         }
-    });
+    }, error => {
 
+      this.invalid = true;
+
+
+
+    });
 
 
   }

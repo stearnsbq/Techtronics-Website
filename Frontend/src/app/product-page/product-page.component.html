@@ -1,14 +1,17 @@
-<div id = "product_page_container">
+<div *ngIf="media" id = "product_page_container">
     <!-- this image will be a button -->
     <img id = "back_button" src="../assets/back_arrow.png">
-    
+
     <div id = "product_content">
-        <img id = "product_image" src="">  
+        <img id *ngIf="media.images[0]" [src]="media.images[0]">
         <div id = "product_information">
-            <h1 id = "product_name"> TEST PRODUCT NAME </h1>
+            <h1 id = "product_name"> {{media.Name}} </h1>
+
+              <h3 id="product_platform">Platform: {{media.Platform}}</h3>
+
 
         </div>
-        
+
     </div>
 
 </div>

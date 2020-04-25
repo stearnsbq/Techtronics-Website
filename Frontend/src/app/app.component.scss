@@ -1,5 +1,6 @@
-app-nav-bar { // should be out of document flow.
+.navbar { // should be out of document flow.
     position: fixed;
+    z-index: 1;
 
     height: 50px;
     width: 100%;
@@ -11,7 +12,6 @@ app-nav-bar { // should be out of document flow.
 }
 
 .router-outlet { // in document flow.
-    z-index: -1;
 
     position: relative;
 
@@ -19,7 +19,7 @@ app-nav-bar { // should be out of document flow.
 
     display: inline-block;
 
-    height: 3000px; // concerned with this really.
+    //height: 3000px; // concerned with this really.
     min-height: 100%;
 
     //margin-bottom: -4px; // weird...
@@ -28,11 +28,9 @@ app-nav-bar { // should be out of document flow.
     width: 100%;
 }
 
-app-item-area {
-    width: 100%;
-}
 
-app-footer-bar { // Out of document flow. :)
+
+.footer { // Out of document flow. :)
     position: absolute;
 
     bottom: -100px;

@@ -3,16 +3,21 @@
     min-height: 100px;
     max-height: 100px;
 
-    border-bottom-style: solid; 
-    border-width: 2px; 
+    border-bottom-style: solid;
+    border-width: 2px;
+    transition: 0.3s;
 }
 
-.item_attributes { // associated with ul tag. 
-    list-style-type: none; 
-    
+.item:hover{
+  background-color: lightgray;
+}
+
+.item_attributes { // associated with ul tag.
+    list-style-type: none;
+
     display: flex;
 
-    overflow: hidden;  
+    overflow: hidden;
     border-bottom-style: solid;
     border-width: 2px;
 }
@@ -22,7 +27,7 @@
 
     overflow: hidden;
 
-	margin: 0px;
+	  margin: 0px;
     padding: 0xp;
 
     margin: 0; /* To remove default bottom margin */
@@ -30,10 +35,11 @@
 
     height: 100%;
 
-    width: 100%; 
+    width: 100%;
     white-space: nowrap;
 
     white-space: nowrap;
+}
 
 
 .item_attr {
@@ -45,7 +51,7 @@
 
     border-right-style: solid;
     border-right-color: rgb(153, 153, 153);
-    border-right-width: 1px; 
+    border-right-width: 1px;
 
     padding: 40px; // works for centering etc...
 
@@ -58,3 +64,8 @@
 #item_image img{
   height: 50px;
 }
+
+.product{
+  background-color: green;
+}
+

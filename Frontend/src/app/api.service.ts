@@ -22,6 +22,11 @@ export class ApiService {
   }
 
 
+  public getMediaByID(id): Observable<Media> {
+    return this.http.get<Media>(this.API_URL + 'media/' + id);
+  }
+
+
   public searchMedia(pageNum, searchQuery = ''): Observable<Media[]> {
     const params = {
       page : pageNum + '',

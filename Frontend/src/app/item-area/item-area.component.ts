@@ -46,6 +46,12 @@ export class ItemAreaComponent implements OnInit {
   }
 
 
+  onRowClick(media) {
+    window.scroll(0, 0);
+    this.router.navigate(['/product', media]);
+  }
+
+
   getImage(id: number, fileName: string) {
     return id && fileName ? `${this.apiService.API_URL}uploads/media/${id}/${fileName}` : '';
   }
