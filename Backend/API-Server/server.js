@@ -101,11 +101,11 @@ app.post('/api/register', async (req, res) => {
 				await sql_queries.create_customer(connection, id, gen_date());
 				break;
 			case 'Employee':
-				if (req.user.Account_Level === 'Employee') {
+				//if (req.user.Account_Level === 'Employee') {
 					await sql_queries.create_employee(connection, id, gen_date());
-				} else {
-					throw new Error('Unauthorized User');
-				}
+				//} else {
+					//throw new Error('Unauthorized User');
+				//}
 				break;
 			default:
 				throw new Error('Invalid Account Level');

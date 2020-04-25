@@ -1,4 +1,4 @@
-.navbar { // should be out of document flow.
+app-nav-bar { // should be out of document flow.
     position: fixed;
     z-index: 1;
 
@@ -13,36 +13,28 @@
 
 .router-outlet { // in document flow.
 
+    flex: 1;
+    margin-top: 50px;
+    min-height: calc(100vh - 155px); //
+
     position: relative;
 
     background-color: white; // just for visualization.
 
     display: inline-block;
 
-    //height: 3000px; // concerned with this really.
-    min-height: 100%;
-
-    //margin-bottom: -4px; // weird...
-    margin: 50px 0px -4px;
-
     width: 100%;
 }
 
 
 
+
 .footer { // Out of document flow. :)
-    position: absolute;
 
-    bottom: -100px;
-    left: 0;
-
+    position: relative; // needs to be relative to parent
+    bottom: 0;
     width: 100%;
-    max-width: 100%;
-
     height: 100px;
-    margin-top: 0px;
-
-    min-height: 100px;
-    max-height: 100px;
+    margin-top: 0;
 }
 

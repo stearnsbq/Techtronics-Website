@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 export class AuthService {
   private API_URL = 'http://localhost:8081/api/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private jwt: JwtHelperService) { }
 
 
   public login(username: string, password: string) {
@@ -33,11 +33,10 @@ export class AuthService {
   }
 
 
-  public isAuthenicated(): boolean {
+  public isAuthenticated(): boolean {
     const token = this.getToken();
-    const helper = new JwtHelperService();
 
-    return helper.isTokenExpired(token);
+    return !this.jwt.isTokenExpired(token);
   }
 
 

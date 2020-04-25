@@ -28,18 +28,11 @@ input {
 }
 
 .login {
-  animation: fadeIn 1.5s;
-  animation-fill-mode: forwards;
-  height: 100%;
   width: 100%;
-  display:none;
-  overflow: auto;
-  position: fixed;
-  z-index: 1;
+  position: absolute;
   left: 0;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  padding-top: 100px;
+  padding-top: 101px;
 }
 
 // END
@@ -101,10 +94,6 @@ input {
 #exit_icon:hover {
   color: white;
   transition: 0.3s;
-}
-
-.login_form_parent{
-  animation: slideDown 1s;
 }
 
 #login_title {

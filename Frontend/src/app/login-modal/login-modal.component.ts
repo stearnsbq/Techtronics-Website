@@ -18,15 +18,6 @@ import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login-page',
-  animations: [  trigger('fadeInOut', [
-    transition(':enter', [
-      style({opacity: 0}),
-      animate(500, style({opacity: 1}))
-    ]),
-    transition(':leave', [
-      animate(500, style({opacity: 0}))
-    ])
-  ])],
   templateUrl: './login-modal.component.html',
   styleUrls: ['./login-modal.component.scss']
 })
@@ -40,7 +31,7 @@ export class LoginModalComponent implements OnInit {
   public lock = faLock;
   public login_icon = faUserCircle;
 
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(public auth: AuthService, private router: Router) {
     this.submitted = false;
     this.invalid = false;
   }
@@ -56,6 +47,12 @@ export class LoginModalComponent implements OnInit {
     } else {
       this.login_modal.nativeElement.style.display = 'none';
     }
+  }
+
+
+  public onLogout() {
+    this.auth.logout();
+    this.router.navigate(['login']);
   }
 
   // login event handler need to refactor as it is a little quirky doe
