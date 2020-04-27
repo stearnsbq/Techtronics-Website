@@ -261,9 +261,9 @@ class Queries {
 	static _add_new_game(connection, id, fields) {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				`INSERT INTO Game (Game_ID, Genre, ESRB_rating) VALUES (${id}, ${this.connection.escape(
+				`INSERT INTO Game (Game_ID, Genre, ESRB_rating) VALUES (${id}, ${connection.escape(
 					fields['genre']
-				)}, ${this.connection.escape(fields['esrb_rating'])})`,
+				)}, ${connection.escape(fields['esrb_rating'])})`,
 				async (err, results, fi) => {
 					return err ? reject(err) : resolve(results);
 				}
@@ -274,7 +274,7 @@ class Queries {
 	static _add_new_hardware(connection, id, fields) {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				`INSERT INTO Hardware (Hardware_ID, Type) VALUES (${id}, ${this.connection.escape(fields['type'])})`,
+				`INSERT INTO Hardware (Hardware_ID, Type) VALUES (${id}, ${connection.escape(fields['type'])})`,
 				async (err, results, fi) => {
 					return err ? reject(err) : resolve(results);
 				}
@@ -285,9 +285,9 @@ class Queries {
 	static _add_new_video(connection, id, fields) {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				`INSERT INTO Video (Video_ID, Genre, MPAA_rating) VALUES (${id}, ${this.connection.escape(
+				`INSERT INTO Video (Video_ID, Genre, MPAA_rating) VALUES (${id}, ${connection.escape(
 					fields['genre']
-				)}, ${this.connection.escape(fields['mpaa_rating'])})`,
+				)}, ${connection.escape(fields['mpaa_rating'])})`,
 				async (err, results, fi) => {
 					return err ? reject(err) : resolve(results);
 				}
@@ -298,7 +298,7 @@ class Queries {
 	static _add_new_software(connection, id, fields) {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				`INSERT INTO Software (Software_ID, Type) VALUES (${id}, ${this.connection.escape(fields['type'])})`,
+				`INSERT INTO Software (Software_ID, Type) VALUES (${id}, ${connection.escape(fields['type'])})`,
 				(err, results, fi) => {
 					return err ? reject(err) : resolve(results);
 				}
