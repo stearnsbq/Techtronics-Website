@@ -3,15 +3,16 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { decode } from 'punycode';
+import { Router } from '@angular/router';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private API_URL = 'http://localhost:8081/api/';
+  private API_URL = 'http://3.234.246.29:8081/api/';
 
-  constructor(private http: HttpClient, private jwt: JwtHelperService) { }
+  constructor(private http: HttpClient, private jwt: JwtHelperService, private router: Router) { }
 
 
   public login(username: string, password: string) {
@@ -27,6 +28,7 @@ export class AuthService {
 
   public logout() {
     localStorage.removeItem('token');
+    this.router.navigate(['']);
   }
 
   public getToken(): string {

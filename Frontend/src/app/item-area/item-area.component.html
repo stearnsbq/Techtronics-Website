@@ -13,5 +13,5 @@
 
 
 
-<pagination-controls (pageChange)="gotoPage($event)"></pagination-controls>
+<pagination-controls *ngIf="allMedia.length > ITEMS_PER_PAGES" (pageChange)="gotoPage($event)"></pagination-controls>
 

@@ -155,7 +155,7 @@ module.exports = function(connection) {
 			var id = await sql_queries.get_last_id(connection);
 
 			connection.commit();
-			res.redirect(`./media/${id}`);
+			res.redirect(`./${id}`);
 		} catch (err) {
 			console.log(err);
 			connection.rollback();
