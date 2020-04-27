@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { decode } from 'punycode';
 
 
 @Injectable({
@@ -35,8 +36,16 @@ export class AuthService {
 
   public isAuthenticated(): boolean {
     const token = this.getToken();
-
     return !this.jwt.isTokenExpired(token);
+  }
+
+
+  public isEmployee(): boolean {
+    const token = this.getToken();
+
+    const decoded = this.jwt.decodeToken(token);
+
+    return decoded ? decoded.Account_Level === 'Employee' && this.isAuthenticated() : false;
   }
 
 

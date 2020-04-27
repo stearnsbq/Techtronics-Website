@@ -17,8 +17,12 @@ import { SearchService } from './search.service';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './auth.guard';
-import { InventoryComponent } from './inventory/inventory.component';
 import { RoleGuardService } from './role-guard.service';
+import { ControlpanelComponent } from './controlpanel/controlpanel.component';
+import { TabComponent } from './tab/tab.component';
+import { TabsComponent } from './tabs/tabs.component';
+import { InventoryComponent } from './inventory/inventory.component';
+import { EmployeepanelComponent } from './employeepanel/employeepanel.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -34,7 +38,11 @@ export function tokenGetter() {
     ProductPageComponent,
     LoginModalComponent,
     ProfileComponent,
+    ControlpanelComponent,
+    TabComponent,
+    TabsComponent,
     InventoryComponent,
+    EmployeepanelComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +58,7 @@ export function tokenGetter() {
       {path: 'search', component: ItemAreaComponent},
       {path: 'product/:id',  component: ProductPageComponent},
       {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
-      {path: 'inventory', component: InventoryComponent, canActivate: [RoleGuardService], data: {neededRole: 'Employee'} },
+      {path: 'controlpanel', component: ControlpanelComponent /*, canActivate: [RoleGuardService], data: {neededRole: 'Employee'}*/ },
       {path: 'login', component: LoginModalComponent},
       {path: '**', redirectTo: ''}
     ]),

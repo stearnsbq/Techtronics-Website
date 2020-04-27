@@ -1,0 +1,50 @@
+.tablist{
+  position: relative;
+  padding-top: 15px;
+  flex-direction: row;
+  justify-content: left;
+  display: flex;
+  border: 2px solid #ccc;
+  background-color: #f1f1f1;
+  width: 99.99%;
+
+}
+
+
+.tablist button{
+    color: #3535D0;
+    font-size: large;
+    margin-left: 5px;
+    margin-bottom: -1px;
+    background-color: #f1f1f1;
+
+    // makes the top left and right borders rounded but not the bottom right and left
+    border: none;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+
+    padding: 25px;
+
+
+
+    border-bottom: 1px solid #ccc;
+    transition: 0.3s background-color;
+}
+
+.tablist button:hover{
+  background-color: gray;
+}
+
+.tablist button:focus{
+  outline:none !important;
+}
+
+.tablist button.active{
+  border-left: 2px solid #bfbfbf;
+  border-right: 2px solid #bfbfbf;
+  border-top: 2px solid #bfbfbf;
+  border-bottom: 2px solid #3535D0;
+  margin-bottom: -2px;
+  background-color: #ccc;
+}
+

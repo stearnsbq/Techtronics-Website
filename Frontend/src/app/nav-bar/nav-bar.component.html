@@ -1,6 +1,6 @@
 <nav id="header_content">
   <div id="logo">
-    <h1 class="title">Techtronics</h1>
+    <h1 class="title" routerLink="">Techtronics</h1>
     <img src="">
   </div>
 
@@ -11,8 +11,12 @@
 
     <div class="navigation">
 
-      <a *ngIf="!auth.isAuthenticated()" class="navbutton">Login</a>
-      <a *ngIf="auth.isAuthenticated()" class="navbutton">Logout</a>
+
+      <a *ngIf="auth.isEmployee()" routerLink="controlpanel" class="navbutton">Control Panel</a>
+      <a *ngIf="auth.isAuthenticated()" routerLink="profile" class="navbutton">Profile</a>
+
+      <a *ngIf="!auth.isAuthenticated()" routerLink="login" class="navbutton">Login</a>
+      <a *ngIf="auth.isAuthenticated()" (click)="onLogOut()" class="navbutton">Logout</a>
 
 
     </div>

@@ -104,11 +104,11 @@ app.post('/api/register', async (req, res) => {
 				//if (req.user.Account_Level === 'Employee') {
 					await sql_queries.create_employee(connection, id, gen_date());
 				//} else {
-					//throw new Error('Unauthorized User');
+					//throw new Error('UnauthorizedError');
 				//}
 				break;
 			default:
-				throw new Error('Invalid Account Level');
+				throw new Error('UnauthorizedError');
 		}
 		// add any phone numbers
 		await sql_queries.add_phone_numbers(connection, id, body['phoneNumbers']);
@@ -133,7 +133,7 @@ var credentials = { key: privateKey, cert: certificate };
 if (httpsEnabled) {
 	var server = https.createServer(credentials, app);
 	server.listen(_port, () => {
-		console.log('HTTPs Server running on port 8080');
+		console.log('HTTPS Server running on port 8080');
 	});
 } else {
 	app.listen(_port, () => {
@@ -144,7 +144,7 @@ if (httpsEnabled) {
 connection.connect((err) => {
 	if (err) throw err;
 	console.log('Database connected!');
-	connection.query('USE 508_PROJECT');
+	connection.query('USE project_2');
 });
 
 app.use((err, req, res, next) => {

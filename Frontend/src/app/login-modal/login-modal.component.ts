@@ -38,17 +38,6 @@ export class LoginModalComponent implements OnInit {
 
   ngOnInit() {}
 
-  public onModalOpen() {
-    if (
-      this.login_modal.nativeElement.style.display === 'none' ||
-      this.login_modal.nativeElement.style.display === ''
-    ) {
-      this.login_modal.nativeElement.style.display = 'block';
-    } else {
-      this.login_modal.nativeElement.style.display = 'none';
-    }
-  }
-
 
   public onLogout() {
     this.auth.logout();
@@ -62,7 +51,7 @@ export class LoginModalComponent implements OnInit {
 
     this.auth.login(formData.Username, formData.Password).subscribe(result => {
         if (result) {
-          this.onModalOpen();
+          this.router.navigate(['']);
         }
     }, error => {
 

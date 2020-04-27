@@ -1,0 +1,8 @@
+<div class="tablist">
+  <button [ngClass]="{'active': tab.active === true}" *ngFor="let tab of tabs"  (click)="selectTab(tab)" >{{tab.tabTitle}}</button>
+</div>
+<div class="tabcontent">
+  <ng-content></ng-content>
+</div>
+
+
