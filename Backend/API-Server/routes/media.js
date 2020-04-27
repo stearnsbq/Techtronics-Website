@@ -1,7 +1,8 @@
 module.exports = function(connection) {
 	var express = require('express');
     var router = express.Router();
-    var Validator = require('jsonschema').Validator;
+	var Validator = require('jsonschema').Validator;
+	var schemas = require('../schemas/schema.js')
     var sql_queries = require('../queries.js')
     var multer  = require('multer')
 	var {v1} = require('uuid')
