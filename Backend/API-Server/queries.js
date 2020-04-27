@@ -342,19 +342,19 @@ class Queries {
 
 							switch (body['mediaType']) {
 								case 'game':
-									await this._add_new_game(id, body['mediaFields']);
+									await this._add_new_game(connection, id, body['mediaFields']);
 									break;
 								case 'dlc':
-									await this._add_new_hardware(id, body['mediaFields']);
+									await this._add_new_hardware(connection, id, body['mediaFields']);
 									break;
 								case 'video':
-									await this._add_new_video(id, body['mediaFields']);
+									await this._add_new_video(connection, id, body['mediaFields']);
 									break;
 								case 'software':
-									await this._add_new_software(id, body['mediaFields']);
+									await this._add_new_software(connection, id, body['mediaFields']);
 									break;
 								case 'hardware':
-									await this._add_new_hardware(id, body['mediaFields']);
+									await this._add_new_hardware(connection, id, body['mediaFields']);
 									break;
 								default:
 									throw new Error('Invalid media type');
