@@ -338,7 +338,7 @@ class Queries {
 						return reject(err);
 					} else {
 						try {
-							const id = await this.get_last_id();
+							const id = await this.get_last_id(connection);
 
 							switch (body['mediaType']) {
 								case 'game':
