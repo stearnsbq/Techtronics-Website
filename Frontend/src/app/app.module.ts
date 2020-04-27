@@ -11,7 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiService } from './api.service';
 import { SearchService } from './search.service';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -23,6 +23,8 @@ import { TabComponent } from './tab/tab.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { EmployeepanelComponent } from './employeepanel/employeepanel.component';
+import { LoadingInterceptor } from './LoadingInterceptor';
+import { LoadingComponent } from './loading/loading.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -43,6 +45,7 @@ export function tokenGetter() {
     TabsComponent,
     InventoryComponent,
     EmployeepanelComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,7 +72,8 @@ export function tokenGetter() {
   ],
   providers: [
     ApiService,
-    SearchService
+    SearchService,
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

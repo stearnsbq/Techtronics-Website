@@ -8,7 +8,8 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  public API_URL = 'http://3.234.246.29:8081/api/';
+  public static API_URL = 'http://3.234.246.29:8081/api/';
+  public loading = false;
 
 
   constructor(private http: HttpClient ) { }
@@ -18,22 +19,23 @@ export class ApiService {
     const params = {
     page : pageNum + ''
     };
-    return this.http.get<Media[]>(this.API_URL + 'media', {params});
+    return this.http.get<Media[]>(ApiService.API_URL + 'media', {params});
   }
 
 
   public getMediaByID(id): Observable<Media> {
-    return this.http.get<Media>(this.API_URL + 'media/' + id);
+    return this.http.get<Media>(ApiService.API_URL + 'media/' + id);
   }
 
 
-  public searchMedia(pageNum, searchQuery = ''): Observable<Media[]> {
+  public searchMedia(pageNum, searchQuery = '', sortBy= 'DESC'): Observable<Media[]> {
     const params = {
       page : pageNum + '',
-      query: searchQuery
+      query: searchQuery,
+      sortBy
       };
 
-    return this.http.get<Media[]>(`${this.API_URL}media/search`, {params});
+    return this.http.get<Media[]>(`${ApiService.API_URL}media/search`, {params});
 
   }
 
@@ -42,13 +44,13 @@ export class ApiService {
     const params = {
       query: searchQuery
       };
-    return this.http.get<any>(`${this.API_URL}media/total`, {params});
+    return this.http.get<any>(`${ApiService.API_URL}media/total`, {params});
   }
 
 
 
   public login(form) {
-    return this.http.post<any>(`${this.API_URL}auth/`, form);
+    return this.http.post<any>(`${ApiService.API_URL}auth/`, form);
   }
 
 

@@ -1,17 +1,54 @@
-<div  *ngFor="let media of allMedia | paginate: {  itemsPerPage: ITEMS_PER_PAGES, currentPage: page, totalItems: totalMedia}"  (click)="onRowClick(media.Media_ID)" class = "item">
-	    <ul  class = "item_attributes">
-        <li class = "item_attr" id = "item_image"> <img [src]="getImage(media.Media_ID, media.images[0])">  </li>
-        <li class = "item_attr" id = "item_name"> {{media.Name}} </li>
-		    <li class = "item_attr" id = "item_platform"> {{media.Platform}} </li>
-        <li class = "item_attr" *ngIf="media.Game_Genre" id = "game_genre"> {{media.Game_Genre}}</li>
-        <li class = "item_attr" *ngIf="media.Video_Genre" id = "video_genre"> {{media.Video_Genre}}</li>
-		    <li class = "item_attr" id = "item_price"> ${{media.Price}}</li>
-		    <li class = "item_attr" id = "item_condition"> {{media.Condition}}</li>
-        <li class = "item_attr" id = "item_user_rating">N/A</li>
-	    </ul>
+<!-- shows loading spinner-->
+<app-loading *ngIf="apiService.loading"></app-loading>
+
+<!-- shows how many results and allows the user to sort the items -- make this look better -->
+<div *ngIf="totalMedia > 0" class="itemnav">
+  <p *ngIf="totalMedia === 1">{{totalMedia}} result</p>
+  <p *ngIf="totalMedia > 1">{{totalMedia}} results</p>
+  <select (change)="sortBy($event.target.value)">
+    <option value="best">Best Match</option>
+    <option value="lth">Lowest to highest price</option>
+    <option value="htl">Highest to lowest price</option>
+  </select>
+</div>
+
+
+<div *ngIf="totalMedia <= 0 && !apiService.loading" class="noItems">
+  <!-- Make this look better..... -->
+  <h1>No items found</h1>
+
 </div>
 
 
 
-<pagination-controls *ngIf="allMedia.length > ITEMS_PER_PAGES" (pageChange)="gotoPage($event)"></pagination-controls>
+<div class = "items">
+
+    <!-- Make this look better :) -->
+    <div *ngFor="let media of allMedia | paginate: {  itemsPerPage: ITEMS_PER_PAGES, currentPage: page, totalItems: totalMedia}" (click)="onRowClick(media.Media_ID)" class = "item">
+      <p class="item_attributes" id="item_name">{{media.Name}}</p>
+      <p class="item_attributes" id = "item_image"> <img src="https://www.amerikickkansas.com/wp-content/uploads/2017/04/default-image.jpg">  </p>   <!--  change this image (temp)-->
+      <p class="item_attributes" id = "item_platform"> {{media.Platform}} </p>
+      <p class="item_attributes" *ngIf="media.Game_Genre" id = "game_genre"> {{media.Game_Genre}}</p>
+      <p class="item_attributes" *ngIf="media.Video_Genre" id = "video_genre"> {{media.Video_Genre}}</p>
+      <p class="item_attributes" id = "item_price"> ${{media.Price}}</p>
+      <p class="item_attributes" id = "item_condition"> {{media.Condition}}</p>
+      <p class="item_attributes" id = "item_user_rating">N/A</p>
+
+
+    </div>
+
+
+</div>
+
+<div class ="pagination">
+      <!-- Pagination of the media items -->
+      <pagination-controls *ngIf="totalMedia > ITEMS_PER_PAGES" (pageChange)="gotoPage($event)"></pagination-controls>
+
+</div>
+
+
+
+
+
+
 

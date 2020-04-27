@@ -1,71 +1,43 @@
-.item {
-    height: 100px;
-    min-height: 100px;
-    max-height: 100px;
-
-    border-bottom-style: solid;
-    border-width: 2px;
-    transition: 0.3s;
-}
-
-.item:hover{
-  background-color: lightgray;
-}
-
-.item_attributes { // associated with ul tag.
-    list-style-type: none;
-
-    display: flex;
-
-    overflow: hidden;
-    border-bottom-style: solid;
-    border-width: 2px;
-}
-
-.item_attributes { // associated with ul tag.
-	list-style-type: none;
-
-    overflow: hidden;
-
-	  margin: 0px;
-    padding: 0xp;
-
-    margin: 0; /* To remove default bottom margin */
-    padding: 0; /* To remove default left padding */
-
-    height: 100%;
-
-    width: 100%;
-    white-space: nowrap;
-
-    white-space: nowrap;
-}
-
-
-.item_attr {
-    text-align: justify;
-    border-right-style: solid;
-    border-width: 2px;
-
-    padding: 40px; // works for centering etc...
-
-    border-right-style: solid;
-    border-right-color: rgb(153, 153, 153);
-    border-right-width: 1px;
-
-    padding: 40px; // works for centering etc...
-
-    font-size: 20px;
-
-    height: 100%;
+.items {
+    display: flex; // using flex so we can have a flexible grid layout for the media items
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;  // center the content so it doesn't look jank with uneven whitespace
 }
 
 
 #item_image img{
-  height: 50px;
+  height: 150px;
 }
 
-.product{
-  background-color: green;
+.item {
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 1%;
+  flex-basis: 25%;
+  margin: 10px;
+
+  // border: 2px solid black;  // temp border to visualize the objects
+  background-color: white;
+
+  height: 100%;
+
+  transition: 0.2s; // background color transition
 }
 
+
+.item:hover{
+  background-color: gainsboro;
+}
+
+.item_attributes { // associated with div of attributes
+
+    overflow: hidden;
+}
+
+
+
+
+.pagination{  // center the pagination module
+
+}

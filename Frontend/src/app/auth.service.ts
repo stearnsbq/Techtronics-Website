@@ -4,19 +4,19 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { decode } from 'punycode';
 import { Router } from '@angular/router';
+import { ApiService } from './api.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private API_URL = 'http://3.234.246.29:8081/api/';
 
   constructor(private http: HttpClient, private jwt: JwtHelperService, private router: Router) { }
 
 
   public login(username: string, password: string) {
-    return this.http.post<{token: string}>(`${this.API_URL}auth`, {username, password}).pipe(map(result => {
+    return this.http.post<{token: string}>(`${ApiService.API_URL}auth`, {username, password}).pipe(map(result => {
       if (result.token) {
         localStorage.setItem('token', result.token);
         return true;
@@ -27,7 +27,7 @@ export class AuthService {
 
 
   public logout() {
-    localStorage.removeItem('token');
+    localStorage.clear();
     this.router.navigate(['']);
   }
 
