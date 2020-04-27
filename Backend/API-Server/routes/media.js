@@ -79,24 +79,12 @@ module.exports = function(connection) {
 
 	router.get('/search', async (req, res) => {
 		try {
-			const search_query = req.query['query'];
-			const page = parseInt(req.query['page']);
+			const search_query = req.query['query'] || '';
+			const page = parseInt(req.query['page']) || 1;
+			const sort = req.query['sortBy'] || 'DESC';
 
-			if (search_query && page) {
-				res.send(
-					await sql_queries.search(
-						connection,
-						parseInt(req.query['page']),
-						connection.escape(`%${search_query}%`)
-					)
-				);
-			} else if (search_query) {
-				res.send(await sql_queries.search(connection, 1, connection.escape(`%${search_query}%`)));
-			} else if (page) {
-				res.send(await sql_queries.search(connection, parseInt(page)));
-			} else {
-				res.send(await sql_queries.search(connection));
-			}
+			res.send(await sql_queries.search(connection, page, connection.escape(`%${search_query}%`), sort));
+
 		} catch (err) {
 			console.log(err);
 			res.sendStatus(500);

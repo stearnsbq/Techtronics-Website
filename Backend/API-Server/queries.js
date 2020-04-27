@@ -3,7 +3,7 @@ var bs = require('binary-search');
 const argon2 = require('argon2');
 var jwt = require('jsonwebtoken'); // will need for login only endpoints
 const config = require('./config/config.js');
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 12;
 
 class Queries {
 
@@ -502,7 +502,7 @@ class Queries {
 		})
 	}
 
-	static search(connection, page = 1, searchQuery = "'%%'") {
+	static search(connection, page = 1, searchQuery = "'%%'", sort="'desc'", itemsPerPage= ITEMS_PER_PAGE) {
 		return new Promise((resolve, reject) => {
 			const offset = (page - 1) * ITEMS_PER_PAGE;
 			const query = `SELECT Media.Media_ID, Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game_Genre', ESRB_Rating, Hardware.Type AS 'Hardware_Type', Video.Genre AS 'Video_Genre', MPAA_Rating, Software.Type AS 'Software Type'
@@ -517,7 +517,7 @@ class Queries {
                                OR Game.Genre LIKE ${searchQuery} 
                                OR Video.Genre LIKE ${searchQuery}
                                OR Software.Type LIKE ${searchQuery}
-                               OR Hardware.Type LIKE ${searchQuery} ORDER BY Media_ID LIMIT ${offset} , ${ITEMS_PER_PAGE}`;
+                               OR Hardware.Type LIKE ${searchQuery} ORDER BY Price ${sort} LIMIT ${offset} , ${itemsPerPage}`;
 
 			// Get all of the media in the database
 			connection.query(query, async (err, allMedia, fi) => {
