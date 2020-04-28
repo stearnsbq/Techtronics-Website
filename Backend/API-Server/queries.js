@@ -400,6 +400,8 @@ class Queries {
 							return resolve({});
 						}
 
+						
+
 
 						var tmp = {};
 						for (const prop in results[0]) {
