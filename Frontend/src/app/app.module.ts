@@ -25,6 +25,7 @@ import { InventoryComponent } from './inventory/inventory.component';
 import { EmployeepanelComponent } from './employeepanel/employeepanel.component';
 import { LoadingInterceptor } from './LoadingInterceptor';
 import { LoadingComponent } from './loading/loading.component';
+import { HomePageComponent } from './home-page/home-page.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -46,6 +47,7 @@ export function tokenGetter() {
     InventoryComponent,
     EmployeepanelComponent,
     LoadingComponent,
+    HomePageComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,7 +65,7 @@ export function tokenGetter() {
       {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
       {path: 'controlpanel', component: ControlpanelComponent /*, canActivate: [RoleGuardService], data: {neededRole: 'Employee'}*/ },
       {path: 'login', component: LoginModalComponent},
-      {path: '**', redirectTo: ''}
+      {path: '**', redirectTo: ''} 
     ]),
     ReactiveFormsModule,
     FontAwesomeModule,

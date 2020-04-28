@@ -13,7 +13,7 @@ input {
 
 
 .button {
-  background-color: rgb(150, 150, 150);
+  background-color: rgb(150, 150, 150); 
   font-size: 20px;
   font-weight: bold;
   padding: 10px 20px;
@@ -29,10 +29,7 @@ input {
 
 .login {
   width: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  padding-top: 50px;
+  padding-top: 60px;
 }
 
 // END
@@ -87,7 +84,7 @@ input {
   text-align: center;
   position: relative;
   top: 80px;
-  left: 240px;
+  left: 240px; 
   margin: auto;
 }
 
@@ -100,8 +97,8 @@ input {
   position: relative;
   text-align: center;
   padding: 5px;
-  width: 200px;
-  top: 35px;
+  width: 200px; 
+  top: -80px; 
   margin: auto;
   font-size: 20px;
   font-weight: bolder;
@@ -110,6 +107,12 @@ input {
   background-color: white;
 }
 
+.login_form_parent {
+  display: flex; 
+
+  justify-content: center;
+
+}
 
 #login_form {
   padding: 30px;
@@ -117,11 +120,11 @@ input {
   border-radius: 15px;
   border: 2px solid grey;
   background-color: rgb(196, 196, 196);
-  margin: auto;
+  margin: 0;
 }
 
-#login {
-  width: 350px;
+.login {
+  width: 100%; 
 }
 
 #username_input {
@@ -134,12 +137,14 @@ input {
 
 #splash_icon {
   text-align: center;
-  padding-top: 10px;
+  padding-top: 0px;
+  position: relative;
+
 }
 
 #splash_icon fa-icon {
-  font-size: 100px;
-  color: gray;
+  font-size: 150px;
+  color: #171a21;
 }
 
 #password_input {
@@ -180,7 +185,7 @@ input {
   border-radius: 15px;
   background-color: rgba(255, 0, 0, 0.5);
   transition: 0.5s;
-}
+} 
 
 
 #register_box{
