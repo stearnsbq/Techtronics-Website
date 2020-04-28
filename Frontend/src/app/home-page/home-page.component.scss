@@ -1,7 +1,16 @@
 .home_page_title_container {
-    margin: 25px;
+    margin-top: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+
     padding: 10px;
+
     background-color: #171a21;
+
+    border-style: solid; 
+    border-color: rgb(0,0,0); 
+    border-width: 3px;
 }
 
 .home_page_title {
@@ -10,4 +19,17 @@
 }
 
 .home_page_container {
+}
+
+.home_page_content {
+    margin-top: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+
+    border-style: solid; 
+    border-color: rgb(0,0,0); 
+    border-width: 3px;
+
+    height: 10px;
 }

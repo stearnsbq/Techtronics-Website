@@ -64,6 +64,7 @@ export function tokenGetter() {
       {path: 'product/:id',  component: ProductPageComponent},
       {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
       {path: 'controlpanel', component: ControlpanelComponent /*, canActivate: [RoleGuardService], data: {neededRole: 'Employee'}*/ },
+      {path: 'productpage', component: ProductPageComponent},
       {path: 'login', component: LoginModalComponent},
       {path: '**', redirectTo: ''} 
     ]),
@@ -79,4 +80,4 @@ export function tokenGetter() {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { } 
