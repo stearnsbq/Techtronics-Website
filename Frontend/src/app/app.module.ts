@@ -9,7 +9,7 @@ import { ProductPageComponent } from './product-page/product-page.component';
 import { LoginModalComponent } from './login-modal/login-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiService } from './api.service';
@@ -61,12 +61,11 @@ export function tokenGetter() {
       {path: 'search', component: ItemAreaComponent},
       {path: 'product/:id',  component: ProductPageComponent},
       {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
-      {path: 'controlpanel', component: ControlpanelComponent /*, canActivate: [RoleGuardService], data: {neededRole: 'Employee'}*/ },
+      {path: 'controlpanel', component: ControlpanelComponent , canActivate: [RoleGuardService], data: {neededRole: 'Employee'} },
       {path: 'login', component: LoginModalComponent},
       {path: '**', redirectTo: ''}
     ]),
     ReactiveFormsModule,
-    FontAwesomeModule,
     FontAwesomeModule,
     NgxPaginationModule
   ],
