@@ -396,6 +396,11 @@ class Queries {
 				if(err){
 					return reject(err);
 				}else{
+						if(results.length <= 0){
+							return resolve({});
+						}
+
+
 						var tmp = {};
 						for (const prop in results[0]) {
 							if (results[0][prop]) {
