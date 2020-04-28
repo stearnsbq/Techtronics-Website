@@ -12,6 +12,7 @@ const schemas = require('./schemas/schema.js');
 var jwt = require('jsonwebtoken'); // will need for login only endpoints
 const { gen_date } = require('./util.js');
 
+
 var app = express();
 
 const _port = 8081;
@@ -64,7 +65,6 @@ app.post('/api/auth', async (req, res) => {
 
 });
 
-// TODO: DO SERVER SIDE VALIDATION
 app.post('/api/register', async (req, res) => {
 	var body = req.body;
 
