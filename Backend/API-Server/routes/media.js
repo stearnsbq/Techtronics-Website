@@ -83,7 +83,7 @@ module.exports = function(connection) {
 			const page = parseInt(req.query['page']) || 1;
 			const sort = req.query['sortBy'] || 'DESC';
 
-			res.send(await sql_queries.search(connection, page, connection.escape(`%${search_query}%`), sort));
+			res.send(await sql_queries.search(connection, page, connection.escape(`%${search_query}%`), connection.escape(sort)));
 
 		} catch (err) {
 			console.log(err);

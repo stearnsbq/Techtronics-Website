@@ -12,15 +12,13 @@ app-nav-bar { // should be out of document flow.
 }
 
 .container{
-    background-color: rgb(255,255,255);
-
-
+  background-color: rgb(255,255,255);
 }
 
 .router-outlet { // in document flow.
     flex: 1;
     margin-top: 50px;
-    min-height: calc(100vh - 155px); // 
+    min-height: calc(100vh - 155px); //
 
     position: relative;
 
@@ -30,7 +28,7 @@ app-nav-bar { // should be out of document flow.
 
     width: 100%;
 
-    background-color: rgb(255,255,255);  
+    background-color: rgb(255,255,255);
 }
 
 .footer { // Out of document flow. :)
@@ -41,6 +39,6 @@ app-nav-bar { // should be out of document flow.
     width: 100%;
     height: 100px;
 
-    margin-top: 10px; // gives spacing between main content and footer. 
+    margin-top: 10px; // gives spacing between main content and footer.
 }
 
