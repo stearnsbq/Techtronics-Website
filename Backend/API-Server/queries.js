@@ -400,7 +400,7 @@ class Queries {
 							return resolve({});
 						}
 
-						
+
 
 
 						var tmp = {};
@@ -509,8 +509,16 @@ class Queries {
 		})
 	}
 
-	static search(connection, page = 1, searchQuery = "'%%'", sort="'desc'", itemsPerPage= ITEMS_PER_PAGE) {
+	static search(connection, page = 1, searchQuery = "'%%'", sort="'DESC'", itemsPerPage= ITEMS_PER_PAGE) {
 		return new Promise((resolve, reject) => {
+			let sorted = 'ORDER BY Price ';
+
+			if(sort == 'DESC'){
+				sorted = sorted + ' DESC'
+			}else if (sort == 'ASC'){
+				sorted = sorted + ' ASC'
+			}
+
 			const offset = (page - 1) * ITEMS_PER_PAGE;
 			const query = `SELECT Media.Media_ID, Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game_Genre', ESRB_Rating, Hardware.Type AS 'Hardware_Type', Video.Genre AS 'Video_Genre', MPAA_Rating, Software.Type AS 'Software Type'
                                FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID 
@@ -524,7 +532,8 @@ class Queries {
                                OR Game.Genre LIKE ${searchQuery} 
                                OR Video.Genre LIKE ${searchQuery}
                                OR Software.Type LIKE ${searchQuery}
-                               OR Hardware.Type LIKE ${searchQuery} ORDER BY Price ${sort} LIMIT ${offset} , ${itemsPerPage}`;
+							   OR Hardware.Type LIKE ${searchQuery} ${sorted} LIMIT ${offset} , ${itemsPerPage}`;
+							
 
 			// Get all of the media in the database
 			connection.query(query, async (err, allMedia, fi) => {
