@@ -15,8 +15,8 @@ app-nav-bar { // should be out of document flow.
 
 .router-outlet { // in document flow.
     flex: 1;
-    margin-top: 50px;
-    min-height: calc(100vh - 155px); //
+    padding-top: 50px; 
+    min-height: calc(100vh - 155px); 
 
     position: relative;
 
@@ -37,6 +37,6 @@ app-nav-bar { // should be out of document flow.
     max-width: 100%; 
     height: 100px;
 
-    margin-top: 10px; // gives spacing between main content and footer.
+    margin-top: 0px; // gives spacing between main content and footer.
 }
 
