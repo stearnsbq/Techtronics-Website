@@ -49,6 +49,7 @@
   color: #171a21;
   margin-left: 20px;
   display: inline;
+  user-select: none;
 }
 
 .no_item_msg_icon { 
@@ -60,5 +61,5 @@
 
 .no_item_msg_icon fa-icon {
   font-size: 60px;
-  color: #171a21;
+  color: #171a21; 
 }
