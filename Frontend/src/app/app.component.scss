@@ -33,12 +33,11 @@ app-nav-bar { // should be out of document flow.
 .footer { // Out of document flow. :)
     position: relative; // needs to be relative to parent
 
-    bottom: 0px; 
+    bottom: 0px;
 
     width: 100vw;
     max-width: 100%; 
     height: 100px;
 
-    margin-top: 0px; // gives spacing between main content and footer.
 }
 
