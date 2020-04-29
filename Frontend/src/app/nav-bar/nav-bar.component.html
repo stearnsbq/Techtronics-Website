@@ -1,8 +1,8 @@
 <nav id="header_content">
-  <div id="logo">
-    <h1 class="title" routerLink="productpage">Techtronics</h1>
-    <img src="">
-  </div> 
+
+    <div id="logo">
+      <h1 class="title" routerLink="productpage">Techtronics</h1>
+    </div>
 
     <div id="search_container">
         <input id="search_bar" #searchBox type="text" (keyup.enter)='search(searchBox.value)' placeholder="Search for product...">
@@ -11,15 +11,35 @@
 
     <div class="navigation">
 
+      <div class="desktop-nav">
 
-      <a *ngIf="auth.isEmployee()" routerLink="controlpanel" class="navbutton">Control Panel</a>
-      <a *ngIf="auth.isAuthenticated()" routerLink="profile" class="navbutton">Profile</a>
+        <a *ngIf="auth.isEmployee()" routerLink="controlpanel" class="navbutton">Control Panel</a>
+        <a *ngIf="auth.isAuthenticated()" routerLink="profile" class="navbutton">Profile</a>
 
-      <a *ngIf="!auth.isAuthenticated()" routerLink="login" class="navbutton">Login</a>
-      <a *ngIf="auth.isAuthenticated()" (click)="onLogOut()" class="navbutton">Logout</a> 
+        <a *ngIf="!auth.isAuthenticated()" routerLink="login" class="navbutton">Login</a>
+        <a *ngIf="auth.isAuthenticated()" (click)="onLogOut()" class="navbutton">Logout</a>
 
+      </div>
+
+
+      <fa-icon [icon]="bars" (click)="showMenu($event)" class="menu"></fa-icon>
+      <fa-icon [icon]="cart" id="shopping-cart"></fa-icon>
+      <span id="cart-count-icon">1</span>
+
+      <div class="dropdown">
+
+        <a [style.display]="menuShown ? 'block' : 'none'" *ngIf="auth.isEmployee()" routerLink="controlpanel" class="navbutton">Control Panel</a>
+        <a [style.display]="menuShown ? 'block' : 'none'" *ngIf="auth.isAuthenticated()" routerLink="profile" class="navbutton">Profile</a>
+
+        <a [style.display]="menuShown ? 'block' : 'none'" *ngIf="!auth.isAuthenticated()" routerLink="login" class="navbutton">Login</a>
+        <a [style.display]="menuShown ? 'block' : 'none'" *ngIf="auth.isAuthenticated()" (click)="onLogOut()" class="navbutton">Logout</a>
+
+      </div>
 
     </div>
+
+
+
 
 
 

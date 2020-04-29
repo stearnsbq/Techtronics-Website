@@ -1,5 +1,5 @@
 #header_content {
-    justify-content: left;
+   // justify-content: left;
     display: flex;
     flex-grow: 1;
     flex-direction: row;
@@ -12,8 +12,8 @@
 }
 
 #search_container {
-  width: 50%;
-  margin-right: 20px;
+  width: 60%;
+  margin-right: 15px;
 }
 
 #search_bar {
@@ -37,14 +37,52 @@
 
 }
 
+#shopping-cart{
+  padding: 4px;
+  margin-right: 20px;
+  position: absolute;
+  font-size: 35px;
+  color: white;
+  right: 0px;
+  top: 0px;
+  transition: 0.2s;
+}
+
+#shopping-cart:hover{
+  color: lightgrey;
+}
+
+#shopping-cart:active {
+  color: lightgrey;
+}
+
+
+#cart-count-icon{
+  z-index: 1;
+  width: 15px;
+  height: auto;
+
+  right: 17px; // position number over shopping cart icon
+  top: 20px;
+
+  padding: 4px 3px 0 3px;
+
+
+  text-align: center;
+  font-weight: bolder;
+  color: white;
+  position: absolute;
+
+
+  border-radius: 50%; // make it a circle
+  background-color: red;
+}
+
 
 .navigation{
   margin-top: 14px;
 }
 
-#logo {
-  margin-right: 0px;
-}
 
 .title{
   color: white;
@@ -70,5 +108,83 @@
 
 .navbutton:hover{
   background-color: rgb(45, 50, 64);
+}
+
+.dropdown{
+  margin-top: -3px;
+  display: none;
+}
+
+
+.menu{
+  color: white;
+  font-size: 35px;
+  margin-top: -10px;
+  margin-right: 10px;
+  transition: 0.2s;
+  display: none;
+}
+
+.menu:hover{
+  color: lightgrey;
+}
+
+.menu:active {
+  color: lightgrey;
+}
+
+
+
+// formats the look on mobile
+@media (max-width: 1160px) {
+  .desktop-nav { display: none; }
+
+  .menu {
+    display: block;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    padding: 15px;
+  }
+
+  .title{
+    padding: 5px;
+  }
+
+  .dropdown {
+    margin-top: -11px;
+    display: block;
+  }
+
+  #header_content {
+    display: block;
+    margin-top: -10px;
+    height: 100px;
+  }
+
+  .title {
+    width: 50%;
+    text-align: left;
+  }
+
+  #search_container{
+   width: auto;
+  }
+
+  #search_bar{
+    margin-left: 5px;
+    margin-top: -20px;
+  }
+
+  #shopping-cart{
+    margin-right: 70px;
+
+  }
+
+  #cart-count-icon{
+    margin-right: 50px;
+  }
+
+
 }
 
