@@ -39,6 +39,10 @@ export class ProductPageComponent implements OnInit {
 
   }
 
+  hoverEvent(event){
+    console.log(event);
+  }
+
 
   addToCart(media) {
 

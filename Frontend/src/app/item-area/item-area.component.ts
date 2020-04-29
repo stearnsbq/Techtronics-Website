@@ -30,7 +30,6 @@ export class ItemAreaComponent implements OnInit {
       this.apiService.searchMedia(params.page, params.query, params.sortBy).subscribe(result => {
         this.allMedia = result;
         this.apiService.totalMedia(params.query).subscribe(total => {
-          console.log(total.total);
           this.totalMedia = total.total;
         });
 
