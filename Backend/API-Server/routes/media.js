@@ -125,13 +125,7 @@ module.exports = function(connection) {
 
 		const body = req.body;
 
-		var JsonValidator = new Validator();
-		var result = JsonValidator.validate(body, schemas.register_schema);
-
 		try {
-			if (result.errors.length <= 0) {
-				throw new Error(result.errors);
-			}
 
 			connection.beginTransaction();
 
@@ -145,7 +139,7 @@ module.exports = function(connection) {
 			connection.commit();
 			res.redirect(`./${id}`);
 		} catch (err) {
-			console.log(err);
+			
 			connection.rollback();
 			res.sendStatus(401);
 		}
