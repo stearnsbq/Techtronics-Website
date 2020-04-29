@@ -308,9 +308,13 @@ class Queries {
 
 	static _add_new_media_company(connection, media_id, company_id) {
 		return new Promise((resolve, reject) => {
-			const query = `INSERT INTO Media_Companies VALUES (${media_id}, ${company_id})`;
 
-			connection.query(query, (err, results, fi) => {
+			connection.query(`INSERT INTO Media_Companies VALUES (?, ?)`, [media_id, company_id] ,(err, results, fi) => {
+				if(!err){
+					connection.query("UPDATE Company SET Number_of_products = Number_of_products + 1 WHERE Company_ID = ?", [company_id], (err, results, fi) => {
+						return err ? reject(err) : resolve(results);
+					})
+				}
 				return err ? reject(err) : resolve(results);
 			});
 		});
@@ -328,8 +332,9 @@ class Queries {
 		});
 	}
 
-	static add_new_media(connection, body, companies) {
+	static add_new_media(connection, body) {
 		return new Promise((resolve, reject) => {
+			const companyInfo = body['companyInfo']
 
 			connection.query(
 				`INSERT INTO Media (Name, Platform, Price, \`Condition\`) VALUES (?, ?, ?, ?)`, [body['name'], body['platform'], body['price'], body['condition']],
@@ -339,6 +344,10 @@ class Queries {
 					} else {
 						try {
 							const id = await this.get_last_id(connection);
+
+							for(const company of Object.values(companyInfo)){
+								await this._add_new_media_company(connection, id, company)
+							}
 
 							switch (body['mediaType']) {
 								case 'game':
@@ -399,9 +408,6 @@ class Queries {
 						if(results.length <= 0){
 							return resolve({});
 						}
-
-
-
 
 						var tmp = {};
 						for (const prop in results[0]) {
@@ -509,6 +515,28 @@ class Queries {
 		})
 	}
 
+
+	static _add_companies(connection, media_id){
+		return new Promise((resolve, reject) => {
+
+			connection.query('SELECT MAX(CASE WHEN Type = "Publisher" THEN Company.Name END) "Publisher", MAX(CASE WHEN Type = "Developer" THEN Company.Name END) "Developer", MAX(CASE WHEN Type = "Manufacturer" THEN Company.Name END) "Manufacturer" FROM Media_Companies JOIN Company ON Media_Companies.Company = Company.Company_ID WHERE Media_Companies.Media = ?', [media_id], (err, results, fi) => {
+				if(err){
+					return reject(err);
+				}else{
+					for(const prop in results[0]){
+						if(!results[0][prop]){
+							delete results[0][prop];
+						}
+					}
+					
+					return resolve(results[0]);
+				}
+			});
+
+		})
+
+	}
+
 	static search(connection, page = 1, searchQuery = "'%%'", sort="'DESC'", itemsPerPage= ITEMS_PER_PAGE) {
 		return new Promise((resolve, reject) => {
 			let sorted = 'ORDER BY Price ';
@@ -520,37 +548,40 @@ class Queries {
 			}
 
 			const offset = (page - 1) * ITEMS_PER_PAGE;
-			const query = `SELECT Media.Media_ID, Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game_Genre', ESRB_Rating, Hardware.Type AS 'Hardware_Type', Video.Genre AS 'Video_Genre', MPAA_Rating, Software.Type AS 'Software Type'
-                               FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID 
-                               LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
-                               LEFT JOIN Game ON Game.Game_ID=Media.Media_ID 
-                               LEFT JOIN Hardware ON Hardware.Hardware_ID=Media.Media_ID 
-							   LEFT JOIN Media_Companies ON Media_Companies.Media=Media.Media_ID
-                               WHERE Name LIKE ${searchQuery} 
-                               OR Platform LIKE ${searchQuery}
-                               OR \`Condition\` LIKE ${searchQuery}
-                               OR Game.Genre LIKE ${searchQuery} 
-                               OR Video.Genre LIKE ${searchQuery}
-                               OR Software.Type LIKE ${searchQuery}
-							   OR Hardware.Type LIKE ${searchQuery} ${sorted} LIMIT ${offset} , ${itemsPerPage}`;
+			const query = `SELECT DISTINCT Media.Media_ID, Media.Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game_Genre', ESRB_Rating, Hardware.Type AS 'Hardware_Type', Video.Genre AS 'Video_Genre', MPAA_Rating, Software.Type AS 'Software Type'
+								FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID 
+								LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
+								LEFT JOIN Game ON Game.Game_ID=Media.Media_ID 
+								LEFT JOIN Hardware ON Hardware.Hardware_ID=Media.Media_ID 
+								LEFT JOIN Media_Companies ON (Media_Companies.Media = Media.Media_ID)
+								LEFT JOIN Company ON (Media_Companies.Company = Company.Company_ID)
+								WHERE Media_Companies.Type = 'Publisher' OR Media_Companies.Type IS NULL 
+								AND Media.Name LIKE ${searchQuery} 
+								OR Platform LIKE ${searchQuery}
+								OR \`Condition\` LIKE ${searchQuery}
+								OR Game.Genre LIKE ${searchQuery} 
+								OR Video.Genre LIKE ${searchQuery}
+								OR Software.Type LIKE ${searchQuery}
+								OR Hardware.Type LIKE ${searchQuery} 
+								OR Company.name LIKE ${searchQuery} ${sorted} LIMIT ${offset} , ${itemsPerPage}`;
 							
 
 			// Get all of the media in the database
 			connection.query(query, async (err, allMedia, fi) => {
 				var send = [];
 				if (!err) {
-					// Due to the query having columns with null values, this trims the nulls from the media (I don't think you can do much better than O(n*12) )
+					
 					for (const result of allMedia) {
-						var tmp = {};
 						for (const prop in result) {
-							if (result[prop]) {
-								tmp[prop] = result[prop];
+							if (!result[prop]) {
+								delete result[prop];
 							}
 						}
-						const images = await this._get_images_for_media(connection, result.Media_ID);	
-						tmp['images'] = images ? images : [];
-						tmp['DLC'] = await this._add_DLC(connection, result.Media_ID);
-						send.push(tmp);
+						
+						result['images'] = await this._get_images_for_media(connection, result.Media_ID);
+						result['companyInfo'] = await this._add_companies(connection, result.Media_ID);
+						result['DLC'] = await this._add_DLC(connection, result.Media_ID);
+						send.push(result);
 					}
 
 					// we got the data resolve the promise
