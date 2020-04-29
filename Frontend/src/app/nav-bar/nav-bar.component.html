@@ -1,8 +1,8 @@
 <nav id="header_content">
   <div id="logo">
-    <h1 class="title" routerLink="">Techtronics</h1>
+    <h1 class="title" routerLink="productpage">Techtronics</h1>
     <img src="">
-  </div>
+  </div> 
 
     <div id="search_container">
         <input id="search_bar" #searchBox type="text" (keyup.enter)='search(searchBox.value)' placeholder="Search for product...">
@@ -16,7 +16,7 @@
       <a *ngIf="auth.isAuthenticated()" routerLink="profile" class="navbutton">Profile</a>
 
       <a *ngIf="!auth.isAuthenticated()" routerLink="login" class="navbutton">Login</a>
-      <a *ngIf="auth.isAuthenticated()" (click)="onLogOut()" class="navbutton">Logout</a>
+      <a *ngIf="auth.isAuthenticated()" (click)="onLogOut()" class="navbutton">Logout</a> 
 
 
     </div>

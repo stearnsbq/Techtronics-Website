@@ -32,7 +32,6 @@ export function tokenGetter() {
   return localStorage.getItem('token');
 }
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +61,7 @@ export function tokenGetter() {
       }
     }),
     RouterModule.forRoot([
-      {path: '', component: HomePageComponent},
+      //{path: '', component: HomePageComponent}, 
       {path: 'search', component: ItemAreaComponent},
       {path: 'product/:id',  component: ProductPageComponent},
       {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
@@ -82,4 +81,4 @@ export function tokenGetter() {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { } 

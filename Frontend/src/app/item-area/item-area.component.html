@@ -6,17 +6,20 @@
   <p *ngIf="totalMedia === 1">{{totalMedia}} result</p>
   <p *ngIf="totalMedia > 1">{{totalMedia}} results</p>
   <select (change)="sortBy($event.target.value)">
-    <option value="best">Best Match</option>
+    <option value="best">Best match</option>
     <option value="lth">Lowest to highest price</option>
     <option value="htl">Highest to lowest price</option>
-  </select>
-</div>
-
+  </select> 
+</div> 
 
 <div *ngIf="totalMedia <= 0 && !apiService.loading" class="noItems">
   <!-- Make this look better..... -->
-  <h1>No items found</h1>
-
+  <span> 
+    <h1 class="no_item_message">No items found</h1> 
+    <div class="no_item_msg_icon"> 
+      <fa-icon [icon]="sadtear"> </fa-icon>
+    </div>
+  </span> 
 </div>
 
 
@@ -26,7 +29,7 @@
     <!-- Make this look better :) -->
     <div *ngFor="let media of allMedia | paginate: {  itemsPerPage: ITEMS_PER_PAGES, currentPage: page, totalItems: totalMedia}" (click)="onRowClick(media.Media_ID)" class = "item">
       <p class="item_attributes" id="item_name">{{media.Name}}</p>
-      <p class="item_attributes" id = "item_image"> <img src="https://www.amerikickkansas.com/wp-content/uploads/2017/04/default-image.jpg">  </p>   <!--  change this image (temp)-->
+      <p class="item_attributes" id = "item_image"> <img draggable="false" src="https://www.amerikickkansas.com/wp-content/uploads/2017/04/default-image.jpg">  </p>   <!--  change this image (temp)-->
       <p class="item_attributes" id = "item_platform"> {{media.Platform}} </p>
       <p class="item_attributes" *ngIf="media.Game_Genre" id = "game_genre"> {{media.Game_Genre}}</p>
       <p class="item_attributes" *ngIf="media.Video_Genre" id = "video_genre"> {{media.Video_Genre}}</p>
