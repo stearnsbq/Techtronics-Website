@@ -1,0 +1,27 @@
+.inventory-list{
+  overflow: auto;
+  width: 75%;
+  height: 300px;
+
+}
+
+.item_attributes{
+  flex: 1;
+  height: 100%;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+
+.item{
+
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+
+#item_image{
+  height: 50px;
+}

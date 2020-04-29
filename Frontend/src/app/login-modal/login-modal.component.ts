@@ -22,7 +22,6 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./login-modal.component.scss']
 })
 export class LoginModalComponent implements OnInit {
-  @ViewChild('Login', undefined) login_modal;
   public submitted: boolean;
   public invalid: boolean;
 

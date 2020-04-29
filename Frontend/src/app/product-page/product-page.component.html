@@ -3,7 +3,7 @@
     <img id = "back_button" src="../assets/back_arrow.png">
 
     <div id = "product_content">
-        <img id *ngIf="media.images[0]" [src]="media.images[0]">
+        <img id *ngIf="media.images[0]" [src]="'http://3.234.246.29:8081/api/uploads/' + 'media/' + media.Media_ID + '/' + media.images[0]">
         <div id = "product_information">
             <h1 id = "product_name"> {{media.Name}} </h1>
 

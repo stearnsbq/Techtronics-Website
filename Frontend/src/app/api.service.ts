@@ -15,7 +15,7 @@ export class ApiService {
   constructor(private http: HttpClient ) { }
 
 
-  public getMedia(pageNum): Observable<Media[]> {
+  public getMedia(pageNum= 1): Observable<Media[]> {
     const params = {
     page : pageNum + ''
     };

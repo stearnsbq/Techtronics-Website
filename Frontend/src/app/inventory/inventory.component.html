@@ -1,1 +1,17 @@
-<p>inventory works!</p>
+
+<input type="search" placeholder="Search" [(ngModel)]="query" (change)="search($event)">
+
+<div class="inventory-list" (scroll)="scroll($event)">
+
+
+<div *ngFor="let media of inventory" class = "item" >
+    <p class="item_attributes" id="item_name">{{media.Name}}</p>  <!--  change this image (temp)-->
+    <p class="item_attributes" id = "item_platform"> {{media.Platform}} </p>
+    <p class="item_attributes" *ngIf="media.Game_Genre" id = "game_genre"> {{media.Game_Genre}}</p>
+    <p class="item_attributes" *ngIf="media.Video_Genre" id = "video_genre"> {{media.Video_Genre}}</p>
+    <p class="item_attributes" id = "item_price"> ${{media.Price}}</p>
+    <p class="item_attributes" id = "item_condition"> {{media.Condition}}</p>
+</div>
+
+
+</div>

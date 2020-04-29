@@ -13,7 +13,7 @@ input {
 
 
 .button {
-  background-color: rgb(150, 150, 150); 
+  background-color: rgb(150, 150, 150);
   font-size: 20px;
   font-weight: bold;
   padding: 10px 20px;
@@ -84,7 +84,7 @@ input {
   text-align: center;
   position: relative;
   top: 80px;
-  left: 240px; 
+  left: 240px;
   margin: auto;
 }
 
@@ -97,8 +97,8 @@ input {
   position: relative;
   text-align: center;
   padding: 5px;
-  width: 200px; 
-  top: -80px; 
+  width: 200px;
+  top: -80px;
   margin: auto;
   font-size: 20px;
   font-weight: bolder;
@@ -108,7 +108,7 @@ input {
 }
 
 .login_form_parent {
-  display: flex; 
+  display: flex;
 
   justify-content: center;
 
@@ -124,7 +124,7 @@ input {
 }
 
 .login {
-  width: 100%; 
+  width: 100%;
 }
 
 #username_input {
@@ -185,12 +185,19 @@ input {
   border-radius: 15px;
   background-color: rgba(255, 0, 0, 0.5);
   transition: 0.5s;
-} 
+}
 
 
 #register_box{
-  padding-top: 25px;
+  margin-top: 25px;
   text-align: center;
+  transition: 0.2s;
 }
+
+
+#register_box:hover{
+  color: blue;
+}
+
 
 // FORM END
