@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Media } from '../model/media';
 import { ApiService } from '../api.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faSadTear } from '@fortawesome/free-regular-svg-icons'; 
+import { faSadTear } from '@fortawesome/free-regular-svg-icons';
 import { SearchService } from '../search.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
@@ -17,8 +17,8 @@ export class ItemAreaComponent implements OnInit {
   public totalMedia = 0;
   public page = 1;
   public query = '';
-  public sort = ''; 
-  public sadtear = faSadTear;  
+  public sort = '';
+  public sadtear = faSadTear;
 
   constructor(public apiService: ApiService, private activatedRoute: ActivatedRoute, private router: Router) {
     this.page = 1;
@@ -26,10 +26,11 @@ export class ItemAreaComponent implements OnInit {
       this.page = params.page;
       this.query = params.query;
       this.sort = params.sortBy;
-      
+
       this.apiService.searchMedia(params.page, params.query, params.sortBy).subscribe(result => {
         this.allMedia = result;
         this.apiService.totalMedia(params.query).subscribe(total => {
+          console.log(total.total);
           this.totalMedia = total.total;
         });
 

@@ -557,7 +557,7 @@ class Queries {
 								LEFT JOIN Hardware ON Hardware.Hardware_ID=Media.Media_ID 
 								LEFT JOIN Media_Companies ON (Media_Companies.Media = Media.Media_ID)
 								LEFT JOIN Company ON (Media_Companies.Company = Company.Company_ID)
-								WHERE Media_Companies.Type = 'Publisher' OR Media_Companies.Type IS NULL 
+								WHERE Media_Companies.Type = 'Publisher'
 								AND Media.Name LIKE ${searchQuery} 
 								OR Platform LIKE ${searchQuery}
 								OR \`Condition\` LIKE ${searchQuery}
