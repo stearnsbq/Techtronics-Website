@@ -49,7 +49,7 @@ export function tokenGetter() {
     EmployeepanelComponent,
     LoadingComponent,
     HomePageComponent,
-    RegistrationComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
