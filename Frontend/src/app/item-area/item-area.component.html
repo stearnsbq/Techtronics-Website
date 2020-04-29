@@ -9,17 +9,17 @@
     <option value="best">Best match</option>
     <option value="lth">Lowest to highest price</option>
     <option value="htl">Highest to lowest price</option>
-  </select> 
-</div> 
+  </select>
+</div>
 
 <div *ngIf="totalMedia <= 0 && !apiService.loading" class="noItems">
   <!-- Make this look better..... -->
-  <span> 
-    <h1 class="no_item_message">No items found</h1> 
-    <div class="no_item_msg_icon"> 
+  <span>
+    <h1 class="no_item_message">No items found</h1>
+    <div class="no_item_msg_icon">
       <fa-icon [icon]="sadtear"> </fa-icon>
     </div>
-  </span> 
+  </span>
 </div>
 
 

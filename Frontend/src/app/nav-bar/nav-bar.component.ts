@@ -13,6 +13,7 @@ import { LocalstorageService } from '../localstorage.service';
 export class NavBarComponent implements OnInit {
 
   public menuShown = false;
+  public cartShown = false;
   public bars = icons.faBars;
   public cart = icons.faShoppingCart;
   public itemsInCart = 0;
@@ -43,6 +44,10 @@ export class NavBarComponent implements OnInit {
 
   public showMenu(event) {
     this.menuShown = !this.menuShown;
+  }
+
+  public showCart(event) {
+    this.cartShown = !this.cartShown;
   }
 
 }
