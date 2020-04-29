@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Media } from '../model/media';
 import { ApiService } from '../api.service';
-import {faStar} from '@fortawesome/free-solid-svg-icons'; 
+import {faStar} from '@fortawesome/free-solid-svg-icons';
+import { LocalstorageService } from '../localstorage.service';
 
 @Component({
   selector: 'app-product-page',
@@ -12,14 +13,13 @@ import {faStar} from '@fortawesome/free-solid-svg-icons';
 export class ProductPageComponent implements OnInit {
   public media: Media;
   public star = faStar;
+  public selectedImage = 1;
 
-   constructor(private route: ActivatedRoute, private api: ApiService) {
+   constructor(private route: ActivatedRoute, public storage: LocalstorageService, private api: ApiService) {
+     storage.syncStorage();
 
 
-
-
-
-    this.route.params.subscribe(params => {
+     this.route.params.subscribe(params => {
       const id = params.id;
 
 
@@ -37,6 +37,17 @@ export class ProductPageComponent implements OnInit {
 
 
 
+  }
+
+
+  addToCart(media) {
+
+    this.storage.addItemToCart(media);
+
+  }
+
+  changeImage(selectedImage) {
+    this.selectedImage = selectedImage;
   }
 
 }

@@ -3,8 +3,13 @@
 
 
     <div id = "main_content">
-        <!-- *ngIf="media.images[0]" [src]="media.images[0]" -->
-        <img id = "product_image" draggable="false" *ngIf="media.images[0]" [src]="'http://3.234.246.29:8081/api/uploads/' + 'media/' + media.Media_ID + '/' + media.images[0]">
+
+        <div class="image-container">
+          <img *ngFor="let image of media.images | paginate: {  itemsPerPage: 1, currentPage: selectedImage, totalItems: media.images.length}" id = "product_image"  draggable="false" [src]="'http://3.234.246.29:8081/api/uploads/media/' + media.Media_ID + '/' + image">
+          <pagination-controls class="pagination-controls" (pageChange)="changeImage($event)"></pagination-controls>
+        </div>
+
+
         <div id = "product_information">
 
             <div class = "attribute_container">
@@ -33,7 +38,7 @@
                 </div>
             </div>
 
-            <input type="button" id="add_to_cart" value="ADD TO CART">
+            <input [disabled]="storage.cartContains(media)" type="button" id="add_to_cart" (click)="addToCart(media)" value="ADD TO CART">
         </div>
 
 

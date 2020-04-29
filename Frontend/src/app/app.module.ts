@@ -27,6 +27,7 @@ import { LoadingInterceptor } from './LoadingInterceptor';
 import { LoadingComponent } from './loading/loading.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { LocalstorageService } from './localstorage.service';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -61,7 +62,7 @@ export function tokenGetter() {
       }
     }),
     RouterModule.forRoot([
-      //{path: '', component: HomePageComponent}, 
+      // {path: '', component: HomePageComponent},
       {path: 'search', component: ItemAreaComponent},
       {path: 'product/:id',  component: ProductPageComponent},
       {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
@@ -77,8 +78,9 @@ export function tokenGetter() {
   providers: [
     ApiService,
     SearchService,
+    LocalstorageService,
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { } 
+export class AppModule { }

@@ -1,40 +1,40 @@
 #product_page_container {
-    display: flex; 
+    display: flex;
     justify-content: center;
-    
+
     margin-top: 25px;
-} 
+}
 
 #back_button {
     position: relative;
-    left: -30px; 
-    top: 30px; 
+    left: -30px;
+    top: 30px;
 
-    height: 60px; 
+    height: 60px;
 
-    border-radius: 100%; 
+    border-radius: 100%;
     border-style: solid;
     border-width: 1px;
     border-color: rgb(122,122,122);
 
-    box-shadow: 0px 1px rgb(17, 17, 17);  
+    box-shadow: 0px 1px rgb(17, 17, 17);
 }
 
 #main_content {
-    height: 800px;  
+    height: 800px;
 
     width: 100%;
     max-width: 1280px;
 
-    display: flex; 
+    display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    
+
 
 }
 
 #product_information {
-    margin-left: 20px; 
+    margin-left: 20px;
     margin-right: 20px;
     flex-grow: 1;
 }
@@ -43,29 +43,29 @@
     color: #171a21;
 }
 
-#product_name { 
+#product_name {
     font-size: 25px;
 }
 
 .attribute_container {
-    border-style: solid; 
+    border-style: solid;
     border-color: #171a21;
     border-width: 1px;
     border-radius: 4px;
-    
+
     padding: 5px;
 
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
 }
 
-#product_name { 
+#product_name {
     margin: 0px;
 }
 
 .product_attr_title {
     font-size: 15px;
-    color: rgb(146, 146, 146);  
-    margin: 0px; 
+    color: rgb(146, 146, 146);
+    margin: 0px;
 }
 
 .product_attribute {
@@ -73,50 +73,59 @@
     margin: 0px;
 }
 
-#product_image { 
+#product_image {
     border-style: solid;
-    border-width: 1px; 
+    border-width: 1px;
     border-radius: 4px;
     border-color: #171a21;
-    
+
     max-height: 350px;
     max-width: 450px; // this as well.
 
     margin-left: 10px;
-    margin-right: 10px;  
+    margin-right: 10px;
     margin-bottom: 10px;
-} 
+}
 
-#product_author { 
-    font-size: 18px; 
+.pagination-controls ::ng-deep .ngx-pagination {
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+}
+
+
+#product_author {
+    font-size: 18px;
 }
 
 #add_to_cart {
     cursor: pointer;
-    width: 100%; 
+    width: 100%;
     height: 40px;
 
-    border-style: none; 
+    border-style: none;
     border-radius: 4px;
 
-    color: rgb(255,255,255); 
+    color: rgb(255,255,255);
 
-    font-size: 15px; 
+    font-size: 15px;
 
     background-color: #42c277;
 
     text-decoration: none;
 }
 
+
+
 #add_to_cart:hover {
-    background-color: #3bb36d;  
+    background-color: #46c279;
 }
 
 #add_to_cart:active{
 	border: 5px solid #3ea761;
 	background:none;
     outline:none;
-    background-color: #3bb36d;  
+    background-color: #3bb36d;
 	padding:0;
 }
 

@@ -23,8 +23,12 @@
 
 
       <fa-icon [icon]="bars" (click)="showMenu($event)" class="menu"></fa-icon>
-      <fa-icon [icon]="cart" id="shopping-cart"></fa-icon>
-      <span id="cart-count-icon">1</span>
+
+      <div class="shopping-cart-container">
+        <fa-icon [icon]="cart" id="shopping-cart"></fa-icon>
+        <span *ngIf="itemsInCart > 0" id="cart-count-icon">{{itemsInCart}}</span>
+      </div>
+
 
       <div class="dropdown">
 
