@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Media } from '../model/media';
 import { ApiService } from '../api.service';
+import {faStar} from '@fortawesome/free-solid-svg-icons'; 
 
 @Component({
   selector: 'app-product-page',
@@ -10,6 +11,7 @@ import { ApiService } from '../api.service';
 })
 export class ProductPageComponent implements OnInit {
   public media: Media;
+  public star = faStar;
 
    constructor(private route: ActivatedRoute, private api: ApiService) {
     const params = this.route.params.subscribe(params => {

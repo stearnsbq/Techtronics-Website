@@ -1,7 +1,8 @@
 // GLOBAL STYLING FOR THE LOGIN PAGE
 label {
   display: block;
-  padding: 10px;
+  padding-bottom: 10px;
+  color: #171a21;
 }
 
 input {
@@ -11,20 +12,20 @@ input {
   border: 1px solid #ccc
 }
 
-
-.button {
-  background-color: rgb(150, 150, 150); 
+.button { 
+  cursor: pointer; 
+  background-color: #171a21; 
   font-size: 20px;
   font-weight: bold;
   padding: 10px 20px;
-  color: black;
+  color: rgb(255,255,255);
   border: none;
   border-radius: 4px;
   transition: 0.2s;
 }
 
 .button:hover {
-  background-color: rgb(120, 120, 120);
+  background-color: #3a3b3d;
 }
 
 .login {
@@ -100,16 +101,15 @@ input {
   width: 200px; 
   top: -80px; 
   margin: auto;
-  font-size: 20px;
+  font-size: 25px;
   font-weight: bolder;
-  border: 1px solid black;
-  border-radius: 10px;
-  background-color: white;
 }
 
 .login_form_parent {
   display: flex; 
 
+  min-height: 500px;
+  max-height: 500px;
   justify-content: center;
 
 }
@@ -118,13 +118,19 @@ input {
   padding: 30px;
   width: 350px;
   border-radius: 15px;
-  border: 2px solid grey;
-  background-color: rgb(196, 196, 196);
   margin: 0;
 }
 
 .login {
   width: 100%; 
+}
+
+#username {
+  border-color: #171a21;
+}
+
+#password {
+  border-color: #171a21;
 }
 
 #username_input {
@@ -138,12 +144,13 @@ input {
 #splash_icon {
   text-align: center;
   padding-top: 0px;
+  margin-top: -90px;
   position: relative;
 
 }
 
-#splash_icon fa-icon {
-  font-size: 150px;
+#splash_icon fa-icon { 
+  font-size: 120px; 
   color: #171a21;
 }
 
@@ -165,11 +172,11 @@ input {
 
 // adds a animation to the inputs upon focus
 #password_input:focus-within fa-icon {
-  color: rgb(130, 130, 130);
+  color: #171a21;
 }
 
 #username_input:focus-within fa-icon {
-  color: rgb(130, 130, 130);
+  color: #171a21;
 }
 
 #extra_options {
@@ -182,14 +189,15 @@ input {
   color: white;
   padding: 5px;
   text-align: center;
-  border-radius: 15px;
-  background-color: rgba(255, 0, 0, 0.5);
+  border-radius: 4px;
+  background-color: rgb(223, 64, 64);
   transition: 0.5s;
+  margin-bottom: 5px
 } 
 
 
 #register_box{
-  padding-top: 25px;
+  padding-top: 5px;
   text-align: center;
 }
 

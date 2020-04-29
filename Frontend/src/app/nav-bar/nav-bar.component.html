@@ -16,7 +16,7 @@
       <a *ngIf="auth.isAuthenticated()" routerLink="profile" class="navbutton">Profile</a>
 
       <a *ngIf="!auth.isAuthenticated()" routerLink="login" class="navbutton">Login</a>
-      <a *ngIf="auth.isAuthenticated()" (click)="onLogOut()" class="navbutton">Logout</a>
+      <a *ngIf="auth.isAuthenticated()" (click)="onLogOut()" class="navbutton">Logout</a> 
 
 
     </div>

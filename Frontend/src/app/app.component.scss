@@ -3,7 +3,7 @@ app-nav-bar { // should be out of document flow.
     z-index: 1;
 
     height: 50px;
-    width: 100%;
+    width: 100vw; 
 
     top: 0px;
     left: 0px;
@@ -26,7 +26,7 @@ app-nav-bar { // should be out of document flow.
 
     display: inline-block;
 
-    width: 100%;
+    width: 100vw;
 
     background-color: rgb(255,255,255);
 }
@@ -34,9 +34,7 @@ app-nav-bar { // should be out of document flow.
 .footer { // Out of document flow. :)
     position: relative; // needs to be relative to parent
 
-    bottom: 0px;
-
-    width: 100%;
+    width: 100vw;
     height: 100px;
 
     margin-top: 10px; // gives spacing between main content and footer.
