@@ -461,7 +461,7 @@ class Queries {
 
 	static get_page_count(connection, serverQuery='\'%%\'') {
 		return new Promise((resolve, reject) => {
-			const query = `SELECT DISTINCT COUNT(Media_ID) as total
+			const query = `SELECT COUNT(DISTINCT(Media_ID)) as total
 								FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID 
 								LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
 								LEFT JOIN Game ON Game.Game_ID=Media.Media_ID 
