@@ -25,10 +25,10 @@ export class ItemAreaComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.page = params.page;
       this.query = params.query;
-      this.sort = params.sortBy;
+      this.sort = params.sortBy; 
 
       this.apiService.searchMedia(params.page, params.query, params.sortBy).subscribe(result => {
-        this.allMedia = result;
+        this.allMedia = result; 
         this.apiService.totalMedia(params.query).subscribe(total => {
           this.totalMedia = total.total;
         });

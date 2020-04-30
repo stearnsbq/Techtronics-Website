@@ -24,8 +24,14 @@ export class ProductPageComponent implements OnInit {
 
 
       api.getMediaByID(id).subscribe(media => {
-        this.media = media;
-      });
+        this.media = media; 
+      }); 
+
+      if (this.media != undefined) {
+      
+
+
+      }
 
 
 
@@ -34,8 +40,6 @@ export class ProductPageComponent implements OnInit {
    }
 
   ngOnInit() {
-
-
 
   }
 

@@ -28,6 +28,7 @@ import { LoadingComponent } from './loading/loading.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LocalstorageService } from './localstorage.service';
+import { CartPageComponent } from './cart-page/cart-page.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -49,7 +50,8 @@ export function tokenGetter() {
     EmployeepanelComponent,
     LoadingComponent,
     HomePageComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    CartPageComponent
   ],
   imports: [
     BrowserModule,
@@ -69,6 +71,7 @@ export function tokenGetter() {
       {path: 'register', component: RegistrationComponent},
       {path: 'controlpanel', component: ControlpanelComponent , canActivate: [RoleGuardService], data: {neededRole: 'Employee'} },
       {path: 'login', component: LoginModalComponent},
+      {path: 'cart', component: CartPageComponent},  
       {path: '**', redirectTo: ''}
     ]),
     ReactiveFormsModule,
@@ -83,4 +86,4 @@ export function tokenGetter() {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { } 

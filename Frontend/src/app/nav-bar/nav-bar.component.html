@@ -25,9 +25,11 @@
       <fa-icon [icon]="bars" (click)="showMenu($event)" class="menu"></fa-icon>
 
       <div class="shopping-cart-container">
-        <fa-icon [icon]="cart" id="shopping-cart"></fa-icon>
-        <span *ngIf="itemsInCart > 0" id="cart-count-icon">{{itemsInCart}}</span>
-      </div>
+        <a routerLink="cart"> <!-- Had to change this so that it would work regardless of the fact. -->
+          <fa-icon [icon]="cart" id="shopping-cart"></fa-icon>
+         <span *ngIf="itemsInCart > 0" id="cart-count-icon">{{itemsInCart}}</span> 
+        </a>
+      </div> 
 
 
       <div class="dropdown">
@@ -36,7 +38,7 @@
         <a [style.display]="menuShown ? 'block' : 'none'" *ngIf="auth.isAuthenticated()" routerLink="profile" class="navbutton">Profile</a>
 
         <a [style.display]="menuShown ? 'block' : 'none'" *ngIf="!auth.isAuthenticated()" routerLink="login" class="navbutton">Login</a>
-        <a [style.display]="menuShown ? 'block' : 'none'" *ngIf="auth.isAuthenticated()" (click)="onLogOut()" class="navbutton">Logout</a>
+        <a [style.display]="menuShown ? 'block' : 'none'" *ngIf="auth.isAuthenticated()" (click)="onLogOut()" class="navbutton">Logout</a> 
 
       </div>
 

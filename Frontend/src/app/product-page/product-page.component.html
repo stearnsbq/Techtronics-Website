@@ -30,12 +30,12 @@
             <div class = "attribute_container">
                 <h3 class="product_attr_title"> User Rating </h3>
                 <div class = "user_rating_container">
-                    <fa-icon class="rating_star" [icon]="star"></fa-icon>
-                    <fa-icon class="rating_star" [icon]="star"></fa-icon>
-                    <fa-icon class="rating_star" [icon]="star"></fa-icon>
-                    <fa-icon class="rating_star" [icon]="star"></fa-icon>
-                    <fa-icon class="rating_star" [icon]="star"></fa-icon>
-                </div>
+                    <fa-icon class="rating_star rating_star1" [icon]="star"></fa-icon>
+                    <fa-icon class="rating_star rating_star2" [icon]="star"></fa-icon>
+                    <fa-icon class="rating_star rating_star3" [icon]="star"></fa-icon>
+                    <fa-icon class="rating_star rating_star4" [icon]="star"></fa-icon>
+                    <fa-icon class="rating_star rating_star5" [icon]="star"></fa-icon>
+                </div> 
             </div>
 
             <input [disabled]="storage.cartContains(media)" type="button" id="add_to_cart" (click)="addToCart(media)" value="ADD TO CART">
