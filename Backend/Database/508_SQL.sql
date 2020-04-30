@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS `Media` (
   `Name` varchar(50) NOT NULL,
   `Platform` varchar(50) NOT NULL,
   `User_rating` float,
+  `Type` varchar(25) CHECK (`Type` IN ('Game', 'Hardware', 'Software', 'Video')) NOT NULL,
   `Price` float NOT NULL,
   `Condition` text NOT NULL,
   `Quantity` INT DEFAULT 0,

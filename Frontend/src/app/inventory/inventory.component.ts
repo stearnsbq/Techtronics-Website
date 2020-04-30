@@ -17,6 +17,13 @@ export class InventoryComponent implements OnInit {
   public exitIcon = icons.faTimes;
   public allChecked = false;
 
+
+
+  public createNewMediaModalShow = false;
+  public createNewSpecialModalShow = false;
+
+  public selectedMediaType = '';
+
   constructor(public api: ApiService) {
     this.inventory = [];
 

@@ -5,6 +5,7 @@ export interface Media {
   Price: number;
   Condition: string;
   Quantity: number;
+  MediaType: string;
   User_Rating?: string;
   Game_Genre?: string;
   ESRB_Rating?: string;

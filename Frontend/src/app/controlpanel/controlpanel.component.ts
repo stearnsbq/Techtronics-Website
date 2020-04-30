@@ -10,6 +10,7 @@ export class ControlpanelComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    
   }
 
 

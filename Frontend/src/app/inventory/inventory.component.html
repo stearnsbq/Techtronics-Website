@@ -4,8 +4,8 @@
 <b> Total items: {{totalItems}} </b>
 
 
-<button>Add New Item</button>
-<button>Create New Special</button>
+<button (click)="createNewMediaModalShow = true">Add New Item</button>
+<button (click)="createNewSpecialModalShow = true">Create New Special</button>
 
 
 <div class="inventory-list" (scroll)="scroll($event)">
@@ -32,6 +32,83 @@
   </table>
 
 </div>
+
+
+
+<div *ngIf="createNewMediaModalShow" id="create-new-media" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span (click)="createNewMediaModalShow = false" class="close">&times;</span>
+
+    <input type="text" placeholder="Name">
+    <input type="text" placeholder="Platform">
+    <input type="number" min="1" step="any" placeholder="Price" />
+    <input type="number" min="1" step="any" placeholder="Quantity"/>
+
+    <select>
+      <option>Used</option>
+      <option>New</option>
+    </select>
+
+    <select [(ngModel)]="selectedMediaType">
+      <option>Game</option>
+      <option>Video</option>
+      <option>Software</option>
+      <option>Hardware</option>
+    </select>
+
+
+    <div *ngIf="selectedMediaType === 'Game'" class="media-info" id="game-info">
+      <input type="text" placeholder="Genre">
+      <select>
+        <option>E</option>
+        <option>E10+</option>
+        <option>T</option>
+        <option>M</option>
+        <option>A18+</option>
+        <option>RP</option>
+      </select>
+
+      <select>
+      </select>
+
+    </div>
+
+    <div *ngIf="selectedMediaType === 'Video'" class="media-info" id="video-info">
+      <input type="text" placeholder="Genre">
+      <select>
+        <option>G</option>
+        <option>PG</option>
+        <option>PG-13</option>
+        <option>R</option>
+        <option>NC-17</option>
+      </select>
+    </div>
+
+    <div *ngIf="selectedMediaType === 'Software'" class="media-info" id="software-info">
+      <input type="text" placeholder="Type">
+    </div>
+
+    <div *ngIf="selectedMediaType === 'Hardware'" class="media-info" id="hardware-info">
+        <input type="text" placeholder="Type">
+    </div>
+
+  </div>
+
+</div>
+
+
+<div *ngIf="createNewSpecialModalShow" id="create-new-special" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span (click)="createNewSpecialModalShow = false" class="close">&times;</span>
+    <p>Some text in the Modal..</p>
+  </div>
+
+</div>
+
 
 
 

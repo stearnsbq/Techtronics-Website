@@ -440,7 +440,7 @@ class Queries {
 
 	static get_page_count(connection, serverQuery='\'%%\'') {
 		return new Promise((resolve, reject) => {
-			const query = `SELECT COUNT(Media_ID) as total
+			const query = `SELECT DISTINCT COUNT(Media_ID) as total
 								FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID 
 								LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
 								LEFT JOIN Game ON Game.Game_ID=Media.Media_ID 
@@ -465,7 +465,7 @@ class Queries {
 	static get_all_media(connection, page = 1) {
 		return new Promise((resolve, reject) => {
 			let offset = (page - 1) * ITEMS_PER_PAGE;
-			const query = `SELECT DISTINCT Media.Media_ID, Media.Quantity, Media.Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game_Genre', ESRB_Rating, Hardware.Type AS 'Hardware_Type', Video.Genre AS 'Video_Genre', MPAA_Rating, Software.Type AS 'Software Type'
+			const query = `SELECT DISTINCT Media.Media_ID, Media.Type, Media.Quantity, Media.Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game_Genre', ESRB_Rating, Hardware.Type AS 'Hardware_Type', Video.Genre AS 'Video_Genre', MPAA_Rating, Software.Type AS 'Software Type'
 									FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID 
 									LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
 									LEFT JOIN Game ON Game.Game_ID=Media.Media_ID 
@@ -560,7 +560,7 @@ class Queries {
 			}
 
 			const offset = (page - 1) * ITEMS_PER_PAGE;
-			const query = `SELECT DISTINCT Media.Media_ID, Media.Quantity, Media.Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game_Genre', ESRB_Rating, Hardware.Type AS 'Hardware_Type', Video.Genre AS 'Video_Genre', MPAA_Rating, Software.Type AS 'Software Type'
+			const query = `SELECT DISTINCT Media.Media_ID, Media.Type, Media.Quantity, Media.Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game_Genre', ESRB_Rating, Hardware.Type AS 'Hardware_Type', Video.Genre AS 'Video_Genre', MPAA_Rating, Software.Type AS 'Software Type'
 								FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID 
 								LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
 								LEFT JOIN Game ON Game.Game_ID=Media.Media_ID 
