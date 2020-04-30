@@ -21,19 +21,62 @@ class Queries {
                 }
             })
         })
-    }
+	}
+	
+	static get_publishers(connection){
+		return new Promise((resolve, reject) =>{
+			const query = "SELECT Company_ID, Name FROM Company JOIN Publisher ON (Company.Company_ID = Publisher.Publisher_ID)"
+			connection.query(query, (err, results, fields) => {
+				return err ? reject(err) : resolve(results);
+			})
+
+
+		})
+	}
+
+	static get_developers(connection){
+		return new Promise((resolve, reject) =>{
+			const query = "SELECT Company_ID, Name FROM Company JOIN Developer ON (Company.Company_ID = Developer.Developer_ID)"
+			connection.query(query, (err, results, fields) => {
+				return err ? reject(err) : resolve(results);
+			})
+
+
+		})
+	}
+
+	static get_manufacturers(connection){
+		return new Promise((resolve, reject) =>{
+			const query = "SELECT Company_ID, Name FROM Company JOIN Manufacturer ON (Company.Company_ID = Manufacturer.Manufacturer_ID)"
+			connection.query(query, (err, results, fields) => {
+				return err ? reject(err) : resolve(results);
+			})
+
+
+		})
+	}
 
 
     static _get_order_items(connection, order_id){
         return new Promise((resolve, reject)=>{
-            connection.query(`SELECT Media FROM Order_Items WHERE \`Order\`=?`, [order_id], async (err, results, fields) => {
+			const query = `SELECT Media.Media_ID, Media.Type, Media.Quantity, Media.Name, Platform, User_rating, Order_Items.Price as 'Price', \`Condition\`, Game.Genre AS 'Game_Genre', ESRB_Rating, Hardware.Type AS 'Hardware_Type', Video.Genre AS 'Video_Genre', MPAA_Rating, Software.Type AS 'Software Type' FROM Order_Items JOIN Media ON Order_Items.Media = Media.Media_ID LEFT JOIN Video ON Video.Video_ID=Media.Media_ID LEFT JOIN Software ON Software.Software_ID=Media.Media_ID LEFT JOIN Game ON Game.Game_ID=Media.Media_ID LEFT JOIN Hardware ON Hardware.Hardware_ID=Media.Media_ID WHERE Order_Items.Order=?`
+            connection.query(query, [order_id], async (err, results, fields) => {
                 if(err){
                     return reject(err);
                 }else{
-                    var send = []
-                    for(const result of results){
-                        send.push(await this.get_media_by_id(connection, result['Media']));
-                    }
+					var send = [];
+
+					
+					for (const result of results) {
+						var tmp = {};
+						for (const prop in result) {
+							if (result[prop]) {
+								tmp[prop] = result[prop];
+							}
+						}
+						send.push(tmp);
+					}
+
                     return resolve(send);
                 }
             })
@@ -466,7 +509,6 @@ class Queries {
 								LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
 								LEFT JOIN Game ON Game.Game_ID=Media.Media_ID 
 								LEFT JOIN Hardware ON Hardware.Hardware_ID=Media.Media_ID 
-								LEFT JOIN Media_Companies ON Media_Companies.Media=Media.Media_ID
 								WHERE Name LIKE ${serverQuery} 
 								OR Platform LIKE ${serverQuery}
 								OR \`Condition\` LIKE ${serverQuery}
@@ -482,6 +524,8 @@ class Queries {
 			});
 		});
 	}
+
+
 
 	static get_all_media(connection, page = 1) {
 		return new Promise((resolve, reject) => {
@@ -565,6 +609,14 @@ class Queries {
 	static delete_media(connection, media_id){
 		return new Promise((resolve, reject)=>{
 			connection.query("UPDATE Media SET deleted = SYSDATE() WHERE Media_ID=?", [media_id], (err, results, fields) =>{
+				return err ? reject(err) : resolve(results);
+			})
+		})
+	}
+
+	static update_media(connection, media){
+		return new Promise((resolve, reject)=>{
+			connection.query("UPDATE Media SET `Condition` = ?, Name=?, Price=?, Platform=?, Quantity=?, Type=?  WHERE Media_ID=?", [media['Condition'],media['Name'],media['Price'],media['Platform'],media['Quantity'],media['Type'], media.Media_ID], (err, results, fields) =>{
 				return err ? reject(err) : resolve(results);
 			})
 		})

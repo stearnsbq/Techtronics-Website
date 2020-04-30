@@ -28,6 +28,8 @@ import { LoadingComponent } from './loading/loading.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LocalstorageService } from './localstorage.service';
+import { MediaInfoComponent } from './media-info/media-info.component';
+import { ModalComponent } from './modal/modal.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -49,7 +51,9 @@ export function tokenGetter() {
     EmployeepanelComponent,
     LoadingComponent,
     HomePageComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    MediaInfoComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

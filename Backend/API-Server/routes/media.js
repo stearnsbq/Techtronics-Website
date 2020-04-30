@@ -118,7 +118,7 @@ module.exports = function(connection) {
 
 
 	router.post('/', async (req, res) => {
-		if (req.user && req.user.Account_Level !== 'Employee') {
+		if (!req.user || req.user.Account_Level !== 'Employee') {
 			res.sendStatus(401);
 			return;
 		}
@@ -147,10 +147,42 @@ module.exports = function(connection) {
 
 
 	router.delete('/:id', (req, res) =>{
-		if (req.user && req.user.Account_Level !== 'Employee') {
+		if (!req.user || req.user.Account_Level !== 'Employee') {
 			res.sendStatus(401);
 			return;
 		}
+		
+
+
+	})
+
+
+	router.put('/', async (req, res)=>{
+		if (!req.user || req.user.Account_Level !== 'Employee') {
+			res.sendStatus(401);
+			return;
+		}
+
+		try{
+			for (media of req.body){
+
+				await sql_queries.update_media(connection, media);
+	
+			}
+			res.sendStatus(200);
+		}catch(err){
+			res.sendStatus(500);
+		}
+
+
+	})
+
+	router.put('/:id', (req, res)=>{
+		if (!req.user || req.user.Account_Level !== 'Employee') {
+			res.sendStatus(401);
+			return;
+		}
+
 	})
 
 	return router;

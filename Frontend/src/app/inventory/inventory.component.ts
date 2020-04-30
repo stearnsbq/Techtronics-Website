@@ -25,10 +25,15 @@ export class InventoryComponent implements OnInit {
   public selectedMediaType = '';
 
   public games: Media[];
+  public editedInventory: any[];
+
+  public showMedia = false;
+  public selectedMedia: Media;
 
   constructor(public api: ApiService) {
     this.inventory = [];
     this.games = [];
+    this.editedInventory = [];
 
     api.searchMedia(this.page, this.query).subscribe(media => {
       console.log(media);
@@ -37,7 +42,7 @@ export class InventoryComponent implements OnInit {
 
     api.totalMedia().subscribe(count => this.totalItems = count.total);
 
-    api.getGames().subscribe(games => this.games = games);
+    api.getGames().subscribe(games => this.games = games );
 
 
    }
@@ -60,7 +65,7 @@ export class InventoryComponent implements OnInit {
   }
 
 
-  search(event) {
+  search() {
     this.page = 1;
     this.bottom = false;
     this.api.searchMedia(this.page, this.query).subscribe(media => {
@@ -68,6 +73,36 @@ export class InventoryComponent implements OnInit {
     });
   }
 
+
+  change(event, i) {
+    const field = event.target.getAttribute('name');
+    const indexOf = this.editedInventory.findIndex(e => e.Media_ID === this.editedInventory[i].Media_ID);
+
+    if (indexOf >= 0) {
+       this.editedInventory[indexOf][field] = event.target.outerText;
+     } else {
+       const copy: any = {};
+       copy[field] = event.target.outerText;
+       Object.assign(copy, this.inventory[i]);
+       this.editedInventory.push(copy);
+    }
+  }
+
+
+
+  showMediaModal(media) {
+    this.showMedia = true;
+    this.selectedMedia = media;
+  }
+
+  save() {
+    this.api.updateMedia(this.editedInventory);
+  }
+
+  createNew(data) {
+    console.log(data);
+
+  }
 
 
 }

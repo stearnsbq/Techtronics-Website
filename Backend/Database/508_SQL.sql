@@ -124,6 +124,7 @@ CREATE TABLE IF NOT EXISTS `Order` (
 CREATE TABLE IF NOT EXISTS `Order_Items` (
   `Order` INT,
   `Media` INT,
+  `Price` FLOAT DEFAULT 0 NOT NULL,
   PRIMARY KEY (`Order`, `Media`),
   FOREIGN KEY (`Order`) REFERENCES `Order` (`Order_ID`),
   FOREIGN KEY (`Media`) REFERENCES `Media` (`Media_ID`)

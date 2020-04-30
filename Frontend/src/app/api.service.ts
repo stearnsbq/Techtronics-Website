@@ -43,7 +43,6 @@ export class ApiService {
 
   }
 
-
   public totalMedia(searchQuery = '') {
     const params = {
       query: searchQuery
@@ -52,9 +51,29 @@ export class ApiService {
   }
 
 
-
   public login(form) {
     return this.http.post<any>(`${ApiService.API_URL}auth/`, form);
+  }
+
+
+  public createNewMedia(media) {
+    return this.http.post<any>(`${ApiService.API_URL}media/`, media);
+  }
+
+  public updateMedia(media) {
+    return this.http.put<any>(`${ApiService.API_URL}media/`, media);
+  }
+
+  public getDevelopers() {
+    return this.http.get<any>(`${ApiService.API_URL}companies/developers`);
+  }
+
+  public getPublishers() {
+    return this.http.get<any>(`${ApiService.API_URL}companies/publishers`);
+  }
+
+  public getManufacturers() {
+    return this.http.get<any>(`${ApiService.API_URL}companies/manufacturers`);
   }
 
 

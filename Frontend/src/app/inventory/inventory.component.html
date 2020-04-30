@@ -20,14 +20,15 @@
       <th>Condition</th>
       <th>Quantity</th>
     </tr>
-    <tr *ngFor="let media of inventory">
+    <tr (click)="showMediaModal(media)" *ngFor="let media of inventory; let i = index">
+
       <td><input [checked]="allChecked" type="checkbox"></td>
-      <td>{{media.Media_ID}}</td>
-      <td>{{media.Name}}</td>
-      <td>{{media.Platform}}</td>
-      <td>{{media.Price}}</td>
-      <td>{{media.Condition}}</td>
-      <td>{{media.Quantity}}</td>
+      <td name="Media_ID">{{media.Media_ID}}</td>
+      <td id="media-name" name="Name">{{media.Name}}</td>
+      <td name="Platform">{{media.Platform}}</td>
+      <td id="media-price" name="Price">{{media.Price}}</td>
+      <td name="Condition">{{media.Condition}}</td>
+      <td name="Quantity">{{media.Quantity}}</td>
     </tr>
   </table>
 
@@ -35,83 +36,120 @@
 
 
 
-<div *ngIf="createNewMediaModalShow" id="create-new-media" class="modal">
 
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span (click)="createNewMediaModalShow = false" class="close">&times;</span>
-
-    <input type="text" placeholder="Name">
-    <input type="text" placeholder="Platform">
-    <input type="number" min="1" step="any" placeholder="Price" />
-    <input type="number" min="1" step="any" placeholder="Quantity"/>
-
-    <select>
-      <option>Used</option>
-      <option>New</option>
-    </select>
-
-    <select [(ngModel)]="selectedMediaType">
-      <option>Game</option>
-      <option>Video</option>
-      <option>Software</option>
-      <option>Hardware</option>
-    </select>
+<app-modal *ngIf="showMedia" [(toggle)]="showMedia">
+  <app-media-info [media]="selectedMedia"></app-media-info>
+</app-modal>
 
 
-    <div *ngIf="selectedMediaType === 'Game'" class="media-info" id="game-info">
-      <input type="text" placeholder="Genre">
-      <select>
-        <option value="" selected disabled>Select ESRB Rating</option>
-        <option>E</option>
-        <option>E10+</option>
-        <option>T</option>
-        <option>M</option>
-        <option>A18+</option>
-        <option>RP</option>
-      </select>
+<app-modal title="Create New Media" [(toggle)]="createNewMediaModalShow" id="create-new-media">
 
-      <select>
-        <option value="" selected disabled>DLC For...</option>
-        <option *ngFor="let game of games" [value]="game.Media_ID">{{game.Name}}</option>
-      </select>
+    <form #form="ngForm" (ngSubmit)="createNew(form.value)">
 
-    </div>
+      <div class="media-info">
 
-    <div *ngIf="selectedMediaType === 'Video'" class="media-info" id="video-info">
-      <input type="text" placeholder="Genre">
-      <select>
-        <option value="" selected disabled>Select MPAA Rating</option>
-        <option>G</option>
-        <option>PG</option>
-        <option>PG-13</option>
-        <option>R</option>
-        <option>NC-17</option>
-      </select>
-    </div>
+        <label>Media Name</label>
+        <input type="text" ngModel name="Name" #name="ngModel" placeholder="Name">
+        <label>Platform</label>
+        <input type="text" ngModel name="Platform" #platform="ngModel" placeholder="Platform">
+        <label>Price</label>
+        <input type="number" min="1" step="any" ngModel name="Price" #price="ngModel" placeholder="Price" />
+        <label>Quantity</label>
+        <input type="number" min="1" step="any" ngModel name="Quantity" #quantity="ngModel" placeholder="Quantity"/>
 
-    <div *ngIf="selectedMediaType === 'Software'" class="media-info" id="software-info">
-      <input type="text" placeholder="Type">
-    </div>
-
-    <div *ngIf="selectedMediaType === 'Hardware'" class="media-info" id="hardware-info">
-        <input type="text" placeholder="Type">
-    </div>
-
-  </div>
-
-</div>
+        <label>Condition</label>
+        <select ngModel name="Condition" #condition="ngModel">
+          <option>Used</option>
+          <option>New</option>
+        </select>
 
 
-<div *ngIf="createNewSpecialModalShow" id="create-new-special" class="modal">
+        <div id="media-companies">
+          <label>Publisher</label>
+          <select ngModel name="Publisher" #publisher="ngModel"></select>
+          <label>Developer</label>
+          <select ngModel name="Developer" #developer="ngModel"></select>
+          <label>Manufacturer</label>
+          <select ngModel name="Manufacturer" #manufacturer="ngModel"></select>
+        </div>
 
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span (click)="createNewSpecialModalShow = false" class="close">&times;</span>
-    <p>Some text in the Modal..</p>
-  </div>
+        <label>Type</label>
 
-</div>
+        <select ngModel name="Type" #type="ngModel" [(ngModel)]="selectedMediaType">
+          <option>Game</option>
+          <option>Video</option>
+          <option>Software</option>
+          <option>Hardware</option>
+        </select>
+
+      </div>
+
+
+
+      <div id="specific-media-info">
+        <hr *ngIf="selectedMediaType">
+
+        <div *ngIf="selectedMediaType === 'Game'" class="media-info" id="game-info">
+          <label>Game Genre</label>
+          <input type="text" ngModel name="Game_Genre" #game_genre="ngModel" placeholder="Genre">
+          <label>ESRB</label>
+          <select ngModel name="ESRB" #esrb="ngModel">
+            <option value="" selected disabled>Select ESRB Rating</option>
+            <option>E</option>
+            <option>E10+</option>
+            <option>T</option>
+            <option>M</option>
+            <option>A18+</option>
+            <option>RP</option>
+          </select>
+
+          <label>DLC</label>
+          <select ngModel name="DLC" #dlc="ngModel">
+            <option value="" selected disabled>DLC For...</option>
+            <option *ngFor="let game of games" [value]="game.Media_ID">{{game.Name}}</option>
+          </select>
+
+        </div>
+
+        <div *ngIf="selectedMediaType === 'Video'" class="media-info" id="video-info">
+          <label>Video Genre</label>
+          <input ngModel name="Video_Genre" #video_genre="ngModel" type="text" placeholder="Genre">
+          <select ngModel name="MPAA_Rating" #mpaa_rating="ngModel">
+            <option value="" selected disabled>Select MPAA Rating</option>
+            <option>G</option>
+            <option>PG</option>
+            <option>PG-13</option>
+            <option>R</option>
+            <option>NC-17</option>
+          </select>
+        </div>
+
+        <div *ngIf="selectedMediaType === 'Software'" class="media-info" id="software-info">
+          <label>Software_Type</label>
+          <input type="text" ngModel name="Software_Type" #software_type="ngModel" placeholder="Type">
+        </div>
+
+        <div *ngIf="selectedMediaType === 'Hardware'" class="media-info" id="hardware-info">
+          <label>Hardware_Type</label>
+            <input type="text" ngModel name="Hardware_Type" #hardware_type="ngModel" placeholder="Type">
+        </div>
+
+      </div>
+
+      <button type="submit">Create</button>
+
+    </form>
+
+
+</app-modal>
+
+<app-modal [(toggle)]="createNewSpecialModalShow" id="create-new-special">
+
+  <input type="number" min="1" step="any" placeholder="% off" />
+  <input type="datetime-local" placeholder="% off" />
+
+</app-modal>
+
 
 
 
