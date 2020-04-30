@@ -62,6 +62,7 @@
     <div *ngIf="selectedMediaType === 'Game'" class="media-info" id="game-info">
       <input type="text" placeholder="Genre">
       <select>
+        <option value="" selected disabled>Select ESRB Rating</option>
         <option>E</option>
         <option>E10+</option>
         <option>T</option>
@@ -71,6 +72,8 @@
       </select>
 
       <select>
+        <option value="" selected disabled>DLC For...</option>
+        <option *ngFor="let game of games" [value]="game.Media_ID">{{game.Name}}</option>
       </select>
 
     </div>
@@ -78,6 +81,7 @@
     <div *ngIf="selectedMediaType === 'Video'" class="media-info" id="video-info">
       <input type="text" placeholder="Genre">
       <select>
+        <option value="" selected disabled>Select MPAA Rating</option>
         <option>G</option>
         <option>PG</option>
         <option>PG-13</option>

@@ -189,10 +189,31 @@ class Queries {
 
 	static get_all_games(connection) {
 		return new Promise((resolve, reject) => {
-			const query = `SELECT Media_ID, Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game Genre', ESRB_Rating FROM Media JOIN Game ON Game.Game_ID=Media.Media_ID`;
+			const query = `SELECT * FROM Media JOIN Game ON Game.Game_ID=Media.Media_ID`;
 
-			connection.query(query, (err, results, fields) => {
-				return err ? reject(err) : resolve(results);
+			connection.query(query, async (err, results, fields) => {
+
+				if(err){
+					return resolve(err);
+				}else{
+					let send = [];
+					for (const result of results) {
+						
+						for (const prop in result) {
+							if (result[prop] === null) {
+								delete result[prop];
+							}
+						}
+						
+						result['images'] = await this._get_images_for_media(connection, result.Media_ID);
+						result['companyInfo'] = await this._add_companies(connection, result.Media_ID);
+						result['DLC'] = await this._add_DLC(connection, result.Media_ID);
+						send.push(result);
+					}
+					return resolve(send);
+
+				}
+				
 			});
 		});
 	}

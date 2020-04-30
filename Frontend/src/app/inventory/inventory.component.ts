@@ -24,8 +24,11 @@ export class InventoryComponent implements OnInit {
 
   public selectedMediaType = '';
 
+  public games: Media[];
+
   constructor(public api: ApiService) {
     this.inventory = [];
+    this.games = [];
 
     api.searchMedia(this.page, this.query).subscribe(media => {
       console.log(media);
@@ -33,6 +36,9 @@ export class InventoryComponent implements OnInit {
     });
 
     api.totalMedia().subscribe(count => this.totalItems = count.total);
+
+    api.getGames().subscribe(games => this.games = games);
+
 
    }
 

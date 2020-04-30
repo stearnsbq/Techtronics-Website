@@ -22,6 +22,10 @@ export class ApiService {
     return this.http.get<Media[]>(ApiService.API_URL + 'media', {params});
   }
 
+  public getGames() {
+    return this.http.get<Media[]>(ApiService.API_URL + 'media/games');
+  }
+
 
   public getMediaByID(id): Observable<Media> {
     return this.http.get<Media>(ApiService.API_URL + 'media/' + id);
