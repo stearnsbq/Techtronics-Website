@@ -398,7 +398,7 @@ class Queries {
 			LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
 			LEFT JOIN Game ON Game.Game_ID=Media.Media_ID 
 			LEFT JOIN Hardware ON Hardware.Hardware_ID=Media.Media_ID 
-			LEFT JOIN Media_Companies ON Media_Companies.Media=Media.Media_ID WHERE Media.Media_ID=? `
+			LEFT JOIN Media_Companies ON Media_Companies.Media=Media.Media_ID WHERE Media.Media_ID=? AND Media.deleted IS NULL `
 
 
 			connection.query(query, [ id ], async (err, results, fields) => {
@@ -411,7 +411,7 @@ class Queries {
 
 						var tmp = {};
 						for (const prop in results[0]) {
-							if (results[0][prop]) {
+							if (results[0][prop] !== null) {
 								tmp[prop] = results[0][prop];
 							}
 						}
@@ -452,7 +452,7 @@ class Queries {
 								OR Game.Genre LIKE ${serverQuery} 
 								OR Video.Genre LIKE ${serverQuery}
 								OR Software.Type LIKE ${serverQuery}
-								OR Hardware.Type LIKE ${serverQuery}`;
+								OR Hardware.Type LIKE ${serverQuery} AND Media.deleted IS NULL`;
 
 					
 
@@ -465,15 +465,15 @@ class Queries {
 	static get_all_media(connection, page = 1) {
 		return new Promise((resolve, reject) => {
 			let offset = (page - 1) * ITEMS_PER_PAGE;
-			const query = `SELECT DISTINCT Media.Media_ID, Media.Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game_Genre', ESRB_Rating, Hardware.Type AS 'Hardware_Type', Video.Genre AS 'Video_Genre', MPAA_Rating, Software.Type AS 'Software Type'
+			const query = `SELECT DISTINCT Media.Media_ID, Media.Quantity, Media.Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game_Genre', ESRB_Rating, Hardware.Type AS 'Hardware_Type', Video.Genre AS 'Video_Genre', MPAA_Rating, Software.Type AS 'Software Type'
 									FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID 
 									LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
 									LEFT JOIN Game ON Game.Game_ID=Media.Media_ID 
 									LEFT JOIN Hardware ON Hardware.Hardware_ID=Media.Media_ID 
 									LEFT JOIN Media_Companies ON (Media_Companies.Media = Media.Media_ID)
 									LEFT JOIN Company ON (Media_Companies.Company = Company.Company_ID)
-									WHERE Media_Companies.Type = 'Publisher' OR Media_Companies.Type IS NULL 
-									LIMIT ${offset} , ${itemsPerPage}`;
+									WHERE Media.deleted IS NULL
+									LIMIT ${offset} , ${ITEMS_PER_PAGE}`;
 
 
 			connection.query(query, async (err, results, fields) => {
@@ -483,8 +483,9 @@ class Queries {
 
 					for (const result of results) {
 						var tmp = {};
+					
 						for (const prop in result) {
-							if (result[prop]) {
+							if (result[prop] !== null) {
 								tmp[prop] = result[prop];
 							}
 						}
@@ -526,7 +527,7 @@ class Queries {
 					return reject(err);
 				}else{
 					for(const prop in results[0]){
-						if(!results[0][prop]){
+						if(results[0][prop] === null){
 							delete results[0][prop];
 						}
 					}
@@ -537,6 +538,15 @@ class Queries {
 
 		})
 
+	}
+
+
+	static delete_media(connection, media_id){
+		return new Promise((resolve, reject)=>{
+			connection.query("UPDATE Media SET deleted = SYSDATE() WHERE Media_ID=?", [media_id], (err, results, fields) =>{
+				return err ? reject(err) : resolve(results);
+			})
+		})
 	}
 
 	static search(connection, page = 1, searchQuery = "'%%'", sort="'DESC'", itemsPerPage= ITEMS_PER_PAGE) {
@@ -550,7 +560,7 @@ class Queries {
 			}
 
 			const offset = (page - 1) * ITEMS_PER_PAGE;
-			const query = `SELECT DISTINCT Media.Media_ID, Media.Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game_Genre', ESRB_Rating, Hardware.Type AS 'Hardware_Type', Video.Genre AS 'Video_Genre', MPAA_Rating, Software.Type AS 'Software Type'
+			const query = `SELECT DISTINCT Media.Media_ID, Media.Quantity, Media.Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game_Genre', ESRB_Rating, Hardware.Type AS 'Hardware_Type', Video.Genre AS 'Video_Genre', MPAA_Rating, Software.Type AS 'Software Type'
 								FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID 
 								LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
 								LEFT JOIN Game ON Game.Game_ID=Media.Media_ID 
@@ -564,7 +574,7 @@ class Queries {
 								OR Video.Genre LIKE ${searchQuery}
 								OR Software.Type LIKE ${searchQuery}
 								OR Hardware.Type LIKE ${searchQuery} 
-								OR Company.Name LIKE ${searchQuery} ${sorted} LIMIT ${offset} , ${itemsPerPage}`;
+								OR Company.Name LIKE ${searchQuery} AND Media.deleted IS NULL ${sorted} LIMIT ${offset} , ${itemsPerPage}`;
 							
 
 			// Get all of the media in the database
@@ -573,8 +583,9 @@ class Queries {
 				if (!err) {
 					
 					for (const result of allMedia) {
+						
 						for (const prop in result) {
-							if (!result[prop]) {
+							if (result[prop] === null) {
 								delete result[prop];
 							}
 						}

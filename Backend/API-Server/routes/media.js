@@ -145,5 +145,13 @@ module.exports = function(connection) {
 		}
 	});
 
+
+	router.delete('/:id', (req, res) =>{
+		if (req.user && req.user.Account_Level !== 'Employee') {
+			res.sendStatus(401);
+			return;
+		}
+	})
+
 	return router;
 };

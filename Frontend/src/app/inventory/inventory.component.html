@@ -18,6 +18,7 @@
       <th>Platform</th>
       <th>Price</th>
       <th>Condition</th>
+      <th>Quantity</th>
     </tr>
     <tr *ngFor="let media of inventory">
       <td><input [checked]="allChecked" type="checkbox"></td>
@@ -26,6 +27,7 @@
       <td>{{media.Platform}}</td>
       <td>{{media.Price}}</td>
       <td>{{media.Condition}}</td>
+      <td>{{media.Quantity}}</td>
     </tr>
   </table>
 
