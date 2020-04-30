@@ -1,8 +1,14 @@
 .inventory-list{
   overflow: auto;
-  width: 75%;
+  width: 100%;
   height: 300px;
 
+}
+
+.inventory-list table{
+  overflow: auto;
+  width: 100%;
+  height: 300px;
 }
 
 .item_attributes{
@@ -12,16 +18,34 @@
   border: 1px solid black;
 }
 
-
 .item{
-
   margin: 0;
   display: flex;
   justify-content: space-around;
   flex-direction: row;
 }
 
+.media-tabs ::ng-deep .tabList button {
+  color: red;
+
+}
+#mark{
+  width: 10px;
+}
+
 
 #item_image{
   height: 50px;
 }
+
+table, th, td {
+  border: 1px solid black;
+}
+
+
+th{
+  background-color: rgb(23,26,33);
+  color: white;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}

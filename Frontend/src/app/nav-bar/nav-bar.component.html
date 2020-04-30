@@ -24,7 +24,7 @@
 
       <fa-icon [icon]="bars" (click)="menuShown = !menuShown" class="menu"></fa-icon>
 
-      <div class="shopping-cart-container">
+      <div *ngIf="!auth.isEmployee()" class="shopping-cart-container">
 
         <fa-icon (mouseenter)="cartShown = true" (mouseout)="cartShown = false" [icon]="cart" id="shopping-cart"></fa-icon>
         <span *ngIf="itemsInCart > 0" id="cart-count-icon">{{itemsInCart}}</span>

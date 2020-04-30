@@ -1,17 +1,38 @@
 
 <input type="search" placeholder="Search" [(ngModel)]="query" (change)="search($event)">
 
+<b> Total items: {{totalItems}} </b>
+
+
+<button>Add New Item</button>
+<button>Create New Special</button>
+
+
 <div class="inventory-list" (scroll)="scroll($event)">
 
+  <table>
+    <tr>
+      <th id="mark"><input type="checkbox"  [(ngModel)]="allChecked"></th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Platform</th>
+      <th>Price</th>
+      <th>Condition</th>
+    </tr>
+    <tr *ngFor="let media of inventory">
+      <td><input [checked]="allChecked" type="checkbox"></td>
+      <td>{{media.Media_ID}}</td>
+      <td>{{media.Name}}</td>
+      <td>{{media.Platform}}</td>
+      <td>{{media.Price}}</td>
+      <td>{{media.Condition}}</td>
+    </tr>
+  </table>
 
-<div *ngFor="let media of inventory" class = "item" >
-    <p class="item_attributes" id="item_name">{{media.Name}}</p>  <!--  change this image (temp)-->
-    <p class="item_attributes" id = "item_platform"> {{media.Platform}} </p>
-    <p class="item_attributes" *ngIf="media.Game_Genre" id = "game_genre"> {{media.Game_Genre}}</p>
-    <p class="item_attributes" *ngIf="media.Video_Genre" id = "video_genre"> {{media.Video_Genre}}</p>
-    <p class="item_attributes" id = "item_price"> ${{media.Price}}</p>
-    <p class="item_attributes" id = "item_condition"> {{media.Condition}}</p>
 </div>
 
 
-</div>
+
+
+
+

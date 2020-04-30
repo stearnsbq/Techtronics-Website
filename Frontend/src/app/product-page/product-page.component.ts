@@ -39,7 +39,7 @@ export class ProductPageComponent implements OnInit {
 
   }
 
-  hoverEvent(event){
+  hoverEvent(event) {
     console.log(event);
   }
 

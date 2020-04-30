@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Media } from '../model/media';
 import { ApiService } from '../api.service';
+import * as icons from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-inventory',
@@ -11,7 +12,10 @@ export class InventoryComponent implements OnInit {
   public inventory: Media[];
   public page = 1;
   public bottom = false;
+  public totalItems = 0;
   public query = '';
+  public exitIcon = icons.faTimes;
+  public allChecked = false;
 
   constructor(public api: ApiService) {
     this.inventory = [];
@@ -20,6 +24,8 @@ export class InventoryComponent implements OnInit {
       console.log(media);
       this.inventory.push.apply(this.inventory, media);
     });
+
+    api.totalMedia().subscribe(count => this.totalItems = count.total);
 
    }
 
@@ -48,5 +54,7 @@ export class InventoryComponent implements OnInit {
       this.inventory = media;
     });
   }
+
+
 
 }
