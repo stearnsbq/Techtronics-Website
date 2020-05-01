@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  public static API_URL = 'http://3.234.246.29:8081/api/';
+  public static API_URL = 'http://localhost:8081/api/';
   public loading = false;
 
 
@@ -74,6 +74,20 @@ export class ApiService {
 
   public getManufacturers() {
     return this.http.get<any>(`${ApiService.API_URL}companies/manufacturers`);
+  }
+
+  public uploadFiles(files, media_id){
+    let formData = new FormData();
+
+    formData.append('media', media_id)
+
+    for(const file of files){
+
+    }
+
+
+    return this.http.post<any>(`${ApiService.API_URL}media/upload`, );
+
   }
 
 

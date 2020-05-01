@@ -370,10 +370,10 @@ class Queries {
 		});
 	}
 
-	static _add_new_media_company(connection, media_id, company_id) {
+	static _add_new_media_company(connection, media_id, company_id, company_type) {
 		return new Promise((resolve, reject) => {
-
-			connection.query(`INSERT INTO Media_Companies VALUES (?, ?)`, [media_id, company_id] ,(err, results, fi) => {
+			console.log(media_id, company_id, company_type)
+			connection.query(`INSERT INTO Media_Companies VALUES (?, ?, ?)`, [media_id, company_id, company_type] ,(err, results, fi) => {
 				if(!err){
 					connection.query("UPDATE Company SET Number_of_products = Number_of_products + 1 WHERE Company_ID = ?", [company_id], (err, results, fi) => {
 						return err ? reject(err) : resolve(results);
@@ -398,10 +398,11 @@ class Queries {
 
 	static add_new_media(connection, body) {
 		return new Promise((resolve, reject) => {
+			console.log(body)
 			const companyInfo = body['companyInfo']
 
 			connection.query(
-				`INSERT INTO Media (Name, Platform, Price, \`Condition\`, Quantity, Type) VALUES (?, ?, ?, ?, ?, ?)`, [body['name'], body['platform'], body['price'], body['condition'], body['quantity']. body['type']],
+				`INSERT INTO Media (Name, Platform, Price, \`Condition\`, Quantity, Type) VALUES (?, ?, ?, ?, ?, ?)`, [body['name'], body['platform'], body['price'], body['condition'], body['quantity'], body['type']],
 				async (err, results, fi) => {
 					if (err) {
 						return reject(err);
@@ -409,11 +410,12 @@ class Queries {
 						try {
 							const id = await this.get_last_id(connection);
 
-							for(const company of Object.values(companyInfo)){
-								await this._add_new_media_company(connection, id, company)
+							for(const company in companyInfo){
+		
+								await this._add_new_media_company(connection, id, companyInfo[company], company)
 							}
 
-							switch (body['mediaType']) {
+							switch (body['mediaType'].toLowerCase()) {
 								case 'game':
 									await this._add_new_game(connection, id, body['mediaFields']);
 									break;

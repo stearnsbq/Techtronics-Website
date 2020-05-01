@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Media } from '../model/media';
 import { ApiService } from '../api.service';
 import * as icons from '@fortawesome/free-solid-svg-icons';
+import { read } from 'fs';
 
 @Component({
   selector: 'app-inventory',
@@ -16,6 +17,8 @@ export class InventoryComponent implements OnInit {
   public query = '';
   public exitIcon = icons.faTimes;
   public allChecked = false;
+
+  public selectedImage: any;
 
   public createNewMediaModalShow = false;
   public createNewSpecialModalShow = false;
@@ -34,6 +37,9 @@ export class InventoryComponent implements OnInit {
 
   public invalidCompany = false;
 
+  public images: File[];
+  public imagePreviews: any[];
+
   constructor(public api: ApiService) {
     this.inventory = [];
     this.games = [];
@@ -41,6 +47,8 @@ export class InventoryComponent implements OnInit {
     this.publishers = [];
     this.developers = [];
     this.manufacturers = [];
+    this.images = [];
+    this.imagePreviews = [];
 
     api.searchMedia(this.page, this.query).subscribe((media) => {
       this.inventory.push.apply(this.inventory, media);
@@ -141,6 +149,22 @@ export class InventoryComponent implements OnInit {
     }
   }
 
+  handleImage(images) {
+    this.images.concat(images);
+
+    const reader = new FileReader();
+
+    reader.onload = e => this.imagePreviews.push(e.target.result);
+
+    reader.readAsDataURL(images[0]);
+
+  }
+
+
+  changeImage(event) {
+    this.selectedImage = event;
+  }
+
   createNew(data) {
     if (
       data.Publisher.length <= 0 &&
@@ -153,6 +177,7 @@ export class InventoryComponent implements OnInit {
         name: data.Name,
         platform: data.Platform,
         price: data.Price,
+        type: data.Type,
         condition: data.Condition,
         quantity: data.Quantity,
         mediaType: data.Type,
@@ -165,7 +190,7 @@ export class InventoryComponent implements OnInit {
         ),
       };
 
-      console.log(newMedia);
+      
 
       this.api.createNewMedia(newMedia).subscribe(result => {
         console.log(result);

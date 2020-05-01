@@ -69,17 +69,17 @@
           <label>Publisher</label>
           <select ngModel name="Publisher" #publisher="ngModel">
             <option value="" selected disabled>Select Publisher</option>
-            <option *ngFor="let publisher of publishers">{{publisher.Name}}</option>
+            <option *ngFor="let publisher of publishers" [value]="publisher.Company_ID">{{publisher.Name}}</option>
           </select>
           <label>Developer</label>
           <select ngModel name="Developer" #developer="ngModel">
             <option value="" selected disabled>Select Developer</option>
-            <option *ngFor="let publisher of developers">{{publisher.Name}}</option>
+            <option *ngFor="let developer of developers" [value]="developer.Company_ID">{{developer.Name}}</option>
           </select>
           <label>Manufacturer</label>
           <select ngModel name="Manufacturer" #manufacturer="ngModel">
             <option value="" selected disabled>Select Manufacturer</option>
-            <option *ngFor="let manufacturer of manufacturers">{{manufacturer.Name}}</option>
+            <option *ngFor="let manufacturer of manufacturers" [value]="manufacturer.Company_ID">{{manufacturer.Name}}</option>
           </select>
           <div *ngIf="invalidCompany" class="error">
             Atleast 1 company is required!
@@ -148,6 +148,14 @@
         </div>
 
       </div>
+
+      <div class="image-upload">
+        <label>Add Photos</label>
+        <img *ngFor="let image of imagePreviews | paginate: {  itemsPerPage: 1, currentPage: selectedImage, totalItems: imagePreviews.length} " [src]="image">
+        <pagination-controls *ngIf="imagePreviews.length > 0" class="pagination-controls" (pageChange)="changeImage($event)"></pagination-controls>
+        <input required type="file" placeholder="Add Photo" (change)="handleImage($event.target.files)">
+      </div>
+
 
       <button type="submit">Create</button>
 

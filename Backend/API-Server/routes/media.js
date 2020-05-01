@@ -11,6 +11,10 @@ module.exports = function(connection) {
 
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
+			if(!fs.existsSync('./uploads/media/')){
+				fs.mkdirSync('./uploads/media/');
+			}
+
 		  const path = './uploads/media/'+ req.body.media;
 
 		  if(!fs.existsSync(path)){
@@ -28,7 +32,7 @@ module.exports = function(connection) {
     var upload = multer({ storage: storage })
 
 
-    router.post('/upload', upload.fields([{name: 'media', maxCount: 1}, {name: 'media_image', maxCount: 1}]), (req, res)=>{
+    router.post('/upload', upload.fields([{name: 'media', maxCount: 1}, {name: 'media_image', maxCount: 5}]), (req, res)=>{
 		if(req.files){
 			res.send(req.files['media_image'][0].filename);
 		}else{
@@ -139,9 +143,9 @@ module.exports = function(connection) {
 			connection.commit();
 			res.redirect(`./${id}`);
 		} catch (err) {
-			
+			console.log(err)
 			connection.rollback();
-			res.sendStatus(401);
+			res.send(err, 500);
 		}
 	});
 

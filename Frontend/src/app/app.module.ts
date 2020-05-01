@@ -30,6 +30,8 @@ import { RegistrationComponent } from './registration/registration.component';
 import { LocalstorageService } from './localstorage.service';
 import { MediaInfoComponent } from './media-info/media-info.component';
 import { ModalComponent } from './modal/modal.component';
+import { AuthService } from './auth.service';
+import { AuthInterceptor } from './AuthInterceptor';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -63,6 +65,8 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter,
+        whitelistedDomains: ['3.234.246.29:8081', '3.234.246.29'],
+        blacklistedRoutes: ['3.234.246.29:8081/api/auth/', 'localhost:8081']
       }
     }),
     RouterModule.forRoot([
@@ -83,7 +87,8 @@ export function tokenGetter() {
     ApiService,
     SearchService,
     LocalstorageService,
-    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
