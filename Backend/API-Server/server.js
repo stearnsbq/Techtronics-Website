@@ -31,7 +31,7 @@ app.use(expJwt({ secret: config.JWT.Secret, credentialsRequired: false }));
 
 var connection = sql.createConnection(config.sql_config);
 
-var sql_queries = require('./queries.js');
+var sql_queries = require('./queries.js'); 
 
 var media = require('./routes/media.js')(connection);
 var user = require('./routes/user.js')(connection);
@@ -44,7 +44,7 @@ app.use('/api/orders', orders);
 
 
 
-app.get('/api/uploads/:type/:id/:filename', async (req, res) => {
+app.get('/api/uploads/:type/:id/:filename', async (req, res) => { 
 	const type = req.params['type']
 	const id = req.params['id']
 	const filename = req.params['filename']

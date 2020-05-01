@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
 
-    margin-top: 25px;
+    padding-top: 25px; 
 }
 
 #back_button {
@@ -39,8 +39,9 @@
     flex-grow: 1;
 }
 
-.rating_star {
+.rating_star { 
     color: #171a21;
+    font-size: 25px;
 }
 
 #product_name {
@@ -55,6 +56,8 @@
 
     padding: 5px;
 
+    flex: 0.8;
+
     margin-bottom: 10px;
 }
 
@@ -68,7 +71,7 @@
     margin: 0px;
 }
 
-.product_attribute {
+.product_attribute { 
     font-size: 20px;
     margin: 0px;
 }
@@ -82,15 +85,16 @@
     max-height: 350px;
     max-width: 450px; // this as well.
 
-    margin-left: 10px;
-    margin-right: 10px;
+    flex: 0.8;
+
+
     margin-bottom: 10px;
 }
 
 .pagination-controls ::ng-deep .ngx-pagination {
   padding: 0px;
   display: flex;
-  justify-content: center;
+  justify-content: center;  
 }
 
 

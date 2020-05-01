@@ -1,15 +1,42 @@
 <div id="cart_page_container"> 
 
+    <div id="cart_page_content">
+        <div *ngFor='let media of allMedia'  class="cart_item">
+            <div class="product_information"> 
+                <div class="content_header">
+                    <h2 class="product_name"> {{media.Name}} </h2>   
+                    <fa-icon [icon]="minus" class="remove_button">  </fa-icon>  
+                </div>
+                
+                <div class="all_attributes"> 
+                    <div class="attribute_pack"> 
+                        <h3 class="product_attr_title">Price</h3> 
+                        <h3 class="product_attribute">${{media.Price}}</h3>  
+                    </div> 
+            
+                    <div class="attribute_pack"> 
+                        <h3 class="product_attr_title">Platform</h3> 
+                        <h3 class="product_attribute">{{media.Platform}}</h3>   
+                    </div>
 
-    <div class="cart_item">
-        <img class="product_image"> </img>  
-        
-        <h2 class="product_name"> {{Media.Name}} </h2>
+                    <div class = "attribute_pack rating_attribute_pack">
+                        <h3 class="product_attr_title">User Rating</h3> 
+                        <div class = "user_rating_container">
+                            <fa-icon class="rating_star rating_star1" [icon]="star"></fa-icon>
+                            <fa-icon class="rating_star rating_star2" [icon]="star"></fa-icon>
+                            <fa-icon class="rating_star rating_star3" [icon]="star"></fa-icon>
+                            <fa-icon class="rating_star rating_star4" [icon]="star"></fa-icon>
+                            <fa-icon class="rating_star rating_star5" [icon]="star"></fa-icon>
+                        </div> 
+         
+                    </div>
+                </div> 
+                
+            </div> 
 
-        <h3 class="product_attribute">{{Media.Platform}}</h3> 
-        
-        <h3 class="product_attribute"> </h3>
+        </div> 
 
+        <input [disabled]="storage.cartContains(media)"  type="button" id="order_now"  routerLink=""  value="Order Now">
 
     </div>
 

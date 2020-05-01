@@ -23,17 +23,11 @@ export class ProductPageComponent implements OnInit {
       const id = params.id;
 
 
+      // asynchronously executing.
       api.getMediaByID(id).subscribe(media => {
         this.media = media; 
-      }); 
-
-      if (this.media != undefined) {
       
-
-
-      }
-
-
+      });  
 
     });
 

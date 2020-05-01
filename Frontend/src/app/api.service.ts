@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Media } from './model/media';
+import { Order } from './model/order';
 import { HttpClient } from '@angular/common/http';
 
 
@@ -14,13 +15,18 @@ export class ApiService {
 
   constructor(private http: HttpClient ) { }
 
+  public getOrders() { 
+    return this.http.get<Order>(ApiService.API_URL + 'orders'); 
+  }
+
 
   public getMedia(pageNum= 1): Observable<Media[]> {
     const params = {
     page : pageNum + ''
     };
+
     return this.http.get<Media[]>(ApiService.API_URL + 'media', {params});
-  }
+  } 
 
 
   public getMediaByID(id): Observable<Media> {
