@@ -19,7 +19,7 @@ export class LocalstorageService {
 
   removeItemFromCart(media) {
     if (this._cart) {
-      this._cart.filter(a => a.Media_ID !== media.Media_ID);
+      this._cart = this._cart.filter(a => a.Media_ID !== media.Media_ID);
     }
     this._cartSubject.next(this._cart);
     this.saveToStorage();
