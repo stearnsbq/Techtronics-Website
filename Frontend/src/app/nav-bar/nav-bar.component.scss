@@ -102,7 +102,9 @@
 }
 
 
+
 .title{
+  cursor: pointer;
   color: white;
   margin-top: 10px;
   padding-left: 10px;
@@ -110,6 +112,11 @@
   text-align: center;
   user-select: none;
 }
+
+.title:hover { 
+  color: lightgrey;
+}
+
 
 .navbutton{
   cursor: pointer;
@@ -136,6 +143,7 @@
 
 
 .menu{
+  cursor: pointer;
   color: white;
   font-size: 35px;
   margin-top: -10px;

@@ -200,10 +200,15 @@ input {
   padding-top: 5px;
   text-align: center;
   transition: 0.2s;
+  
 }
 
+#register_box_msg {
+  cursor: pointer; 
+  
+}
 
-#register_box:hover{
+#register_box_msg:hover{
   color: blue;
 }
 

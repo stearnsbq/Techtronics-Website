@@ -4,9 +4,9 @@
         <div *ngFor='let media of allMedia'  class="cart_item">
             <div class="product_information"> 
                 <div class="content_header">
-                    <h2 class="product_name"> {{media.Name}} </h2>   
-                    <fa-icon [icon]="minus" class="remove_button">  </fa-icon>  
-                </div>
+                    <h2 class="product_name"> {{media.Name}} </h2>    
+                    <fa-icon [icon]="minus" (click)="remove_from_cart(media.Media_ID)" class="remove_button">  </fa-icon>  
+                </div> 
                 
                 <div class="all_attributes"> 
                     <div class="attribute_pack"> 
@@ -19,7 +19,7 @@
                         <h3 class="product_attribute">{{media.Platform}}</h3>   
                     </div>
 
-                    <div class = "attribute_pack rating_attribute_pack">
+                    <div class = "attribute_pack rating_attribute_pack"> 
                         <h3 class="product_attr_title">User Rating</h3> 
                         <div class = "user_rating_container">
                             <fa-icon class="rating_star rating_star1" [icon]="star"></fa-icon>

@@ -19,7 +19,7 @@ export class LocalstorageService {
 
   removeItemFromCart(media) {
     if (this._cart) {
-      this._cart.filter(a => a.Media_ID !== media.Media_ID);
+      this._cart = this._cart.filter(a => a.Media_ID !== media);
     }
     this._cartSubject.next(this._cart);
     this.saveToStorage();
@@ -60,12 +60,11 @@ export class LocalstorageService {
   syncStorage() {
     if (localStorage.getItem('cart')) {
       this._cart = JSON.parse(localStorage.getItem('cart'));
-      this._cartSubject.next(this._cart);
+      this._cartSubject.next(this._cart);   
     }
   }
 
-
-  saveToStorage() {
+  saveToStorage() { 
       localStorage.setItem('cart', JSON.stringify(this._cart));
   }
 

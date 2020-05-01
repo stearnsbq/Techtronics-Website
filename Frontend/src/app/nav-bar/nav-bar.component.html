@@ -25,9 +25,9 @@
       <fa-icon [icon]="bars" (click)="menuShown = !menuShown" class="menu"></fa-icon>
 
       <div class="shopping-cart-container">
-        <a routerLink="cart"> <!-- Had to change this so that it would work regardless of the fact. -->
-          <fa-icon [icon]="cart" id="shopping-cart"></fa-icon>
-         <span *ngIf="itemsInCart > 0" id="cart-count-icon">{{itemsInCart}}</span> 
+        <a draggable="false" routerLink="cart"> <!-- Had to change this so that it would work regardless of the fact. -->
+          <fa-icon draggable="false"  [icon]="cart" id="shopping-cart"></fa-icon>
+         <span *ngIf="itemsInCart > 0" id="cart-count-icon">{{itemsInCart}}</span>  
         </a>
       </div> 
 
