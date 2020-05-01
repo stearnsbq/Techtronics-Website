@@ -20,6 +20,7 @@ export class RegistrationComponent implements OnInit {
 
 
   onRegister(form) {
+    console.log(form);
 
   }
 

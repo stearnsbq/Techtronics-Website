@@ -2,6 +2,7 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Media } from '../model/media';
 import {faEdit} from '@fortawesome/free-solid-svg-icons';
 import { FormArray, FormGroup, FormControl } from '@angular/forms';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-media-info',
@@ -18,7 +19,7 @@ export class MediaInfoComponent implements OnInit {
   public control: FormGroup;
 
 
-  constructor() {
+  constructor(public api: ApiService) {
 
 
   }
@@ -46,8 +47,6 @@ export class MediaInfoComponent implements OnInit {
 
   update(field) {
     this.media[field] = this.control.value[field];
-
-    console.table(this.media);
   }
 
 
@@ -58,6 +57,12 @@ export class MediaInfoComponent implements OnInit {
 
   changeImage(selectedImage) {
     this.selectedImage = selectedImage;
+  }
+
+  saveChanges(event) {
+    this.api.updateMedia(this.media).subscribe(result => {
+        this.media = result;
+    });
   }
 
 

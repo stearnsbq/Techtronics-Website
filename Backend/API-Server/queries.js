@@ -476,7 +476,7 @@ class Queries {
 
 	static get_media_by_id(connection, id) {
 		return new Promise((resolve, reject) => {
-			const query = `SELECT * FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID 
+			const query = `SELECT DISTINCT * FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID 
 			LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
 			LEFT JOIN Game ON Game.Game_ID=Media.Media_ID 
 			LEFT JOIN Hardware ON Hardware.Hardware_ID=Media.Media_ID 
@@ -500,6 +500,7 @@ class Queries {
 
 						const images = await this._get_images_for_media(connection, results[0].Media_ID);	
 						tmp['images'] = images ? images : [];
+						tmp['specials'] = await this._add_specials(connection, results[0].Media_ID);
 						tmp['DLC'] = await this._add_DLC(connection, results[0].Media_ID);
 					
 					return resolve(tmp);
@@ -652,7 +653,15 @@ class Queries {
 	static update_media(connection, media){
 		return new Promise((resolve, reject)=>{
 			connection.query("UPDATE Media SET `Condition`=?, Name=?, Price=?, Platform=?, Quantity=?, Type=?  WHERE Media_ID=?", [media['Condition'], media['Name'], media['Price'], media['Platform'], media['Quantity'], media['Type'], media.Media_ID], (err, results, fields) =>{
-				return err ? reject(err) : resolve(results);
+				if(err){
+					return reject(err);
+				}else{
+					if(media['DLC'].length > 0){
+						for(const dlc of media['DLC']){
+
+						}
+					}
+				}
 			})
 		})
 	}
@@ -665,6 +674,8 @@ class Queries {
 				sorted = sorted + ' DESC'
 			}else if (sort == 'ASC'){
 				sorted = sorted + ' ASC'
+			}else{
+				return reject(new Error("invalid sort"))
 			}
 
 			const offset = (page - 1) * ITEMS_PER_PAGE;

@@ -112,5 +112,5 @@
 
 <div id="footer">
   <hr>
-  <button *ngIf="editMode">Save Changes</button>
+  <button *ngIf="editMode" (click)="saveChanges($event)">Save Changes</button>
 </div>
