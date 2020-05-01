@@ -60,11 +60,12 @@ export class LocalstorageService {
   syncStorage() {
     if (localStorage.getItem('cart')) {
       this._cart = JSON.parse(localStorage.getItem('cart'));
-      this._cartSubject.next(this._cart);   
+      this._cartSubject.next(this._cart);
     }
   }
 
-  saveToStorage() { 
+
+  saveToStorage() {
       localStorage.setItem('cart', JSON.stringify(this._cart));
   }
 

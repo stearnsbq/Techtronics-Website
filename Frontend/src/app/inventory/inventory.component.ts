@@ -150,7 +150,7 @@ export class InventoryComponent implements OnInit {
   }
 
   handleImage(images) {
-    this.images.concat(images);
+    this.images.push(images[0]);
 
     const reader = new FileReader();
 
@@ -191,9 +191,9 @@ export class InventoryComponent implements OnInit {
       };
 
 
-
+      console.log(this.images);
       this.api.createNewMedia(newMedia).subscribe(result => {
-        this.api.uploadFiles(this.images, result.Media_ID).subscribe(result => {});
+        this.api.uploadFiles(this.images, result.Media_ID).subscribe(result => {console.log(result); });
       });
     }
   }

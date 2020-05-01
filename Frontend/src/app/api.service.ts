@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Media } from './model/media';
-import { Order } from './model/order';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 @Injectable({
@@ -15,18 +14,13 @@ export class ApiService {
 
   constructor(private http: HttpClient ) { }
 
-  public getOrders() { 
-    return this.http.get<Order>(ApiService.API_URL + 'orders'); 
-  }
-
 
   public getMedia(pageNum= 1): Observable<Media[]> {
     const params = {
     page : pageNum + ''
     };
-
     return this.http.get<Media[]>(ApiService.API_URL + 'media', {params});
-  } 
+  }
 
   public getGames() {
     return this.http.get<Media[]>(ApiService.API_URL + 'media/games');
@@ -88,8 +82,11 @@ export class ApiService {
     formData.append('media', media_id);
 
     for (const file of files) {
-      formData.append('media_image', file);
+      console.log(file);
+      formData.append('media_image', file, 'work boy');
     }
+
+   // const headers = new HttpHeaders({ 'Content-Type': 'multipart/form-data' });
 
     return this.http.post<any>(`${ApiService.API_URL}media/upload`, formData);
 

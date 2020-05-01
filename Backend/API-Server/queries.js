@@ -511,13 +511,13 @@ class Queries {
 								LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
 								LEFT JOIN Game ON Game.Game_ID=Media.Media_ID 
 								LEFT JOIN Hardware ON Hardware.Hardware_ID=Media.Media_ID 
-								WHERE Name LIKE ${serverQuery} 
+								WHERE (Name LIKE ${serverQuery} 
 								OR Platform LIKE ${serverQuery}
 								OR \`Condition\` LIKE ${serverQuery}
 								OR Game.Genre LIKE ${serverQuery} 
 								OR Video.Genre LIKE ${serverQuery}
 								OR Software.Type LIKE ${serverQuery}
-								OR Hardware.Type LIKE ${serverQuery} AND Media.deleted IS NULL`;
+								OR Hardware.Type LIKE ${serverQuery}) AND Media.deleted IS NULL`;
 
 					
 
@@ -650,14 +650,16 @@ class Queries {
 								LEFT JOIN Hardware ON Hardware.Hardware_ID=Media.Media_ID 
 								LEFT JOIN Media_Companies ON (Media_Companies.Media = Media.Media_ID)
 								LEFT JOIN Company ON (Media_Companies.Company = Company.Company_ID)
-								WHERE Media.Name LIKE ${searchQuery} 
+								WHERE (Media.Name LIKE ${searchQuery} 
 								OR Platform LIKE ${searchQuery}
 								OR \`Condition\` LIKE ${searchQuery}
 								OR Game.Genre LIKE ${searchQuery} 
 								OR Video.Genre LIKE ${searchQuery}
 								OR Software.Type LIKE ${searchQuery}
 								OR Hardware.Type LIKE ${searchQuery} 
-								OR Company.Name LIKE ${searchQuery} AND Media.deleted IS NULL ${sorted} LIMIT ${offset} , ${itemsPerPage}`;
+								OR Company.Name LIKE ${searchQuery}) AND Media.deleted IS NULL ${sorted} LIMIT ${offset} , ${itemsPerPage}`;
+
+			console.log(query)
 							
 
 			// Get all of the media in the database
