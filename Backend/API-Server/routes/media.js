@@ -5,7 +5,7 @@ module.exports = function(connection, upload) {
 	const config = require('../config/config.js');
 	var expJwt = require('express-jwt');
 
-    router.post('/upload', upload.fields([{name: 'media', maxCount: 1}, {name: 'media_image', maxCount: 5}]), expJwt({ secret: config.JWT.Secret}), async (req, res)=>{
+    router.post('/upload', upload.fields([{name: 'media', maxCount: 1}, {name: 'media_image', maxCount: 5}]), async (req, res)=>{
 		if(req.files){
 			console.log(req.files);
 
