@@ -511,13 +511,13 @@ class Queries {
 								LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
 								LEFT JOIN Game ON Game.Game_ID=Media.Media_ID 
 								LEFT JOIN Hardware ON Hardware.Hardware_ID=Media.Media_ID 
-								WHERE Name LIKE ${serverQuery} 
+								WHERE (Name LIKE ${serverQuery} 
 								OR Platform LIKE ${serverQuery}
 								OR \`Condition\` LIKE ${serverQuery}
 								OR Game.Genre LIKE ${serverQuery} 
 								OR Video.Genre LIKE ${serverQuery}
 								OR Software.Type LIKE ${serverQuery}
-								OR Hardware.Type LIKE ${serverQuery} AND Media.deleted IS NULL`;
+								OR Hardware.Type LIKE ${serverQuery}) AND Media.deleted IS NULL`;
 
 					
 
