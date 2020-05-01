@@ -107,3 +107,27 @@ h2, h3 {
 	padding:0;
 }
 
+#empty_cart_pack { 
+    display: flex;
+    justify-content: center;
+}
+
+#empty_cart_msg {
+    color: #171a21;
+    margin-left: 20px;
+    display: inline;
+    user-select: none;
+  }
+  
+#empty_cart_msg_icon { 
+    position: relative; 
+    top: 10px;
+    left: 10px;
+    display: inline-block;
+}
+
+#empty_cart_msg_icon fa-icon {
+    font-size: 60px;
+    color: #171a21; 
+ }
+

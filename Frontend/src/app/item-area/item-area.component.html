@@ -16,14 +16,14 @@
   <span>
     <h1 class="no_item_message">No items found</h1>
     <div class="no_item_msg_icon">
-      <fa-icon [icon]="sadtear"> </fa-icon>
+      <fa-icon [icon]="sadtear"> </fa-icon> 
     </div>
   </span>
 </div>
 
 
 
-<div class = "items">
+<div class = "items"> 
 
     <!-- Make this look better :) -->
     <div *ngFor="let media of allMedia | paginate: {  itemsPerPage: ITEMS_PER_PAGES, currentPage: page, totalItems: totalMedia}" (click)="onRowClick(media.Media_ID)" class = "item">

@@ -13,7 +13,7 @@
         <div id = "product_information">
 
             <div class = "attribute_container">
-                <h1 id = "product_name"> {{media.Name}} </h1>
+                <h1 id = "product_name"> {{media.Name}} </h1> 
                 <h2 id ="product_author" class="product_attribute">   </h2>
             </div>
 
@@ -36,10 +36,10 @@
                     <fa-icon class="rating_star" #rating_star4 id= "rating_star4" [icon]="star"></fa-icon>
                     <fa-icon class="rating_star" #rating_star5 id= "rating_star5" [icon]="star"></fa-icon>
                 </div> 
-            </div>
+            </div> 
 
-            <input [disabled]="storage.cartContains(media)" type="button" id="add_to_cart" (click)="addToCart(media)" value="ADD TO CART">
-        </div>
+            <input *ngIf="is_logged_in" [disabled]="storage.cartContains(media)" type="button" id="add_to_cart" (click)="addToCart(media)" value="ADD TO CART">
+        </div> 
 
 
     </div>

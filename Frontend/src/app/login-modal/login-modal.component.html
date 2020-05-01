@@ -7,7 +7,7 @@
   <form id="login_form" #form="ngForm" (ngSubmit)="onLogin(form.value)">
 
     <div id="login_title">
-      <h3>Sign In</h3>
+      <h3>Sign In</h3> 
     </div>
 
 
@@ -18,7 +18,7 @@
     </div>
 
     <div *ngIf="invalid"  id ="error" >
-      <h3>Invalid Username or Password.</h3>
+      <h3>Invalid Username or Password.</h3> 
     </div>
 
     <!--Username input for login-->
@@ -32,7 +32,7 @@
 
     <!--Password input for login-->
 
-    <label>Password</label>
+    <label>Password</label> 
     <div id="password_input">
       <input id="password" type="password" placeholder="Password" ngModel name="Password" #password="ngModel" required>
 
@@ -48,7 +48,7 @@
     </div>
 
     <div id="register_box">
-      <b id="register_box_msg" routerLink="/register">Not a Member?</b>
+      <b id="register_box_msg" routerLink="/register">Not a Member?</b> 
     </div>
   </div>
 

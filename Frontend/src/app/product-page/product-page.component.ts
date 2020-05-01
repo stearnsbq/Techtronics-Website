@@ -4,6 +4,7 @@ import { Media } from '../model/media';
 import { ApiService } from '../api.service';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
 import { LocalstorageService } from '../localstorage.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-product-page',
@@ -14,6 +15,7 @@ export class ProductPageComponent implements OnInit, AfterViewInit  {
   public media: Media;
   public star = faStar;
   public selectedImage = 1; 
+  public is_logged_in: boolean = false;  
 
   @ViewChild("rating_star1",{static: false}) rstar1: ElementRef; 
   @ViewChild("rating_star2",{static: false}) rstar2: ElementRef; 
@@ -21,8 +23,12 @@ export class ProductPageComponent implements OnInit, AfterViewInit  {
   @ViewChild("rating_star4",{static: false}) rstar4: ElementRef; 
   @ViewChild("rating_star5",{static: false}) rstar5: ElementRef; 
 
-  constructor(private route: ActivatedRoute, public storage: LocalstorageService, private api: ApiService) {
-    storage.syncStorage();
+  constructor(public auth: AuthService, private route: ActivatedRoute, public storage: LocalstorageService, private api: ApiService, ) {
+    storage.syncStorage(); 
+
+    if (auth.isAuthenticated()) {
+      this.is_logged_in = true; 
+    }
 
 
     this.route.params.subscribe(params => {

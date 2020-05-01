@@ -1,17 +1,42 @@
-<div class="register_form_parent">
+<div id="register_form_parent">
+
+
 
 
 <form id="login_form" #form="ngForm" (ngSubmit)="onRegister(form.value)">
+  <h3 id="signup_title">Sign Up</h3>
 
-  <input placeholder="Username">
+  <label>Input your username.</label>
+  <input placeholder="Username" class="signup_entry"
+  ngModel name="Username" #username="ngModel"
+  >
 
-  <input type="password" placeholder="Password">
-  <input type="email" placeholder="Email">
-  <input type="text" placeholder="First Name">
-  <input type="text" placeholder="Last Name">
-  <input type="date">
+  <label>Input your password.</label>
+  <input type="password" placeholder="Password" class="signup_entry"
+  ngModel name="Password" #password="ngModel"
+  >
 
+  <label>Input your email.</label>
+  <input type="email" placeholder="Email" class="signup_entry"
+  ngModel name="Email" #email="ngModel" 
+  >
 
+  <label>Input your first name.</label> 
+  <input type="text" placeholder="First Name" class="signup_entry"
+  ngModel name="first_name" #first_name="ngModel"
+  >
+
+  <label>Input your last name.</label> 
+  <input type="text" placeholder="Last Name" class="signup_entry"
+    ngModel name="last_name" #last_name="ngModel"
+  >
+
+  <label>Input your birthdate.</label>
+  <input type="date" class="signup_entry" min="1903-01-02">  
+
+  <div id="login_button">
+    <button id="register_button" type="submit" routerLink="login">Register</button>
+  </div>
 </form>
 
 </div>
