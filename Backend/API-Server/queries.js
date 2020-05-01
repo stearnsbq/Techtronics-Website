@@ -401,7 +401,7 @@ class Queries {
 			const companyInfo = body['companyInfo']
 
 			connection.query(
-				`INSERT INTO Media (Name, Platform, Price, \`Condition\`) VALUES (?, ?, ?, ?)`, [body['name'], body['platform'], body['price'], body['condition']],
+				`INSERT INTO Media (Name, Platform, Price, \`Condition\`, Quantity, Type) VALUES (?, ?, ?, ?, ?, ?)`, [body['name'], body['platform'], body['price'], body['condition'], body['quantity']. body['type']],
 				async (err, results, fi) => {
 					if (err) {
 						return reject(err);

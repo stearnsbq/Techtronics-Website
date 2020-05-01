@@ -44,21 +44,22 @@
 
 <app-modal title="Create New Media" [(toggle)]="createNewMediaModalShow" id="create-new-media">
 
-    <form #form="ngForm" (ngSubmit)="createNew(form.value)">
+    <form ngNativeValidate #form="ngForm" (ngSubmit)="createNew(form.value)">
 
       <div class="media-info">
 
         <label>Media Name</label>
-        <input type="text" ngModel name="Name" #name="ngModel" placeholder="Name">
+        <input type="text" ngModel name="Name" #name="ngModel" placeholder="Name" required>
         <label>Platform</label>
-        <input type="text" ngModel name="Platform" #platform="ngModel" placeholder="Platform">
+        <input type="text" ngModel name="Platform" #platform="ngModel" placeholder="Platform" required />
         <label>Price</label>
-        <input type="number" min="1" step="any" ngModel name="Price" #price="ngModel" placeholder="Price" />
+        <input type="number" min="1" step="any" ngModel name="Price" #price="ngModel" placeholder="Price" required/>
         <label>Quantity</label>
-        <input type="number" min="1" step="any" ngModel name="Quantity" #quantity="ngModel" placeholder="Quantity"/>
+        <input type="number" min="1" step="any" ngModel name="Quantity" #quantity="ngModel" placeholder="Quantity" required/>
 
         <label>Condition</label>
-        <select ngModel name="Condition" #condition="ngModel">
+        <select ngModel name="Condition" required #condition="ngModel">
+          <option value="" selected disabled>Select Condition</option>
           <option>Used</option>
           <option>New</option>
         </select>
@@ -66,16 +67,28 @@
 
         <div id="media-companies">
           <label>Publisher</label>
-          <select ngModel name="Publisher" #publisher="ngModel"></select>
+          <select ngModel name="Publisher" #publisher="ngModel">
+            <option value="" selected disabled>Select Publisher</option>
+            <option *ngFor="let publisher of publishers">{{publisher.Name}}</option>
+          </select>
           <label>Developer</label>
-          <select ngModel name="Developer" #developer="ngModel"></select>
+          <select ngModel name="Developer" #developer="ngModel">
+            <option value="" selected disabled>Select Developer</option>
+            <option *ngFor="let publisher of developers">{{publisher.Name}}</option>
+          </select>
           <label>Manufacturer</label>
-          <select ngModel name="Manufacturer" #manufacturer="ngModel"></select>
+          <select ngModel name="Manufacturer" #manufacturer="ngModel">
+            <option value="" selected disabled>Select Manufacturer</option>
+            <option *ngFor="let manufacturer of manufacturers">{{manufacturer.Name}}</option>
+          </select>
+          <div *ngIf="invalidCompany" class="error">
+            Atleast 1 company is required!
+          </div>
         </div>
 
         <label>Type</label>
 
-        <select ngModel name="Type" #type="ngModel" [(ngModel)]="selectedMediaType">
+        <select ngModel name="Type" #type="ngModel" required [(ngModel)]="selectedMediaType" >
           <option>Game</option>
           <option>Video</option>
           <option>Software</option>
@@ -91,9 +104,9 @@
 
         <div *ngIf="selectedMediaType === 'Game'" class="media-info" id="game-info">
           <label>Game Genre</label>
-          <input type="text" ngModel name="Game_Genre" #game_genre="ngModel" placeholder="Genre">
+          <input type="text" ngModel name="Game_Genre" #game_genre="ngModel" placeholder="Genre" required>
           <label>ESRB</label>
-          <select ngModel name="ESRB" #esrb="ngModel">
+          <select ngModel name="ESRB" #esrb="ngModel" required>
             <option value="" selected disabled>Select ESRB Rating</option>
             <option>E</option>
             <option>E10+</option>
@@ -113,8 +126,8 @@
 
         <div *ngIf="selectedMediaType === 'Video'" class="media-info" id="video-info">
           <label>Video Genre</label>
-          <input ngModel name="Video_Genre" #video_genre="ngModel" type="text" placeholder="Genre">
-          <select ngModel name="MPAA_Rating" #mpaa_rating="ngModel">
+          <input ngModel name="Video_Genre" #video_genre="ngModel" type="text" placeholder="Genre" required>
+          <select ngModel name="MPAA_Rating" #mpaa_rating="ngModel" required>
             <option value="" selected disabled>Select MPAA Rating</option>
             <option>G</option>
             <option>PG</option>
@@ -126,12 +139,12 @@
 
         <div *ngIf="selectedMediaType === 'Software'" class="media-info" id="software-info">
           <label>Software_Type</label>
-          <input type="text" ngModel name="Software_Type" #software_type="ngModel" placeholder="Type">
+          <input type="text" ngModel name="Software_Type" #software_type="ngModel" placeholder="Type" required>
         </div>
 
         <div *ngIf="selectedMediaType === 'Hardware'" class="media-info" id="hardware-info">
           <label>Hardware_Type</label>
-            <input type="text" ngModel name="Hardware_Type" #hardware_type="ngModel" placeholder="Type">
+            <input type="text" ngModel name="Hardware_Type" #hardware_type="ngModel" placeholder="Type" required>
         </div>
 
       </div>

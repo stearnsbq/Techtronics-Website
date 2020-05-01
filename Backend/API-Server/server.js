@@ -40,12 +40,13 @@ var companies = require('./routes/companies.js')(connection);
 
 // all media related endpoints
 app.use('/api/media', media);
-// all user related endpoints
 
+// all user related endpoints
 app.use('/api/user', user);
 
 // all order related endpoints
 app.use('/api/orders', orders);
+
 
 app.use('/api/companies', companies);
 

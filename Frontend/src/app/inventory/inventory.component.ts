@@ -6,7 +6,7 @@ import * as icons from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-inventory',
   templateUrl: './inventory.component.html',
-  styleUrls: ['./inventory.component.scss']
+  styleUrls: ['./inventory.component.scss'],
 })
 export class InventoryComponent implements OnInit {
   public inventory: Media[];
@@ -16,8 +16,6 @@ export class InventoryComponent implements OnInit {
   public query = '';
   public exitIcon = icons.faTimes;
   public allChecked = false;
-
-
 
   public createNewMediaModalShow = false;
   public createNewSpecialModalShow = false;
@@ -30,31 +28,52 @@ export class InventoryComponent implements OnInit {
   public showMedia = false;
   public selectedMedia: Media;
 
+  public publishers: any[];
+  public developers: any[];
+  public manufacturers: any[];
+
+  public invalidCompany = false;
+
   constructor(public api: ApiService) {
     this.inventory = [];
     this.games = [];
     this.editedInventory = [];
+    this.publishers = [];
+    this.developers = [];
+    this.manufacturers = [];
 
-    api.searchMedia(this.page, this.query).subscribe(media => {
-      console.log(media);
+    api.searchMedia(this.page, this.query).subscribe((media) => {
       this.inventory.push.apply(this.inventory, media);
     });
 
-    api.totalMedia().subscribe(count => this.totalItems = count.total);
+    api.totalMedia().subscribe((count) => (this.totalItems = count.total));
 
-    api.getGames().subscribe(games => this.games = games );
+    api.getGames().subscribe((games) => (this.games = games));
 
+    api
+      .getDevelopers()
+      .subscribe((developers) => (this.developers = developers));
 
-   }
+    api
+      .getManufacturers()
+      .subscribe((manufacturers) => (this.manufacturers = manufacturers));
 
-  ngOnInit() {
+    api
+      .getPublishers()
+      .subscribe((publishers) => (this.publishers = publishers));
   }
+
+  ngOnInit() {}
 
   // checks when bottom of page is met so we can load more items
   scroll(event) {
-    if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight && !this.bottom) {
+    if (
+      event.target.offsetHeight + event.target.scrollTop >=
+        event.target.scrollHeight &&
+      !this.bottom
+    ) {
       this.page++;
-      this.api.searchMedia(this.page, this.query).subscribe(media => {
+      this.api.searchMedia(this.page, this.query).subscribe((media) => {
         if (media.length <= 0) {
           this.bottom = true;
         } else {
@@ -64,31 +83,29 @@ export class InventoryComponent implements OnInit {
     }
   }
 
-
   search() {
     this.page = 1;
     this.bottom = false;
-    this.api.searchMedia(this.page, this.query).subscribe(media => {
+    this.api.searchMedia(this.page, this.query).subscribe((media) => {
       this.inventory = media;
     });
   }
 
-
   change(event, i) {
     const field = event.target.getAttribute('name');
-    const indexOf = this.editedInventory.findIndex(e => e.Media_ID === this.editedInventory[i].Media_ID);
+    const indexOf = this.editedInventory.findIndex(
+      (e) => e.Media_ID === this.editedInventory[i].Media_ID
+    );
 
     if (indexOf >= 0) {
-       this.editedInventory[indexOf][field] = event.target.outerText;
-     } else {
-       const copy: any = {};
-       copy[field] = event.target.outerText;
-       Object.assign(copy, this.inventory[i]);
-       this.editedInventory.push(copy);
+      this.editedInventory[indexOf][field] = event.target.outerText;
+    } else {
+      const copy: any = {};
+      copy[field] = event.target.outerText;
+      Object.assign(copy, this.inventory[i]);
+      this.editedInventory.push(copy);
     }
   }
-
-
 
   showMediaModal(media) {
     this.showMedia = true;
@@ -99,10 +116,60 @@ export class InventoryComponent implements OnInit {
     this.api.updateMedia(this.editedInventory);
   }
 
-  createNew(data) {
-    console.log(data);
-
+  getMediaFields(data, type) {
+    switch (type) {
+      case 'Game':
+        return Object.assign(
+          {},
+          { genre: data.Game_Genre },
+          { esrb_rating: data.ESRB },
+          data.DLC.length <= 0 ? null : { dlc: data.DLC.length }
+        );
+      case 'Video':
+        return {
+          genre: data.Video_Genre,
+          mpaa_rating: data.MPAA_Rating,
+        };
+      case 'Hardware':
+        return {
+          type: data.Hardware_Type,
+        };
+      case 'Software':
+        return {
+          type: data.Software_Type,
+        };
+    }
   }
 
+  createNew(data) {
+    if (
+      data.Publisher.length <= 0 &&
+      data.Manufacturer.length <= 0 &&
+      data.Developer.length <= 0
+    ) {
+      this.invalidCompany = true;
+    } else {
+      const newMedia = {
+        name: data.Name,
+        platform: data.Platform,
+        price: data.Price,
+        condition: data.Condition,
+        quantity: data.Quantity,
+        mediaType: data.Type,
+        mediaFields: this.getMediaFields(data, data.Type),
+        companyInfo: Object.assign(
+          {},
+          data.Publisher.length <= 0 ? null : { publisher: data.Publisher },
+          data.Developer.length <= 0 ? null : { developer: data.Developer },
+          data.Manufacturer.length <= 0 ? null : { manufacturer: data.Manufacturer }
+        ),
+      };
 
+      console.log(newMedia);
+
+      this.api.createNewMedia(newMedia).subscribe(result => {
+        console.log(result);
+      });
+    }
+  }
 }

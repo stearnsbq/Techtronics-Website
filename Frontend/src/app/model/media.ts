@@ -1,5 +1,5 @@
 export interface Media {
-  Media_ID: number;
+  Media_ID?: number;
   Name: string;
   Platform: string;
   Price: number;

@@ -7,7 +7,6 @@ module.exports = function(connection){
 
     router.get("/:type", async (req, res)=>{
         try {
-
             switch(req.params['type']){
                 case "publishers":
                     res.send(await sql_queries.get_publishers(connection));
@@ -21,7 +20,6 @@ module.exports = function(connection){
                 default:
                     res.sendStatus(400);
             }
-            
         } catch (error) {
             res.send(500);
         }
