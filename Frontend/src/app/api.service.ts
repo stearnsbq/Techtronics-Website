@@ -86,16 +86,19 @@ export class ApiService {
       formData.append('media_image', file, 'work boy');
     }
 
-   // const headers = new HttpHeaders({ 'Content-Type': 'multipart/form-data' });
 
     return this.http.post<any>(`${ApiService.API_URL}media/upload`, formData);
 
   }
 
 
-  public insertSignupInfo() {
-    
+  public createNewSpecial(special) {
+    return this.http.post<Media>(`${ApiService.API_URL}specials/`, special);
   }
+
+
+
+
 
 
 

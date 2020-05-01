@@ -1,1 +1,77 @@
-<h1>{{media.Name}}</h1>
+<fa-icon title="Edit" [icon]="editIcon" (click)="editMode = !editMode" id="edit-item-icon"></fa-icon>
+<fa-icon [icon]="removeIcon" id="remove-image"></fa-icon>
+
+<div id="images-container">
+  <label id="images-label">Images</label>
+
+  <div id="product-images">
+    <img *ngFor="let image of media.images | paginate: {  itemsPerPage: 1, currentPage: selectedImage, totalItems: media.images.length}" id = "product_image"  draggable="false" [src]="'http://3.234.246.29:8081/api/uploads/media/' + media.Media_ID + '/' + image">
+    <pagination-controls *ngIf="media.images.length > 0" class="pagination-controls" (pageChange)="changeImage($event)"></pagination-controls>
+  </div>
+
+  <div *ngIf="editMode" id="add-new-images">
+    <label>Add new Image</label>
+    <input type="file">
+  </div>
+
+</div>
+
+<div id="product_info">
+
+  <div (change)="update($event.target.name)" *ngIf="editMode" id="editMode">
+
+    <p>Condition: <input *ngIf="editMode" name="Condition" [formControl]="getField('Condition')"></p>
+    <p>Price: <input type="number" *ngIf="editMode" name="Price" [formControl]="getField('Price')"></p>
+    <p>Quantity: <input type="number" *ngIf="editMode" name="Quantity" [formControl]="getField('Quantity')"></p>
+    <p>Type:
+      <select name="Type" [formControl]="getField('Type')">
+        <option>Game</option>
+        <option>Video</option>
+        <option>Software</option>
+        <option>Hardware</option>
+    </select></p>
+  </div>
+
+  <div id="viewMode" *ngIf="!editMode">
+
+    <p>Condition: {{media.Condition}}</p>
+    <p>Price: {{media.Price}}</p>
+    <p>Quantity: {{media.Quantity}}</p>
+    <p>Type: {{media.Type}}</p>
+
+
+  </div>
+
+
+
+  <hr>
+
+  <div *ngIf="media.Type === 'Game'">
+    <p>Genre: {{media.Game_Genre}}</p>
+    <p>ESRB: {{media.ESRB_Rating}}</p>
+    <div *ngIf="media.DLC.length > 0">
+        <p *ngFor="let dlc of media.DLC">{{dlc.Name}}</p>
+    </div>
+  </div>
+
+  <div *ngIf="media.Type === 'Video'">
+    <p>Genre: {{media.Video_Genre}}</p>
+    <p>MPAA: {{media.MPAA_Rating}}</p>
+  </div>
+
+  <div *ngIf="media.Type === 'Hardware'">
+    <p>Type: {{media.Hardware_Type}}</p>
+  </div>
+
+  <div *ngIf="media.Type === 'Software'">
+    <p>Type: {{media.Software_Type}}</p>
+  </div>
+
+</div>
+
+
+
+<div id="footer">
+  <hr>
+  <button>Save Changes</button>
+</div>
