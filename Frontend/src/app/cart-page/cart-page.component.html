@@ -1,6 +1,6 @@
 <div id="cart_page_container">
 
-    <div id="cart_page_content">
+    <div id="cart_page_content"> 
         <div *ngFor='let media of allMedia'  class="cart_item">
             <div class="product_information">
                 <div class="content_header">
@@ -11,7 +11,7 @@
                 <div class="all_attributes">
                     <div class="attribute_pack">
                         <h3 class="product_attr_title">Price</h3>
-                        <h3 class="product_attribute">${{media.Price}}</h3>
+                        <h3 class="product_attribute">${{media.Price}}</h3> 
                     </div>
 
                     <div class="attribute_pack">
@@ -34,9 +34,20 @@
 
             </div>
 
-        </div>
+        </div> 
+        
+        <input *ngIf="has_items" [disabled]="local_storage.cartContains(media)"  type="button" id="order_now"  routerLink=""  value="Order Now">
+        
+        <div *ngIf="!has_items" id="empty_cart_pack">
+            <!-- Make this look better..... -->
+            <span>
+              <h1 id="empty_cart_msg">Your cart is empty!</h1>
+              <div id="empty_cart_msg_icon">
+                <fa-icon [icon]="surprise"> </fa-icon> 
+              </div>
+            </span>
+          </div>
 
-        <input [disabled]="local_storage.cartContains(media)"  type="button" id="order_now"  routerLink=""  value="Order Now">
 
     </div>
 

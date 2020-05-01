@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Media } from '../model/media';
 import { ApiService } from '../api.service';
 import * as icons from '@fortawesome/free-solid-svg-icons';
-import { read } from 'fs';
+
 
 @Component({
   selector: 'app-inventory',

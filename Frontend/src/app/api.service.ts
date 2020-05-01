@@ -93,8 +93,9 @@ export class ApiService {
   }
 
 
-
-
+  public insertSignupInfo() {
+    
+  }
 
 
 
