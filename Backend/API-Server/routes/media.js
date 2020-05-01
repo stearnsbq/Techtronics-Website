@@ -11,8 +11,8 @@ module.exports = function(connection) {
 
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
-			if(!fs.existsSync('./uploads/media/')){
-				fs.mkdirSync('./uploads/media/');
+			if(!fs.existsSync('/uploads/media/')){
+				fs.mkdirSync('/uploads/media/');
 			}
 
 		  const path = './uploads/media/'+ req.body.media;
