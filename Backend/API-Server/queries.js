@@ -650,14 +650,14 @@ class Queries {
 								LEFT JOIN Hardware ON Hardware.Hardware_ID=Media.Media_ID 
 								LEFT JOIN Media_Companies ON (Media_Companies.Media = Media.Media_ID)
 								LEFT JOIN Company ON (Media_Companies.Company = Company.Company_ID)
-								WHERE Media.Name LIKE ${searchQuery} 
+								WHERE (Media.deleted IS NULL) AND Media.Name LIKE ${searchQuery} 
 								OR Platform LIKE ${searchQuery}
 								OR \`Condition\` LIKE ${searchQuery}
 								OR Game.Genre LIKE ${searchQuery} 
 								OR Video.Genre LIKE ${searchQuery}
 								OR Software.Type LIKE ${searchQuery}
 								OR Hardware.Type LIKE ${searchQuery} 
-								OR Company.Name LIKE ${searchQuery} AND Media.deleted IS NULL ${sorted} LIMIT ${offset} , ${itemsPerPage}`;
+								OR Company.Name LIKE ${searchQuery} ${sorted} LIMIT ${offset} , ${itemsPerPage}`;
 							
 
 			// Get all of the media in the database
