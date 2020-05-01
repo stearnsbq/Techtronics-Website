@@ -90,9 +90,19 @@ module.exports = function(connection, upload) {
 	// POST ENDPOINTS
 
     router.post('/specials', expJwt({ secret: config.JWT.Secret}), async (req, res) => {
-        const body = req.body;
-        await sql_queries.create_new_special(connection, body['percentage_off'], body['start_date'], body['end_date']);
-        res.sendStatus(200);
+		const body = req.body;
+
+		try {
+			connection.beginTransaction();
+
+			await sql_queries.create_new_special(connection, body['percentage_off'], body['end_date'], parseInt(body['media']));
+
+			connection.commit();
+			res.sendStatus(200);
+		}catch(err){
+			connection.rollback();
+			res.send(err, 500);
+		}
     });
 
 

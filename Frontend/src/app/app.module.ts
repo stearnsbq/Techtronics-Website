@@ -72,14 +72,14 @@ export function tokenGetter() {
       }
     }),
     RouterModule.forRoot([
-      // {path: '', component: HomePageComponent},
+      {path: '', component: HomePageComponent},
       {path: 'search', component: ItemAreaComponent},
       {path: 'product/:id',  component: ProductPageComponent},
       {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
       {path: 'register', component: RegistrationComponent},
       {path: 'controlpanel', component: ControlpanelComponent , canActivate: [RoleGuardService], data: {neededRole: 'Employee'} },
       {path: 'login', component: LoginModalComponent},
-      {path: 'cart', component: CartPageComponent},
+      {path: 'cart', component: CartPageComponent, canActivate: [AuthGuard]},
       {path: '**', redirectTo: ''}
     ]),
     ReactiveFormsModule,

@@ -16,7 +16,6 @@ export class InventoryComponent implements OnInit {
   public totalItems = 0;
   public query = '';
   public exitIcon = icons.faTimes;
-  public allChecked = false;
 
   public selectedImage: any;
 
@@ -40,6 +39,8 @@ export class InventoryComponent implements OnInit {
   public images: File[];
   public imagePreviews: any[];
 
+  public itemsForSpecial: Media[];
+
   constructor(public api: ApiService) {
     this.inventory = [];
     this.games = [];
@@ -49,6 +50,7 @@ export class InventoryComponent implements OnInit {
     this.manufacturers = [];
     this.images = [];
     this.imagePreviews = [];
+    this.itemsForSpecial = [];
 
     api.searchMedia(this.page, this.query).subscribe((media) => {
       this.inventory.push.apply(this.inventory, media);
@@ -165,6 +167,11 @@ export class InventoryComponent implements OnInit {
     this.selectedImage = event;
   }
 
+
+  addNewMediaForSpecial(event) {
+    this.itemsForSpecial.push(event.target.ngValue);
+  }
+
   createNew(data) {
     if (
       data.Publisher.length <= 0 &&
@@ -190,11 +197,14 @@ export class InventoryComponent implements OnInit {
         ),
       };
 
-
-      console.log(this.images);
       this.api.createNewMedia(newMedia).subscribe(result => {
-        this.api.uploadFiles(this.images, result.Media_ID).subscribe(result => {console.log(result); });
+        this.api.uploadFiles(this.images, result.Media_ID).subscribe(result => {});
       });
     }
+  }
+
+
+  createNewSpecial(data) {
+    this.api.createNewSpecial(data).subscribe(result => {});
   }
 }

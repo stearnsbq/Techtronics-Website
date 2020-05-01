@@ -1,9 +1,14 @@
+import { Special } from './special';
+
 export interface Media {
   Media_ID?: number;
   Name: string;
   Platform: string;
   Price: number;
   Condition: string;
+  Quantity?: number;
+  Type: string;
+  Specials: Special[];
   User_Rating?: number;
   Game_Genre?: string;
   ESRB_Rating?: string;

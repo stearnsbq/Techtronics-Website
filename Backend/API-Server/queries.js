@@ -218,16 +218,32 @@ class Queries {
 		});
 	}
 
-	static create_new_special(connection, percentage_off, start_date, end_date) {
+	static create_new_special(connection, percentage_off, end_date, media_id) {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				'INSERT INTO Specials (Percentage_off, Start_date, End_date) VALUES (?, ?, ?)',
-				[ percentage_off, start_date, end_date ],
-				(err, results, fi) => {
-					return err ? reject(err) : resolve(results);
+				'INSERT INTO Specials (Percentage_off, Start_date, End_date) VALUES (?, SYSDATE(), ?)',
+				[ percentage_off, end_date ],
+				async (err, results, fi) => {
+					if(err){
+						return reject(err);
+					}else{
+						const special_id = await this.get_last_id(connection);
+						return resolve(await this._add_media_specials(connection, media_id, special_id))
+					}
+					
 				}
 			);
 		});
+	}
+
+	static _add_media_specials(connection, media_id, special_id){
+		return new Promise((resolve, reject) => {
+
+			connection.query("INSERT INTO Media_Specials (Special_ID, Media) VALUES (?, ?)", [special_id, media_id], (err, results, fields) =>{
+				return err ? reject(err) : resolve(results);
+			})
+
+		})
 	}
 
 	static get_all_games(connection) {
@@ -616,6 +632,15 @@ class Queries {
 	}
 
 
+	static _add_specials(connection, media_id){
+		return new Promise((resolve, reject) =>{
+			connection.query("SELECT * FROM Specials JOIN Media_Specials ON (Specials.Specials_ID = Media_Specials.Special_ID) WHERE Media_Specials.Media = ?", [media_id], (err, results, fields) =>{
+				return err ? reject(err) : resolve(results);
+			});
+		})
+	}
+
+
 	static delete_media(connection, media_id){
 		return new Promise((resolve, reject)=>{
 			connection.query("UPDATE Media SET deleted = SYSDATE() WHERE Media_ID=?", [media_id], (err, results, fields) =>{
@@ -626,7 +651,7 @@ class Queries {
 
 	static update_media(connection, media){
 		return new Promise((resolve, reject)=>{
-			connection.query("UPDATE Media SET `Condition` = ?, Name=?, Price=?, Platform=?, Quantity=?, Type=?  WHERE Media_ID=?", [media['Condition'],media['Name'],media['Price'],media['Platform'],media['Quantity'],media['Type'], media.Media_ID], (err, results, fields) =>{
+			connection.query("UPDATE Media SET `Condition`=?, Name=?, Price=?, Platform=?, Quantity=?, Type=?  WHERE Media_ID=?", [media['Condition'], media['Name'], media['Price'], media['Platform'], media['Quantity'], media['Type'], media.Media_ID], (err, results, fields) =>{
 				return err ? reject(err) : resolve(results);
 			})
 		})
@@ -659,7 +684,6 @@ class Queries {
 								OR Hardware.Type LIKE ${searchQuery} 
 								OR Company.Name LIKE ${searchQuery}) AND Media.deleted IS NULL ${sorted} LIMIT ${offset} , ${itemsPerPage}`;
 
-			console.log(query)
 							
 
 			// Get all of the media in the database
@@ -678,6 +702,7 @@ class Queries {
 						result['images'] = await this._get_images_for_media(connection, result.Media_ID);
 						result['companyInfo'] = await this._add_companies(connection, result.Media_ID);
 						result['DLC'] = await this._add_DLC(connection, result.Media_ID);
+						result['Specials'] = await this._add_media_specials(connection, result.Media_ID);
 						send.push(result);
 					}
 
