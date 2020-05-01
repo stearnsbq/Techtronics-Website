@@ -7,6 +7,9 @@ module.exports = function(connection, upload) {
 
     router.post('/upload', upload.fields([{name: 'media', maxCount: 1}, {name: 'media_image', maxCount: 5}]), expJwt({ secret: config.JWT.Secret}), async (req, res)=>{
 		if(req.files){
+			console.log(req.files);
+
+
 			for(const image of req.files['media_image']){
 				await sql_queries.set_images(connection, parseInt(req.body.media), image.filename);
 			}
