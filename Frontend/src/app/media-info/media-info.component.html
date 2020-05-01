@@ -5,8 +5,12 @@
   <label id="images-label">Images</label>
 
   <div id="product-images">
-    <img *ngFor="let image of media.images | paginate: {  itemsPerPage: 1, currentPage: selectedImage, totalItems: media.images.length}" id = "product_image"  draggable="false" [src]="'http://3.234.246.29:8081/api/uploads/media/' + media.Media_ID + '/' + image">
-    <pagination-controls *ngIf="media.images.length > 0" class="pagination-controls" (pageChange)="changeImage($event)"></pagination-controls>
+    <img
+      *ngFor="let image of media.images | paginate: {  itemsPerPage: 1, currentPage: selectedImage, totalItems: media.images.length}"
+      id="product_image" draggable="false"
+      [src]="'http://3.234.246.29:8081/api/uploads/media/' + media.Media_ID + '/' + image">
+    <pagination-controls *ngIf="media.images.length > 0" class="pagination-controls" (pageChange)="changeImage($event)">
+    </pagination-controls>
   </div>
 
   <div *ngIf="editMode" id="add-new-images">
@@ -20,16 +24,16 @@
 
   <div (change)="update($event.target.name)" *ngIf="editMode" id="editMode">
 
-    <p>Condition: <input *ngIf="editMode" name="Condition" [formControl]="getField('Condition')"></p>
-    <p>Price: <input type="number" *ngIf="editMode" name="Price" [formControl]="getField('Price')"></p>
-    <p>Quantity: <input type="number" *ngIf="editMode" name="Quantity" [formControl]="getField('Quantity')"></p>
+    <p>Condition: <input name="Condition" [formControl]="getField('Condition')"></p>
+    <p>Price: <input type="number" name="Price" [formControl]="getField('Price')"></p>
+    <p>Quantity: <input type="number" name="Quantity" [formControl]="getField('Quantity')"></p>
     <p>Type:
       <select name="Type" [formControl]="getField('Type')">
         <option>Game</option>
         <option>Video</option>
         <option>Software</option>
         <option>Hardware</option>
-    </select></p>
+      </select></p>
   </div>
 
   <div id="viewMode" *ngIf="!editMode">
@@ -44,28 +48,63 @@
 
 
 
+
   <hr>
 
-  <div *ngIf="media.Type === 'Game'">
-    <p>Genre: {{media.Game_Genre}}</p>
-    <p>ESRB: {{media.ESRB_Rating}}</p>
-    <div *ngIf="media.DLC.length > 0">
+  <div (change)="update($event.target.name)" *ngIf="editMode" id="editMode">
+
+    <div *ngIf="media.Type === 'Game'">
+      <p>Genre: <input name="Game_Genre" [formControl]="getField('Game_Genre')"></p>
+      <p>ESRB: <input name="ESRB_Rating" [formControl]="getField('ESRB_Rating')"></p>
+      <div *ngIf="media.DLC.length > 0">
         <p *ngFor="let dlc of media.DLC">{{dlc.Name}}</p>
+      </div>
     </div>
+
+    <div *ngIf="media.Type === 'Video'">
+      <p>Genre: <input name="Video_Genre" [formControl]="getField('Video_Genre')"></p>
+      <p>MPAA: <input name="MPAA_Rating" [formControl]="getField('MPAA_Rating')"></p>
+    </div>
+
+    <div *ngIf="media.Type === 'Hardware'">
+      <p>Type: <input name="Hardware_Type" [formControl]="getField('Hardware_Type')"></p>
+    </div>
+
+    <div *ngIf="media.Type === 'Software'">
+      <p>Type: <input name="Software_Type" [formControl]="getField('Software_Type')"></p>
+    </div>
+
+
   </div>
 
-  <div *ngIf="media.Type === 'Video'">
-    <p>Genre: {{media.Video_Genre}}</p>
-    <p>MPAA: {{media.MPAA_Rating}}</p>
+
+
+
+  <div *ngIf="!editMode" id="viewMode">
+
+    <div *ngIf="media.Type === 'Game'">
+      <p>Genre: {{media.Game_Genre}}</p>
+      <p>ESRB: {{media.ESRB_Rating}}</p>
+      <div *ngIf="media.DLC.length > 0">
+        <p *ngFor="let dlc of media.DLC">{{dlc.Name}}</p>
+      </div>
+    </div>
+
+    <div *ngIf="media.Type === 'Video'">
+      <p>Genre: {{media.Video_Genre}}</p>
+      <p>MPAA: {{media.MPAA_Rating}}</p>
+    </div>
+
+    <div *ngIf="media.Type === 'Hardware'">
+      <p>Type: {{media.Hardware_Type}}</p>
+    </div>
+
+    <div *ngIf="media.Type === 'Software'">
+      <p>Type: {{media.Software_Type}}</p>
+    </div>
+
   </div>
 
-  <div *ngIf="media.Type === 'Hardware'">
-    <p>Type: {{media.Hardware_Type}}</p>
-  </div>
-
-  <div *ngIf="media.Type === 'Software'">
-    <p>Type: {{media.Software_Type}}</p>
-  </div>
 
 </div>
 
@@ -73,5 +112,5 @@
 
 <div id="footer">
   <hr>
-  <button>Save Changes</button>
+  <button *ngIf="editMode">Save Changes</button>
 </div>
