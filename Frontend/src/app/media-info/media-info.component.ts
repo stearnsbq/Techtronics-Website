@@ -47,6 +47,7 @@ export class MediaInfoComponent implements OnInit {
 
   update(field) {
     this.media[field] = this.control.value[field];
+    console.log(this.media);
   }
 
 

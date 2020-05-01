@@ -158,3 +158,25 @@ CREATE TABLE IF NOT EXISTS `Media_Specials` (
   FOREIGN KEY (`Special_ID`) REFERENCES `Specials` (`Specials_ID`),
   FOREIGN KEY (`Media`) REFERENCES `Media` (`Media_ID`)
 );
+
+
+
+
+
+DELIMITER //
+CREATE TRIGGER update_dlc_before BEFORE UPDATE ON DLC_ID
+BEGIN
+
+IF EXISTS(SELECT * FROM DLC WHERE DLC.Game_ID = new.Game_ID) THEN
+
+UPDATE DLC SET DLC_ID = new.DLC_ID AND Game_ID = new.Game_ID;
+
+ELSE
+
+INSERT INTO DLC (DLC_ID, Game_ID) VALUES (new.Game_ID, new.Game_ID);
+
+END IF;
+
+
+END//
+DELIMITER ;

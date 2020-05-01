@@ -650,6 +650,48 @@ class Queries {
 		})
 	}
 
+	static _update_DLC(connection, DLC_ID, Game_ID){
+		return new Promise((resolve, reject) =>{
+			connection.query("UPDATE DLC SET DLC_ID = ? AND Game_ID = ?", [DLC_ID, Game_ID], (err, results, fields) =>{
+				return err ? reject(err) : resolve(results);
+			})
+		})
+
+	}
+
+
+	static _update_game(connection, media){
+		return new Promise((resolve, reject) =>{
+			connection.query("UPDATE Game SET ESRB_Rating = ? AND Genre= ? WHERE Game_ID = ?", [media['ESRB_Rating'], media['Game_Genre'], media['Media_ID']], (err, results, fields) => {
+				return err ? reject(err) : resolve(results);
+			})
+		})
+	}
+
+	static _update_video(connection, media){
+		return new Promise((resolve, reject) =>{
+			connection.query("UPDATE Video SET MPAA_Rating = ? AND Genre= ? WHERE Video_ID = ?", [media['MPAA_Rating'], media['Video_Genre'], media['Media_ID']], (err, results, fields) => {
+				return err ? reject(err) : resolve(results);
+			})
+		})
+	}
+
+	static _update_software(connection, media){
+		return new Promise((resolve, reject) =>{
+			connection.query("UPDATE Software SET Type=? WHERE Software_ID = ?", [media['Software_Type'], media['Media_ID']], (err, results, fields) => {
+				return err ? reject(err) : resolve(results);
+			})
+		})
+	}
+
+	static _update_hardware(connection, media){
+		return new Promise((resolve, reject) =>{
+			connection.query("UPDATE Hardware SET Hardware_Type=? WHERE Hardware_ID = ?", [media['Hardware_Type'], media['Media_ID']], (err, results, fields) => {
+				return err ? reject(err) : resolve(results);
+			})
+		})
+	}
+
 	static update_media(connection, media){
 		return new Promise((resolve, reject)=>{
 			connection.query("UPDATE Media SET `Condition`=?, Name=?, Price=?, Platform=?, Quantity=?, Type=?  WHERE Media_ID=?", [media['Condition'], media['Name'], media['Price'], media['Platform'], media['Quantity'], media['Type'], media.Media_ID], (err, results, fields) =>{
@@ -658,9 +700,23 @@ class Queries {
 				}else{
 					if(media['DLC'].length > 0){
 						for(const dlc of media['DLC']){
-
+							await this._update_DLC(connection, dlc.Media_ID, media.Media_ID)	
 						}
 					}
+
+					switch(media['Type']){
+						case 'Game':
+							return resolve(await this._update_game(connection, media));
+						case 'Video':
+							return resolve(await this._update_video(connection, media));
+						case 'Hardware':
+							return resolve(await this._update_hardware(connection, media));
+						case 'Software':
+							return resolve(await this._update_software(connection, media));
+						default:
+							return reject(new Error("Invalid Media Type"))
+					}
+
 				}
 			})
 		})
