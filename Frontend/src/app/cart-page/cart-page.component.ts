@@ -7,22 +7,23 @@ import { IconDefinition } from '@fortawesome/free-regular-svg-icons';
 @Component({
   selector: 'app-cart-page',
   templateUrl: './cart-page.component.html',
-  styleUrls: ['./cart-page.component.scss'] 
+  styleUrls: ['./cart-page.component.scss']
 })
 export class CartPageComponent implements OnInit {
   public allMedia: Media[];
-  public minus:IconDefinition = faMinus; 
-  public star:IconDefinition = faStar; 
-  
+  public minus: IconDefinition = faMinus;
+  public star: IconDefinition = faStar;
+
   ngOnInit() {}
 
-  constructor(public local_storage: LocalstorageService) { 
-    local_storage.cartSubject.subscribe(media => (this.allMedia = media));   
+  constructor(public local_storage: LocalstorageService) {
+    local_storage.cartSubject.subscribe(media => (this.allMedia = media));
 
-  } 
 
-  remove_from_cart(media) { 
-    this.local_storage.removeItemFromCart(media) 
+  }
+
+  remove_from_cart(media) {
+    this.local_storage.removeItemFromCart(media);
   }
 
 
