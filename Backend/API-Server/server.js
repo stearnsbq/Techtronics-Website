@@ -6,11 +6,12 @@ const https = require('https');
 var fs = require('fs');
 var cors = require('cors');
 const config = require('./config/config.js');
-var expJwt = require('express-jwt');
 const argon2 = require('argon2');
 const schemas = require('./schemas/schema.js');
 var jwt = require('jsonwebtoken'); // will need for login only endpoints
 const { gen_date } = require('./util.js');
+var multer  = require('multer')
+var {v1} = require('uuid')
 
 
 var app = express();
@@ -23,17 +24,37 @@ const cors_options = {
 }
 
 
+
+
+var storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+	 const path = __dirname + '/uploads/media/'+ req.body.media;
+
+	  if(!fs.existsSync(path)){
+		  fs.mkdirSync(path);
+	  }
+
+	  cb(null, path)
+	},
+	filename: function (req, file, cb) {
+	  cb(null, v1() + '.' + file.originalname.split('.')[1])
+	}
+  })
+
+
+var upload = multer({ storage: storage })
+
+
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors(cors_options))
-
-app.use(expJwt({ secret: config.JWT.Secret, credentialsRequired: false }));
 
 var connection = sql.createConnection(config.sql_config);
 
 var sql_queries = require('./queries.js'); 
 
-var media = require('./routes/media.js')(connection);
+var media = require('./routes/media.js')(connection, upload);
 var user = require('./routes/user.js')(connection);
 var orders = require('./routes/orders.js')(connection);
 var companies = require('./routes/companies.js')(connection);

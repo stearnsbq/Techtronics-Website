@@ -3,8 +3,10 @@ module.exports = function(connection) {
 	var router = express.Router();
 	var Validator = require('jsonschema').Validator;
 	var sql_queries = require('../queries.js');
+	const config = require('../config/config.js');
+	var expJwt = require('express-jwt');
 
-	router.get('/', async (req, res) => {
+	router.get('/', expJwt({ secret: config.JWT.Secret}), async (req, res) => {
 		if(req.user){
 			const person_id = req.user.Person_ID
             const orders = await sql_queries.get_orders(connection, person_id)
@@ -14,7 +16,7 @@ module.exports = function(connection) {
         }
 	});
 
-	router.post('/', async (req, res) => {
+	router.post('/', expJwt({ secret: config.JWT.Secret}), async (req, res) => {
 		const body = req.body;
 		try{
 			connection.startTransaction();

@@ -63,7 +63,7 @@ export class ApiService {
 
 
   public createNewMedia(media) {
-    return this.http.post<any>(`${ApiService.API_URL}media/`, media);
+    return this.http.post<Media>(`${ApiService.API_URL}media/`, media);
   }
 
   public updateMedia(media) {
@@ -84,16 +84,16 @@ export class ApiService {
 
   public uploadFiles(files, media_id) {
     const formData = new FormData();
-    
+
     formData.append('media', media_id);
-    
+
     for (const file of files) {
-    formData.append('media_image', file);
+      formData.append('media_image', file);
     }
-    
+
     return this.http.post<any>(`${ApiService.API_URL}media/upload`, formData);
-    
-    }
+
+  }
 
 
 

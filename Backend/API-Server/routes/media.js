@@ -1,45 +1,23 @@
-module.exports = function(connection) {
+module.exports = function(connection, upload) {
 	var express = require('express');
     var router = express.Router();
-	var Validator = require('jsonschema').Validator;
-	var schemas = require('../schemas/schema.js')
-    var sql_queries = require('../queries.js')
-    var multer  = require('multer')
-	var {v1} = require('uuid')
-	const fs = require('fs')
+	var sql_queries = require('../queries.js')
+	const config = require('../config/config.js');
+	var expJwt = require('express-jwt');
 
-
-    var storage = multer.diskStorage({
-        destination: function (req, file, cb) {
-			if(!fs.existsSync('/uploads/media/')){
-				fs.mkdirSync('/uploads/media/');
-			}
-
-		  const path = './uploads/media/'+ req.body.media;
-
-		  if(!fs.existsSync(path)){
-			  fs.mkdirSync(path);
-		  }
-
-          cb(null, path)
-        },
-        filename: function (req, file, cb) {
-          cb(null, v1() + '.' + file.originalname.split('.')[1])
-        }
-      })
-
-
-    var upload = multer({ storage: storage })
-
-
-    router.post('/upload', upload.fields([{name: 'media', maxCount: 1}, {name: 'media_image', maxCount: 5}]), (req, res)=>{
+    router.post('/upload', upload.fields([{name: 'media', maxCount: 1}, {name: 'media_image', maxCount: 5}]), async (req, res)=>{
 		if(req.files){
-			res.send(req.files['media_image'][0].filename);
+			console.log(req.files);
+
+
+			for(const image of req.files['media_image']){
+				await sql_queries.set_images(connection, parseInt(req.body.media), image.filename);
+			}
+			res.send(req.files['media_image']);
 		}else{
 			res.sendStatus(400);
 		}
     })
-
 
 	router.get('/games', async (req, res) => {
 		const games = await sql_queries.get_all_games(connection);
@@ -113,7 +91,7 @@ module.exports = function(connection) {
 
 	// POST ENDPOINTS
 
-    router.post('/specials', async (req, res) => {
+    router.post('/specials', expJwt({ secret: config.JWT.Secret}), async (req, res) => {
         const body = req.body;
         await sql_queries.create_new_special(connection, body['percentage_off'], body['start_date'], body['end_date']);
         res.sendStatus(200);
@@ -121,7 +99,7 @@ module.exports = function(connection) {
 
 
 
-	router.post('/', async (req, res) => {
+	router.post('/', expJwt({ secret: config.JWT.Secret}), async (req, res) => {
 		if (!req.user || req.user.Account_Level !== 'Employee') {
 			res.sendStatus(401);
 			return;
@@ -150,7 +128,7 @@ module.exports = function(connection) {
 	});
 
 
-	router.delete('/:id', (req, res) =>{
+	router.delete('/:id', expJwt({ secret: config.JWT.Secret}), (req, res) =>{
 		if (!req.user || req.user.Account_Level !== 'Employee') {
 			res.sendStatus(401);
 			return;
@@ -161,7 +139,7 @@ module.exports = function(connection) {
 	})
 
 
-	router.put('/', async (req, res)=>{
+	router.put('/', expJwt({ secret: config.JWT.Secret}), async (req, res)=>{
 		if (!req.user || req.user.Account_Level !== 'Employee') {
 			res.sendStatus(401);
 			return;
@@ -181,7 +159,7 @@ module.exports = function(connection) {
 
 	})
 
-	router.put('/:id', (req, res)=>{
+	router.put('/:id', expJwt({ secret: config.JWT.Secret}), (req, res)=>{
 		if (!req.user || req.user.Account_Level !== 'Employee') {
 			res.sendStatus(401);
 			return;

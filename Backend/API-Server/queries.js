@@ -585,6 +585,14 @@ class Queries {
 		})
 	}
 
+	static set_images(connection, media_id, filename){
+		return new Promise((resolve, reject) => {
+			connection.query('INSERT INTO Media_Images (Media_ID, FileName) VALUES (?, ?)', [media_id, filename], (err, results, fi)=>{
+				return err ? reject(err) : resolve(results)
+			})
+		})
+	}
+
 
 	static _add_companies(connection, media_id){
 		return new Promise((resolve, reject) => {

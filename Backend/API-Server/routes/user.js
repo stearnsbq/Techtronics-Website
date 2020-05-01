@@ -3,8 +3,10 @@ module.exports = function(connection) {
 	var router = express.Router();
 	var Validator = require('jsonschema').Validator;
 	var sql_queries = require('../queries.js');
+	const config = require('../config/config.js');
+	var expJwt = require('express-jwt');
 
-	router.get('/', async (req, res) => {
+	router.get('/', expJwt({ secret: config.JWT.Secret}), async (req, res) => {
 		var Person_ID = req.user.Person_ID;
 
 		var user = await sql_queries.get_user_info(connection, Person_ID);
@@ -13,10 +15,10 @@ module.exports = function(connection) {
 	});
 
 	// TODO: Update user
-	router.put('/', async (req, res) => {});
+	router.put('/', expJwt({ secret: config.JWT.Secret}), async (req, res) => {});
 
 	// TODO: Delete user
-	router.delete('/', async (req, res) => {});
+	router.delete('/', expJwt({ secret: config.JWT.Secret}), async (req, res) => {});
 
 	return router;
 };
