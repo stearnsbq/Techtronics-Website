@@ -72,12 +72,12 @@
             <option *ngFor="let publisher of publishers" [value]="publisher.Company_ID">{{publisher.Name}}</option>
           </select>
           <label>Developer</label>
-          <select ngModel name="Developer" #developer="ngModel">
+          <select  ngModel name="Developer" #developer="ngModel">
             <option value="" selected disabled>Select Developer</option>
             <option *ngFor="let developer of developers" [value]="developer.Company_ID">{{developer.Name}}</option>
           </select>
           <label>Manufacturer</label>
-          <select ngModel name="Manufacturer" #manufacturer="ngModel">
+          <select   ngModel name="Manufacturer" #manufacturer="ngModel">
             <option value="" selected disabled>Select Manufacturer</option>
             <option *ngFor="let manufacturer of manufacturers" [value]="manufacturer.Company_ID">{{manufacturer.Name}}</option>
           </select>
@@ -119,7 +119,7 @@
           <label>DLC</label>
           <select ngModel name="DLC" #dlc="ngModel">
             <option value="" selected disabled>DLC For...</option>
-            <option *ngFor="let game of games" [value]="game.Media_ID">{{game.Name}}</option>
+            <option *ngFor="let game of games" size="5" [value]="game.Media_ID">{{game.Name}}</option>
           </select>
 
         </div>
@@ -156,18 +156,25 @@
         <input required type="file" placeholder="Add Photo" (change)="handleImage($event.target.files)">
       </div>
 
+      <hr>
 
-      <button type="submit">Create</button>
+      <div class="modal-footer">
+        <button type="submit" id ="create-button">Create</button>
+      </div>
+
 
     </form>
 
 
 </app-modal>
 
-<app-modal [(toggle)]="createNewSpecialModalShow" id="create-new-special">
+<app-modal title="Create New Special" [(toggle)]="createNewSpecialModalShow" id="create-new-special">
 
   <input type="number" min="1" step="any" placeholder="% off" />
-  <input type="datetime-local" placeholder="% off" />
+  <input type="date" />
+  <select>
+    <option *ngFor="let item of inventory" size="5">{{item.Name}}</option>
+  </select>
 
 </app-modal>
 

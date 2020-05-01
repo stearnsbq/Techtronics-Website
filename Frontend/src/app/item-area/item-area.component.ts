@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { faSadTear } from '@fortawesome/free-regular-svg-icons';
 import { SearchService } from '../search.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { LocalstorageService } from '../localstorage.service';
 
 @Component({
   selector: 'app-item-area',
@@ -20,7 +21,7 @@ export class ItemAreaComponent implements OnInit {
   public sort = '';
   public sadtear = faSadTear;
 
-  constructor(public apiService: ApiService, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(public apiService: ApiService, private activatedRoute: ActivatedRoute, private router: Router, private storage :LocalstorageService) {
     this.page = 1;
     this.activatedRoute.queryParams.subscribe(params => {
       this.page = params.page;
