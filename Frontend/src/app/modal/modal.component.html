@@ -1,0 +1,18 @@
+<div *ngIf="toggle" class="modal">
+
+  <div class="modal-content">
+    <div class="header">
+
+      <h1 id="title">{{title}}</h1>
+
+      <span (click)="changeToggled()" class="close">&times;</span>
+
+    </div>
+
+    <hr>
+
+    <ng-content ></ng-content>
+
+    
+  </div>
+</div>

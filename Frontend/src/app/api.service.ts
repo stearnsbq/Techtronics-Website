@@ -28,6 +28,10 @@ export class ApiService {
     return this.http.get<Media[]>(ApiService.API_URL + 'media', {params});
   } 
 
+  public getGames() {
+    return this.http.get<Media[]>(ApiService.API_URL + 'media/games');
+  }
+
 
   public getMediaByID(id): Observable<Media> {
     return this.http.get<Media>(ApiService.API_URL + 'media/' + id);
@@ -45,7 +49,6 @@ export class ApiService {
 
   }
 
-
   public totalMedia(searchQuery = '') {
     const params = {
       query: searchQuery
@@ -54,10 +57,43 @@ export class ApiService {
   }
 
 
-
   public login(form) {
     return this.http.post<any>(`${ApiService.API_URL}auth/`, form);
   }
+
+
+  public createNewMedia(media) {
+    return this.http.post<any>(`${ApiService.API_URL}media/`, media);
+  }
+
+  public updateMedia(media) {
+    return this.http.put<any>(`${ApiService.API_URL}media/`, media);
+  }
+
+  public getDevelopers() {
+    return this.http.get<any>(`${ApiService.API_URL}companies/developers`);
+  }
+
+  public getPublishers() {
+    return this.http.get<any>(`${ApiService.API_URL}companies/publishers`);
+  }
+
+  public getManufacturers() {
+    return this.http.get<any>(`${ApiService.API_URL}companies/manufacturers`);
+  }
+
+  public uploadFiles(files, media_id) {
+    const formData = new FormData();
+    
+    formData.append('media', media_id);
+    
+    for (const file of files) {
+    formData.append('media_image', file);
+    }
+    
+    return this.http.post<any>(`${ApiService.API_URL}media/upload`, formData);
+    
+    }
 
 
 

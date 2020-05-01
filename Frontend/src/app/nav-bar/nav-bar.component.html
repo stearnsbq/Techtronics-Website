@@ -22,7 +22,7 @@
       </div>
 
 
-      <fa-icon [icon]="bars" (click)="showMenu($event)" class="menu"></fa-icon>
+      <fa-icon [icon]="bars" (click)="menuShown = !menuShown" class="menu"></fa-icon>
 
       <div class="shopping-cart-container">
         <a routerLink="cart"> <!-- Had to change this so that it would work regardless of the fact. -->

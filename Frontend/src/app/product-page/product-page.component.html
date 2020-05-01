@@ -6,7 +6,7 @@
 
         <div class="image-container">
           <img (mousemove)="hoverEvent($event)" *ngFor="let image of media.images | paginate: {  itemsPerPage: 1, currentPage: selectedImage, totalItems: media.images.length}" id = "product_image"  draggable="false" [src]="'http://3.234.246.29:8081/api/uploads/media/' + media.Media_ID + '/' + image">
-          <pagination-controls class="pagination-controls" (pageChange)="changeImage($event)"></pagination-controls>
+          <pagination-controls *ngIf="media.images.length > 0" class="pagination-controls" (pageChange)="changeImage($event)"></pagination-controls>
         </div>
 
 

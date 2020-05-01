@@ -1,17 +1,180 @@
 
 <input type="search" placeholder="Search" [(ngModel)]="query" (change)="search($event)">
 
+<b> Total items: {{totalItems}} </b>
+
+
+<button (click)="createNewMediaModalShow = true">Add New Item</button>
+<button (click)="createNewSpecialModalShow = true">Create New Special</button>
+
+
 <div class="inventory-list" (scroll)="scroll($event)">
 
+  <table>
+    <tr>
+      <th id="mark"><input type="checkbox"  [(ngModel)]="allChecked"></th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Platform</th>
+      <th>Price</th>
+      <th>Condition</th>
+      <th>Quantity</th>
+    </tr>
+    <tr (click)="showMediaModal(media)" *ngFor="let media of inventory; let i = index">
 
-<div *ngFor="let media of inventory" class = "item" >
-    <p class="item_attributes" id="item_name">{{media.Name}}</p>  <!--  change this image (temp)-->
-    <p class="item_attributes" id = "item_platform"> {{media.Platform}} </p>
-    <p class="item_attributes" *ngIf="media.Game_Genre" id = "game_genre"> {{media.Game_Genre}}</p>
-    <p class="item_attributes" *ngIf="media.Video_Genre" id = "video_genre"> {{media.Video_Genre}}</p>
-    <p class="item_attributes" id = "item_price"> ${{media.Price}}</p>
-    <p class="item_attributes" id = "item_condition"> {{media.Condition}}</p>
+      <td><input [checked]="allChecked" type="checkbox"></td>
+      <td name="Media_ID">{{media.Media_ID}}</td>
+      <td id="media-name" name="Name">{{media.Name}}</td>
+      <td name="Platform">{{media.Platform}}</td>
+      <td id="media-price" name="Price">{{media.Price}}</td>
+      <td name="Condition">{{media.Condition}}</td>
+      <td name="Quantity">{{media.Quantity}}</td>
+    </tr>
+  </table>
+
 </div>
 
 
-</div>
+
+
+<app-modal *ngIf="showMedia" [(toggle)]="showMedia">
+  <app-media-info [media]="selectedMedia"></app-media-info>
+</app-modal>
+
+
+<app-modal title="Create New Media" [(toggle)]="createNewMediaModalShow" id="create-new-media">
+
+    <form ngNativeValidate #form="ngForm" (ngSubmit)="createNew(form.value)">
+
+      <div class="media-info">
+
+        <label>Media Name</label>
+        <input type="text" ngModel name="Name" #name="ngModel" placeholder="Name" required>
+        <label>Platform</label>
+        <input type="text" ngModel name="Platform" #platform="ngModel" placeholder="Platform" required />
+        <label>Price</label>
+        <input type="number" min="1" step="any" ngModel name="Price" #price="ngModel" placeholder="Price" required/>
+        <label>Quantity</label>
+        <input type="number" min="1" step="any" ngModel name="Quantity" #quantity="ngModel" placeholder="Quantity" required/>
+
+        <label>Condition</label>
+        <select ngModel name="Condition" required #condition="ngModel">
+          <option value="" selected disabled>Select Condition</option>
+          <option>Used</option>
+          <option>New</option>
+        </select>
+
+
+        <div id="media-companies">
+          <label>Publisher</label>
+          <select ngModel name="Publisher" #publisher="ngModel">
+            <option value="" selected disabled>Select Publisher</option>
+            <option *ngFor="let publisher of publishers" [value]="publisher.Company_ID">{{publisher.Name}}</option>
+          </select>
+          <label>Developer</label>
+          <select ngModel name="Developer" #developer="ngModel">
+            <option value="" selected disabled>Select Developer</option>
+            <option *ngFor="let developer of developers" [value]="developer.Company_ID">{{developer.Name}}</option>
+          </select>
+          <label>Manufacturer</label>
+          <select ngModel name="Manufacturer" #manufacturer="ngModel">
+            <option value="" selected disabled>Select Manufacturer</option>
+            <option *ngFor="let manufacturer of manufacturers" [value]="manufacturer.Company_ID">{{manufacturer.Name}}</option>
+          </select>
+          <div *ngIf="invalidCompany" class="error">
+            Atleast 1 company is required!
+          </div>
+        </div>
+
+        <label>Type</label>
+
+        <select ngModel name="Type" #type="ngModel" required [(ngModel)]="selectedMediaType" >
+          <option>Game</option>
+          <option>Video</option>
+          <option>Software</option>
+          <option>Hardware</option>
+        </select>
+
+      </div>
+
+
+
+      <div id="specific-media-info">
+        <hr *ngIf="selectedMediaType">
+
+        <div *ngIf="selectedMediaType === 'Game'" class="media-info" id="game-info">
+          <label>Game Genre</label>
+          <input type="text" ngModel name="Game_Genre" #game_genre="ngModel" placeholder="Genre" required>
+          <label>ESRB</label>
+          <select ngModel name="ESRB" #esrb="ngModel" required>
+            <option value="" selected disabled>Select ESRB Rating</option>
+            <option>E</option>
+            <option>E10+</option>
+            <option>T</option>
+            <option>M</option>
+            <option>A18+</option>
+            <option>RP</option>
+          </select>
+
+          <label>DLC</label>
+          <select ngModel name="DLC" #dlc="ngModel">
+            <option value="" selected disabled>DLC For...</option>
+            <option *ngFor="let game of games" [value]="game.Media_ID">{{game.Name}}</option>
+          </select>
+
+        </div>
+
+        <div *ngIf="selectedMediaType === 'Video'" class="media-info" id="video-info">
+          <label>Video Genre</label>
+          <input ngModel name="Video_Genre" #video_genre="ngModel" type="text" placeholder="Genre" required>
+          <select ngModel name="MPAA_Rating" #mpaa_rating="ngModel" required>
+            <option value="" selected disabled>Select MPAA Rating</option>
+            <option>G</option>
+            <option>PG</option>
+            <option>PG-13</option>
+            <option>R</option>
+            <option>NC-17</option>
+          </select>
+        </div>
+
+        <div *ngIf="selectedMediaType === 'Software'" class="media-info" id="software-info">
+          <label>Software_Type</label>
+          <input type="text" ngModel name="Software_Type" #software_type="ngModel" placeholder="Type" required>
+        </div>
+
+        <div *ngIf="selectedMediaType === 'Hardware'" class="media-info" id="hardware-info">
+          <label>Hardware_Type</label>
+            <input type="text" ngModel name="Hardware_Type" #hardware_type="ngModel" placeholder="Type" required>
+        </div>
+
+      </div>
+
+      <div class="image-upload">
+        <label>Add Photos</label>
+        <img *ngFor="let image of imagePreviews | paginate: {  itemsPerPage: 1, currentPage: selectedImage, totalItems: imagePreviews.length} " [src]="image">
+        <pagination-controls *ngIf="imagePreviews.length > 0" class="pagination-controls" (pageChange)="changeImage($event)"></pagination-controls>
+        <input required type="file" placeholder="Add Photo" (change)="handleImage($event.target.files)">
+      </div>
+
+
+      <button type="submit">Create</button>
+
+    </form>
+
+
+</app-modal>
+
+<app-modal [(toggle)]="createNewSpecialModalShow" id="create-new-special">
+
+  <input type="number" min="1" step="any" placeholder="% off" />
+  <input type="datetime-local" placeholder="% off" />
+
+</app-modal>
+
+
+
+
+
+
+
+

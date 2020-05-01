@@ -64,7 +64,7 @@ export class ProductPageComponent implements OnInit, AfterViewInit  {
 
   }
 
-  hoverEvent(event){
+  hoverEvent(event) {
     console.log(event);
   }
 

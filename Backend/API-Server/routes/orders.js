@@ -5,8 +5,8 @@ module.exports = function(connection) {
 	var sql_queries = require('../queries.js');
 
 	router.get('/', async (req, res) => {
-        const person_id = req.user.Person_ID
-        if(person_id){
+		if(req.user){
+			const person_id = req.user.Person_ID
             const orders = await sql_queries.get_orders(connection, person_id)
             res.send(orders);
         }else{

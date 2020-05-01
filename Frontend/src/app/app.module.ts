@@ -28,6 +28,10 @@ import { LoadingComponent } from './loading/loading.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LocalstorageService } from './localstorage.service';
+import { MediaInfoComponent } from './media-info/media-info.component';
+import { ModalComponent } from './modal/modal.component';
+import { AuthService } from './auth.service';
+import { AuthInterceptor } from './AuthInterceptor';
 import { CartPageComponent } from './cart-page/cart-page.component';
 
 export function tokenGetter() {
@@ -51,6 +55,8 @@ export function tokenGetter() {
     LoadingComponent,
     HomePageComponent,
     RegistrationComponent,
+    MediaInfoComponent,
+    ModalComponent,
     CartPageComponent
   ],
   imports: [
@@ -61,6 +67,8 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter,
+        whitelistedDomains: ['3.234.246.29:8081', '3.234.246.29'],
+        blacklistedRoutes: ['3.234.246.29:8081/api/auth/', 'localhost:8081']
       }
     }),
     RouterModule.forRoot([
@@ -71,7 +79,7 @@ export function tokenGetter() {
       {path: 'register', component: RegistrationComponent},
       {path: 'controlpanel', component: ControlpanelComponent , canActivate: [RoleGuardService], data: {neededRole: 'Employee'} },
       {path: 'login', component: LoginModalComponent},
-      {path: 'cart', component: CartPageComponent},  
+      {path: 'cart', component: CartPageComponent},
       {path: '**', redirectTo: ''}
     ]),
     ReactiveFormsModule,
@@ -82,8 +90,9 @@ export function tokenGetter() {
     ApiService,
     SearchService,
     LocalstorageService,
-    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { } 
+export class AppModule { }
