@@ -118,7 +118,7 @@ class Queries {
 	static create_new_order(connection, customer_id, count, address, zipcode, state, country, items, price) {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				'INSERT INTO `Order` (Customer, Media_Count, Address, Zip_code, State, Country, Price) VALUES (?, ?, ?, ?, ?, ?, ?)',
+				'INSERT INTO `Order` (Customer, Media_Count, Address, Zip_code, State, Country, Price, Ordered_date) VALUES (?, ?, ?, ?, ?, ?, ?, SYSDATE())',
 				[ customer_id, count, address, zipcode, state, country, price],
 				async (err, results, fields) => {
 					if (err) {
@@ -182,6 +182,14 @@ class Queries {
 		});
 	}
 
+	static _get_employee_role(connection, employee_id){
+		return new Promise((resolve, reject) => {
+			connection.query("SELECT Role FROM Employees WHERE Employee_ID =?", [employee_id], (err, results, fields) =>{
+				return err ? reject(err) : resolve(results);
+			})
+		})
+	}
+
 	static login_person(connection, username, password) {
 		return new Promise((resolve, reject) => {
 			connection.query(
@@ -191,12 +199,14 @@ class Queries {
 						try {
 							// compare the password sent from the user and the hash in the database
 							if (await argon2.verify(results[0].Password, password)) {
+								let payload = { Person_ID: results[0].Person_ID, Account_Level: results[0].Account_Level };
 
-								
-
+								if(results[0].Account_Level === 'Employee'){
+									payload['Employee_Role'] = this._get_employee_role(connection, results[0].Person_ID);
+								}
 
 								var token = jwt.sign(
-									{ Person_ID: results[0].Person_ID, Account_Level: results[0].Account_Level },
+									payload,
 									config.JWT.Secret,
 									{ expiresIn: '7d' }
 								); // send a JWT token for authentication

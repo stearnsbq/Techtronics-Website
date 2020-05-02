@@ -58,7 +58,8 @@ CREATE TABLE IF NOT EXISTS `Media` (
   `Price` float NOT NULL,
   `Condition` text NOT NULL,
   `Quantity` INT DEFAULT 0,
-  `deleted` date
+  `deleted` date,
+   UNIQUE KEY `id_media_info` (`Name`, `Platform`, `Condition`(255), `Type`)
 );
 
 CREATE TABLE IF NOT EXISTS `Media_Images` (
@@ -111,13 +112,14 @@ CREATE TABLE IF NOT EXISTS `Media_Companies` (
 );
 
 CREATE TABLE IF NOT EXISTS `Order` (
-  `Order_ID` INT PRIMARY KEY  AUTO_INCREMENT,
-  `Customer` INT,
+  `Order_ID`    INT PRIMARY KEY  AUTO_INCREMENT,
+  `Customer`    INT,
   `Media_Count` INT NOT NULL,
-  `Address` varchar(255) NOT NULL,
-  `Zip_code` char(5) NOT NULL,
-  `State` varchar(50) NOT NULL,
-  `Country` varchar(50) NOT NULL,
+  `Address`     varchar(255) NOT NULL,
+  `Zip_code`    char(5) NOT NULL,
+  `State`       varchar(50) NOT NULL,
+  `Country`     varchar(50) NOT NULL,
+  `Ordered_date`
   FOREIGN KEY (`Customer`) REFERENCES `Customer` (`Customer_ID`)
 );
 
@@ -130,9 +132,10 @@ CREATE TABLE IF NOT EXISTS `Order_Items` (
   FOREIGN KEY (`Media`) REFERENCES `Media` (`Media_ID`)
 );
 CREATE TABLE IF NOT EXISTS `Shipping` (
-  `Shipping_ID` INT PRIMARY KEY AUTO_INCREMENT,
-  `Carrier` varchar(50) NOT NULL,
-  `Shipped_date` date NOT NULL
+  `Shipping_ID`     INT PRIMARY KEY AUTO_INCREMENT,
+  `Carrier`         varchar(50) NOT NULL,
+  `Shipped_date`    date NOT NULL,
+  `Tracking_Number` varchar(255)
 );
 
 CREATE TABLE IF NOT EXISTS `Shipped_Orders` (
