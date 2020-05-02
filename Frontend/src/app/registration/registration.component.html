@@ -32,11 +32,11 @@
   >
 
   <label>Input your birthdate.</label>
-  <input type="date" class="signup_entry" min="1903-01-02">
+  <input ngModel name="birth_date" #birth_date="ngModel" type="date" class="signup_entry" min="1903-01-02">
 
 
   <label>Input your Phone Number</label>
-  <input type="text" class="signup_entry" placeholder="Phone Number">
+  <input ngModel name="phone_number" #phone_number="ngModel" type="text" class="signup_entry" placeholder="Phone Number">
 
   <div id="login_button">
     <button id="register_button" type="submit">Register</button>

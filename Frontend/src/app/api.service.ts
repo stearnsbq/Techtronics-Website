@@ -93,8 +93,12 @@ export class ApiService {
 
 
   public createNewSpecial(special) {
-    console.log(special);
-    return this.http.post<Media>(`${ApiService.API_URL}media/specials/`, special);
+    return this.http.post(`${ApiService.API_URL}media/specials/`, special, {responseType: 'text'});
+  }
+
+
+  public register(data) {
+    return this.http.post(`${ApiService.API_URL}register`, data, {responseType: 'text'});
   }
 
 

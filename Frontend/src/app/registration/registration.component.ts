@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as solidIcons from '@fortawesome/free-solid-svg-icons';
 import * as regIcons from '@fortawesome/free-regular-svg-icons';
+import { ApiService } from '../api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -10,7 +12,7 @@ import * as regIcons from '@fortawesome/free-regular-svg-icons';
 export class RegistrationComponent implements OnInit {
 
 
-  constructor() {
+  constructor(private api: ApiService, private router: Router) {
 
 
   }
@@ -20,8 +22,12 @@ export class RegistrationComponent implements OnInit {
 
 
   onRegister(form) {
-    console.log(form);
-    form.Account_Level = 'Customer';
+    form.account_level = 'Customer';
+    form.phoneNumbers = [form.phone_number];
+
+    this.api.register(form).subscribe(result => {
+      this.router.navigate(['login']);
+    });
 
   }
 

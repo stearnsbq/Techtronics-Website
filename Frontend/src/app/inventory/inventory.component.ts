@@ -173,6 +173,7 @@ export class InventoryComponent implements OnInit {
   }
 
   createNew(data) {
+    console.log(data);
     if (
       data.Publisher.length <= 0 &&
       data.Manufacturer.length <= 0 &&

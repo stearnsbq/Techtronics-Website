@@ -175,8 +175,7 @@
 </app-modal>
 
 <app-modal title="Create New Special" [(toggle)]="createNewSpecialModalShow">
-  <form ngNativeValidate #form="ngForm" (ngSubmit)="createNewSpecial(form.value)">
-
+  <form *ngIf="createNewSpecialModalShow" ngNativeValidate  #form="ngForm" (ngSubmit)="createNewSpecial(form.value)">
 
     <div id="create-new-special">
       <label>Percentage Off</label>
@@ -200,8 +199,6 @@
 
 
   </form>
-
-
 </app-modal>
 
 
