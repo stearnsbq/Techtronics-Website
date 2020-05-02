@@ -8,5 +8,6 @@ export interface Order {
     Zip_Code: string;
     State: string;
     Country: string;
-    Order_Items: number[];
+    Price: number;
+    Order_Items: Media[];
   }

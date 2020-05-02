@@ -29,11 +29,14 @@ h2, h3 {
     margin: 0px;
 }
 
-.attribute_pack {
-    margin-right: 20px;
-    display:inline-block;
+.all_attributes {
+    display: inline;
 }
 
+.attribute_pack {
+    margin-right: 20px;
+
+}
 
 .product_information {
     flex: 1;

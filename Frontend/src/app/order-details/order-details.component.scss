@@ -12,22 +12,21 @@
 
     width: 100vw;
     height: 100vh;
-
 }
 
 #order_details_form {
     text-align: center;
+    flex: 1;
 }
 
 #order_dest_content {
     display: flex;
-    justify-content: center;
+    justify-content: center; 
 
+    flex: 0.8;
     width: 80%;
     height: 60%;
-
-    padding-bottom: 30px;
-    padding-top: 0px;
+    
 
     border-style: solid;
     border-radius: 4px;

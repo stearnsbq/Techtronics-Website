@@ -8,12 +8,12 @@ import { Order } from '../model/order'
   styleUrls: ['./order-history.component.scss']
 })
 export class OrderHistoryComponent implements OnInit {
-  public allOrders: Order; 
+  public allOrders: Order[]; 
 
   constructor(public api: ApiService) { 
-    // based on the user_id. 
-    this.api.getOrders(id).subscribe((media) => {
-      this.media = media;
+    
+    this.api.getOrders().subscribe((order) => {
+      this.allOrders = order;  
     });
 
   }

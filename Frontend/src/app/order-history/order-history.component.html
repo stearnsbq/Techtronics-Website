@@ -1,11 +1,43 @@
 <div id="order_history_content">
-    <div *ngIf="allOrders" id="cart_page_content">
-        <div *ngFor='let order of allOrders; let i = index'  class="order">
+    <div *ngIf="allOrders" id="order_page_content">
+        <div *ngFor='let order of allOrders; let i = index'  class="order_item">
+            <div class="order_information">
+                <div class="content_header">
+                    <h2 class="order_id">Order ID: #{{order.Order_ID}} </h2>
+                </div> 
+
+                <div class="all_attributes">
+                    <div class="attribute_pack">
+                        <h3 class="product_attr_title">Total Price</h3>
+                        <h3 class="product_attribute">${{order.Price}}</h3>
+                    </div>
+
+                    <div class="attribute_pack">
+                        <h3 class="product_attr_title">#Items</h3>
+                        <h3 class="product_attribute">{{order.Media_Count}}</h3> 
+                    </div> 
+                </div>
+
+
+            </div>
+
+            <div class="order_media_content">
+                <table> 
+                    <tr id='table_header'>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Type</th>
+                    </tr>
+
+                    <tr *ngFor='let media of order.items ; let i = index'>
+                        <td>{{media.Name}}</td>
+                        <td>${{media.Price}}</td>
+                        <td>{{media.Type}}</td>
+                    </tr>
+
+                </table>
+            </div>
 
         </div>
-
-
     </div>
-
-
 </div>
