@@ -33,6 +33,7 @@ import { ModalComponent } from './modal/modal.component';
 import { AuthService } from './auth.service';
 import { AuthInterceptor } from './AuthInterceptor';
 import { CartPageComponent } from './cart-page/cart-page.component';
+import { OrderHistoryComponent } from './order-history/order-history.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -57,7 +58,8 @@ export function tokenGetter() {
     RegistrationComponent,
     MediaInfoComponent,
     ModalComponent,
-    CartPageComponent
+    CartPageComponent,
+    OrderHistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -80,6 +82,7 @@ export function tokenGetter() {
       {path: 'controlpanel', component: ControlpanelComponent , canActivate: [RoleGuardService], data: {neededRole: 'Employee'} },
       {path: 'login', component: LoginModalComponent},
       {path: 'cart', component: CartPageComponent, canActivate: [AuthGuard]},
+      {path: 'order_history', component: OrderHistoryComponent, canActivate: [AuthGuard]},
       {path: '**', redirectTo: ''}
     ]),
     ReactiveFormsModule,

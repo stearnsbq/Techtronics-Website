@@ -1,14 +1,12 @@
 <div *ngIf="media" id = "product_page_container">
     <!-- this image will be a button -->
 
-
     <div id = "main_content">
 
         <div class="image-container">
           <img (mousemove)="hoverEvent($event)" *ngFor="let image of media.images | paginate: {  itemsPerPage: 1, currentPage: selectedImage, totalItems: media.images.length}" id = "product_image"  draggable="false" [src]="'http://3.234.246.29:8081/api/uploads/media/' + media.Media_ID + '/' + image">
           <pagination-controls *ngIf="media.images.length > 0" class="pagination-controls" (pageChange)="changeImage($event)"></pagination-controls>
-        </div>
-
+        </div> 
 
         <div id = "product_information">
 
@@ -28,7 +26,39 @@
             </div>
 
             <div class = "attribute_container">
-                <h3 class="product_attr_title"> User Rating </h3>
+                <h3 class="product_attr_title"> Condition </h3>
+                <h3 id="product_price" class="product_attribute"> ${{media.Condition}} </h3>
+            </div> 
+
+            <!--  is_hardware and is_software -->
+            <div ngIf="is_hardware || is_software" class = "attribute_container">
+                <h3 class="product_attr_title"> Type </h3>
+                <h3 id="product_price" class="product_attribute"> ${{media.Type}} </h3>
+            </div>
+
+            <!--  is_game with concern for video--> 
+            <div ngIf="is_game || is_video" class = "attribute_container">
+                <h3 class="product_attr_title"> Genre </h3>
+                <h3 id="product_price" class="product_attribute"> ${{media.Genre}} </h3>
+            </div>
+
+            <div ngIf="is_game" class = "attribute_container">
+                <h3 class="product_attr_title"> ESRB Rating </h3> 
+                <h3 id="product_price" class="product_attribute"> ${{media.ESRB_Rating}} </h3>
+            </div>
+
+            <!--  is_dlc -->
+
+            <!--  is_video --> 
+            <div ngIf="is_video" ngclass = "attribute_container">
+                <h3 class="product_attr_title"> MPAA Rating </h3> 
+                <h3 id="product_price" class="product_attribute"> ${{media.MPAA_Rating}} </h3> 
+            </div>
+
+
+
+            <div class = "attribute_container"> 
+                <h3 class="product_attr_title"> User Rating </h3>  
                 <div class = "user_rating_container">
                     <fa-icon class="rating_star" #rating_star1 id= "rating_star1" [icon]="star"></fa-icon>
                     <fa-icon class="rating_star" #rating_star2 id= "rating_star2" [icon]="star"></fa-icon>

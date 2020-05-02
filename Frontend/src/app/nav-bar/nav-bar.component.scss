@@ -208,6 +208,20 @@
 
   }
 
+  #history_icon{
+    cursor: pointer; 
+    margin-right: 70px;
+    padding: 4px;
+    margin-right: 20px;
+    position: absolute;
+    font-size: 35px;
+    color: white;
+    right: 0px;
+    top: 0px;
+    transition: 0.2s;
+
+  }
+
   #cart-count-icon { 
     margin-right: 50px;
   }

@@ -17,6 +17,12 @@ export class ProductPageComponent implements OnInit, AfterViewInit  {
   public selectedImage = 1; 
   public is_logged_in: boolean = false;  
 
+  public is_hardware: boolean = false;  
+  public is_software: boolean = false;  
+  public is_game: boolean = false;  
+  public is_dlc: boolean = false;  
+  public is_video: boolean = false; 
+
   @ViewChild("rating_star1",{static: false}) rstar1: ElementRef; 
   @ViewChild("rating_star2",{static: false}) rstar2: ElementRef; 
   @ViewChild("rating_star3",{static: false}) rstar3: ElementRef; 
@@ -26,9 +32,13 @@ export class ProductPageComponent implements OnInit, AfterViewInit  {
   constructor(public auth: AuthService, private route: ActivatedRoute, public storage: LocalstorageService, private api: ApiService, ) {
     storage.syncStorage(); 
 
-    if (auth.isAuthenticated()) {
+    if (auth.isAuthenticated()) { 
       this.is_logged_in = true; 
     }
+
+
+    
+
 
 
     this.route.params.subscribe(params => {
@@ -38,6 +48,29 @@ export class ProductPageComponent implements OnInit, AfterViewInit  {
       // asynchronously executing.
       api.getMediaByID(id).subscribe(media => {
         this.media = media; 
+
+        switch (this.media.Type) { 
+          case "Game": {
+            this.is_game = true; 
+            break; 
+          } 
+          case "Video": {
+            this.is_game = true; 
+            break; 
+          } 
+          case "Hardware": {
+            this.is_hardware = true; 
+            break; 
+          } 
+          case "DLC": {
+            this.is_dlc = true; 
+            break; 
+          } 
+          case "Software": {
+            this.is_software = true;  
+            break; 
+          } 
+        }
         
         this.media.User_Rating = 5;
 

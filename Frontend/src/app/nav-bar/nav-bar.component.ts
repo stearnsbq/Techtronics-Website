@@ -16,6 +16,7 @@ export class NavBarComponent implements OnInit {
   public cartShown = false;
   public bars = icons.faBars;
   public cart = icons.faShoppingCart;
+  public history = icons.faHistory;
   public itemsInCart = 0;
 
 
