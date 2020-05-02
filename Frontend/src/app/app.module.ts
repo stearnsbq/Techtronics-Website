@@ -89,8 +89,8 @@ export function tokenGetter() {
       {path: 'login', component: LoginModalComponent},
       {path: 'cart', component: CartPageComponent, canActivate: [AuthGuard]},
       {path: 'order_history', component: OrderHistoryComponent, canActivate: [AuthGuard]},
-      {path: 'order_details', component: OrderDetailsComponent}
-     // {path: '**', component: NotFoundComponent}
+      {path: 'order_details', component: OrderDetailsComponent},
+      {path: '**', component: NotFoundComponent}
     ]),
     ReactiveFormsModule,
     FontAwesomeModule,

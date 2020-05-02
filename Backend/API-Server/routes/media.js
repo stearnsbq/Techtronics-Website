@@ -141,10 +141,19 @@ module.exports = function(connection, upload) {
 	});
 
 
-	router.delete('/:id', expJwt({ secret: config.JWT.Secret}), (req, res) =>{
+	router.delete('/:id', expJwt({ secret: config.JWT.Secret}), async (req, res) =>{
 		if (!req.user || req.user.Account_Level !== 'Employee') {
 			res.sendStatus(401);
 			return;
+		}
+		try{
+			const id = parseInt(req.params['id'])
+
+			await sql_queries.delete_media(connection, id);
+
+			res.sendStatus(200);
+		}catch(err){
+			res.sendStatus(500);
 		}
 		
 

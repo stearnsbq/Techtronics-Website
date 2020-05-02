@@ -48,6 +48,24 @@
   font-size: 20px;
 }
 
+#remove-product{
+  float: right;
+  margin-right: 5px;
+  width: 30px;
+  text-align: center;
+  font-size: 25px;
+  padding: 10px;
+  border-radius: 50%;
+  color: white;
+  background-color: red;
+  transition: 0.2s;
+}
+
+#remove-product:hover {
+  background-color: rgb(179, 0, 0);
+}
+
+
 
 #edit-item-icon {
   float: right;

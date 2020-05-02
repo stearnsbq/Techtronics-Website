@@ -48,7 +48,7 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
       }, err => {
         console.log(err)
         if (err.status && err.status === 404) {
-         // this.router.navigate(['notfound']);
+          this.router.navigate(['notfound']);
         }
       });
     });

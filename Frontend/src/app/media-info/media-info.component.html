@@ -1,10 +1,11 @@
-<fa-icon title="Edit" [icon]="editIcon" (click)="editMode = !editMode" id="edit-item-icon"></fa-icon>
-<fa-icon [icon]="removeIcon" id="remove-image"></fa-icon>
 
-<div id="images-container">
+<fa-icon title="Edit" [icon]="editIcon" (click)="editMode = !editMode" id="edit-item-icon"></fa-icon>
+<fa-icon [icon]="removeIcon" (click)="deleteItem()" id="remove-product"></fa-icon>
+
+<div *ngIf="media.images.length > 0" id="images-container">
   <label id="images-label">Images</label>
 
-  <div id="product-images">
+  <div  id="product-images">
     <img
       *ngFor="let image of media.images | paginate: {  itemsPerPage: 1, currentPage: selectedImage, totalItems: media.images.length}"
       id="product_image" draggable="false"

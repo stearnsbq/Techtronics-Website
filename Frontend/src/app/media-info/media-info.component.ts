@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Media } from '../model/media';
-import {faEdit} from '@fortawesome/free-solid-svg-icons';
+import {faEdit, faTrash} from '@fortawesome/free-solid-svg-icons';
 import { FormArray, FormGroup, FormControl } from '@angular/forms';
 import { ApiService } from '../api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-media-info',
@@ -13,13 +14,14 @@ export class MediaInfoComponent implements OnInit {
   @Input() media: Media;
   public selectedImage = 1;
   public editIcon = faEdit;
+  public removeIcon = faTrash;
 
   public editMode = false;
 
   public control: FormGroup;
 
 
-  constructor(public api: ApiService) {
+  constructor(public api: ApiService, public router: Router) {
 
 
 
@@ -46,6 +48,12 @@ export class MediaInfoComponent implements OnInit {
 
 
 
+  }
+
+  deleteItem() {
+    this.api.deleteMedia(this.media.Media_ID).subscribe(result => {
+      this.router.navigate(['controlpanel']);
+    });
   }
 
   update(field) {

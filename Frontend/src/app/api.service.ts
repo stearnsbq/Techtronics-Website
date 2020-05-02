@@ -35,6 +35,10 @@ export class ApiService {
     return this.http.get<Media>(ApiService.API_URL + 'media/' + id);
   }
 
+  public deleteMedia(id): Observable<Media> {
+    return this.http.delete<any>(ApiService.API_URL + 'media/' + id);
+  }
+
 
   public searchMedia(pageNum, searchQuery = '', sortBy= 'DESC'): Observable<Media[]> {
     const params = {
