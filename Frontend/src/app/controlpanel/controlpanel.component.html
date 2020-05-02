@@ -5,7 +5,7 @@
 
 
   </app-tab>
-  <app-tab tabTitle="Employees">
+  <app-tab *ngIf="auth.isManager()" tabTitle="Employees">
 
     <app-employeepanel></app-employeepanel>
 

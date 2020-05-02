@@ -112,14 +112,15 @@ CREATE TABLE IF NOT EXISTS `Media_Companies` (
 );
 
 CREATE TABLE IF NOT EXISTS `Order` (
-  `Order_ID`    INT PRIMARY KEY  AUTO_INCREMENT,
-  `Customer`    INT,
-  `Media_Count` INT NOT NULL,
-  `Address`     varchar(255) NOT NULL,
-  `Zip_code`    char(5) NOT NULL,
-  `State`       varchar(50) NOT NULL,
-  `Country`     varchar(50) NOT NULL,
-  `Ordered_date`
+  `Order_ID`     INT PRIMARY KEY  AUTO_INCREMENT,
+  `Customer`     INT,
+  `Media_Count`  INT NOT NULL,
+  `Address`      varchar(255) NOT NULL,
+  `Zip_code`     char(5) NOT NULL,
+  `State`        varchar(50) NOT NULL,
+  `Country`      varchar(50) NOT NULL,
+  `Price`        FLOAT NOT NULL,
+  `Ordered_date` date NOT NULL,
   FOREIGN KEY (`Customer`) REFERENCES `Customer` (`Customer_ID`)
 );
 

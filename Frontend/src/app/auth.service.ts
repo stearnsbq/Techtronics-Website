@@ -50,6 +50,15 @@ export class AuthService {
     return decoded ? decoded.Account_Level === 'Employee' && this.isAuthenticated() : false;
   }
 
+  public isManager() {
+    const token = this.getToken();
+
+    const decoded = this.jwt.decodeToken(token);
+    console.log(decoded)
+
+    return decoded && this.isEmployee() ? decoded.Employee_Role === 'Manager' && this.isAuthenticated() : false;
+  }
+
 
 
 }

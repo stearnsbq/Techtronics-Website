@@ -184,7 +184,7 @@ class Queries {
 
 	static _get_employee_role(connection, employee_id){
 		return new Promise((resolve, reject) => {
-			connection.query("SELECT Role FROM Employees WHERE Employee_ID =?", [employee_id], (err, results, fields) =>{
+			connection.query("SELECT Role FROM Employee WHERE Employee_ID =?", [employee_id], (err, results, fields) =>{
 				return err ? reject(err) : resolve(results);
 			})
 		})

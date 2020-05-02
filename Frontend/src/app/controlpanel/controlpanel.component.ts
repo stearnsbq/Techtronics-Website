@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-controlpanel',
@@ -7,10 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ControlpanelComponent implements OnInit {
 
-  constructor() { }
+  constructor(public auth: AuthService) { }
 
   ngOnInit() {
-    
+
   }
 
 
