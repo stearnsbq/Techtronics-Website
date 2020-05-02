@@ -37,12 +37,14 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
       this.is_logged_in = true;
     }
 
-    this.route.params.subscribe((params) => { 
+    this.route.params.subscribe((params) => {
       const id = params.id;
+
 
       // asynchronously executing.
       this.api.getMediaByID(id).subscribe((media) => {
         this.media = media;
+        console.log(media)
       });
     });
 

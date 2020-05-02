@@ -6,7 +6,6 @@ module.exports = function(connection, upload) {
 	var expJwt = require('express-jwt');
 
     router.post('/upload', upload.fields([{name: 'media', maxCount: 1}, {name: 'media_image', maxCount: 5}]), async (req, res)=>{
-		console.log(req.body)
 		if(req.files['media_image']){
 			for(const image of req.files['media_image']){
 				await sql_queries.set_images(connection, parseInt(req.body.media), image.filename);
@@ -84,7 +83,13 @@ module.exports = function(connection, upload) {
 
 	router.get('/:id', async (req, res) => {
 		const id = req.params['id'];
-		res.send(await sql_queries.get_media_by_id(connection, id));
+		const media = sql_queries.get_media_by_id(connection, id);
+
+		if(Object.keys(media).length <= 0){
+			res.sendStatus(404);
+		}else{
+			res.send(media);
+		}
 	});
 
 	// POST ENDPOINTS
