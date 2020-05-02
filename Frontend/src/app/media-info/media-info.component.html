@@ -20,6 +20,9 @@
 
 </div>
 
+<label id="type-header">Media Information</label>
+<hr>
+
 <div id="product_info">
 
   <div (change)="update($event.target.name)" *ngIf="editMode" id="editMode">
@@ -27,13 +30,7 @@
     <p>Condition: <input name="Condition" [formControl]="getField('Condition')"></p>
     <p>Price: <input type="number" name="Price" [formControl]="getField('Price')"></p>
     <p>Quantity: <input type="number" name="Quantity" [formControl]="getField('Quantity')"></p>
-    <p>Type:
-      <select name="Type" [formControl]="getField('Type')">
-        <option>Game</option>
-        <option>Video</option>
-        <option>Software</option>
-        <option>Hardware</option>
-      </select></p>
+    <p>Type: {{media.Type}}</p>
   </div>
 
   <div id="viewMode" *ngIf="!editMode">
@@ -46,10 +43,8 @@
 
   </div>
 
-
-
-
-  <hr>
+  <label id="type-header">{{media.Type}} Information</label>
+  <hr id="test">
 
   <div (change)="update($event.target.name)" *ngIf="editMode" id="editMode">
 
@@ -110,7 +105,7 @@
 
 
 
-<div id="footer">
+<div *ngIf="editMode" id="footer">
   <hr>
-  <button *ngIf="editMode" (click)="saveChanges($event)">Save Changes</button>
+  <button  (click)="saveChanges($event)">Save Changes</button>
 </div>
