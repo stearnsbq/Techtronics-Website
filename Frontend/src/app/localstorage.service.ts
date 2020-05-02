@@ -42,10 +42,13 @@ export class LocalstorageService {
   }
 
   cartContains(media) {
+    if(!media){
+      return;
+    }
     return this._cart.some((e) => e.Media_ID === media.Media_ID);
   }
 
-  get cart(): Media[] {  
+  get cart(): Media[] {
     return this._cart;
   }
 
@@ -64,5 +67,5 @@ export class LocalstorageService {
   saveToStorage() {
     localStorage.setItem('cart', JSON.stringify(this._cart));
   }
-  
+
 }

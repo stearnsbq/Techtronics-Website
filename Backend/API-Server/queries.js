@@ -508,7 +508,7 @@ class Queries {
 
 						const images = await this._get_images_for_media(connection, results[0].Media_ID);	
 						tmp['images'] = images ? images : [];
-						tmp['specials'] = await this._add_specials(connection, results[0].Media_ID);
+						tmp['Specials'] = await this._add_specials(connection, results[0].Media_ID);
 						tmp['DLC'] = await this._add_DLC(connection, results[0].Media_ID);
 						tmp['companyInfo'] = await this._add_companies(connection, results[0].Media_ID);
 					
