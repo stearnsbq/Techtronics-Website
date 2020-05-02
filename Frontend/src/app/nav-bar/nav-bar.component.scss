@@ -36,6 +36,7 @@
 }
 
 #shopping-cart {
+  cursor: pointer;
 	padding: 4px;
 	margin-right: 20px;
 	position: absolute;
@@ -53,6 +54,26 @@
 #shopping-cart:active {
 	color: lightgrey;
 }
+
+
+#history_icon {
+  cursor: pointer;
+  margin-right: 70px;
+  padding: 4px;
+  position: absolute;
+  font-size: 35px;
+  color: white;
+  right: 0px;
+  top: 0px;
+  transition: 0.2s;
+}
+
+
+#history_icon:hover {
+  cursor: pointer;
+  color: lightgrey;
+}
+
 
 #cart-count-icon {
 	z-index: 1;
