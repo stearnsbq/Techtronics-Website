@@ -1,22 +1,18 @@
 #cart_page_container {
     padding-top: 25px;
 
-    width: 100%;
-    height: 100%;
-
-    display: flex; 
-    justify-content: center; 
+    display: flex;
+    justify-content: center;
 }
 
 #cart_page_content {
-    max-width: 1080px; 
-    flex-grow: 0.8; 
-
+    max-width: 1080px;
+    flex-grow: 0.8;
 }
 
 h2, h3 {
     margin: 0px;
-} 
+}
 
 .product_name {
     font-size: 25px;
@@ -28,12 +24,12 @@ h2, h3 {
     margin: 0px;
 }
 
-.product_attribute, .rating_star { 
+.product_attribute, .rating_star {
     font-size: 20px;
-    margin: 0px; 
+    margin: 0px;
 }
 
-.attribute_pack {  
+.attribute_pack {
     margin-right: 20px;
     display:inline-block;
 }
@@ -44,29 +40,29 @@ h2, h3 {
 }
 
 .remove_button {
-    cursor: pointer; 
+    cursor: pointer;
     color: rgb(238, 39, 39);
 
-    float: right; 
+    float: right;
 
     padding: 5px;
     padding-right: 10px;
     padding-left: 10px;
-    
-    border-style: solid; 
+
+    border-style: solid;
     border-radius: 4px;
     border-width: 2px;
     border-color: rgb(0,0,0);
 
-    font-size: 45px; 
-    margin-right: 10px; 
+    font-size: 45px;
+    margin-right: 10px;
 }
 
 .content_header {
 }
 
 .content_header > *{
-    display: inline-block; 
+    display: inline-block;
 }
 
 .cart_item {
@@ -82,10 +78,10 @@ h2, h3 {
     margin-bottom: 10px;
 }
 
-#order_now { 
+#order_now {
     cursor: pointer;
     width: 100%;
-    height: 40px;   
+    height: 40px;
 
     border-style: none;
     border-radius: 4px;
@@ -111,7 +107,7 @@ h2, h3 {
 	padding:0;
 }
 
-#empty_cart_pack { 
+#empty_cart_pack {
     display: flex;
     justify-content: center;
 }
@@ -122,9 +118,9 @@ h2, h3 {
     display: inline;
     user-select: none;
   }
-  
-#empty_cart_msg_icon { 
-    position: relative; 
+
+#empty_cart_msg_icon {
+    position: relative;
     top: 10px;
     left: 10px;
     display: inline-block;
@@ -132,6 +128,18 @@ h2, h3 {
 
 #empty_cart_msg_icon fa-icon {
     font-size: 60px;
-    color: #171a21; 
+    color: #171a21;
  }
+
+
+ #cart-details{
+   display: flex;
+   flex-direction: column;
+ }
+
+ #cart-details label{
+  font-weight: bold;
+  font-size: 20px;
+  margin: 5px;
+}
 

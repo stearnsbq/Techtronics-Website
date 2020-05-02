@@ -1,7 +1,7 @@
 <div id="cart_page_container">
 
     <div *ngIf="allMedia" id="cart_page_content">
-        <div *ngFor='let media of allMedia'  class="cart_item">
+        <div *ngFor='let media of allMedia; let i = index'  class="cart_item">
             <div class="product_information">
                 <div class="content_header">
                     <h2 class="product_name"> {{media.Name}} </h2>
@@ -11,7 +11,7 @@
                 <div class="all_attributes">
                     <div class="attribute_pack">
                         <h3 class="product_attr_title">Price</h3>
-                        <h3 class="product_attribute">${{media.Price}}</h3>
+                        <h3 class="product_attribute"> <h3 class="product_attribute" *ngIf="getDiscountPrice(i) !== media.Price.toFixed(2)" style="text-decoration: line-through;">{{media.Price}}</h3>  ${{getDiscountPrice(i)}}</h3>
                     </div>
 
                     <div class="attribute_pack">
@@ -22,7 +22,7 @@
                     <div class = "attribute_pack rating_attribute_pack">
                         <h3 class="product_attr_title">User Rating</h3>
                         <div class = "user_rating_container">
-                          <star-rating [value]="media.User_Rating" totalstars="5" checkedcolor="gold" uncheckedcolor="black" size="24px" readonly="true"></star-rating>
+                          <star-rating [value]="media.User_rating" totalstars="5" checkedcolor="gold" uncheckedcolor="black" size="24px" readonly="true"></star-rating>
                         </div>
 
                     </div>
@@ -33,12 +33,12 @@
         </div>
 
 
-        <div  class="cart_item">
+        <div *ngIf="has_items" class="cart_item" id="cart-details">
               <label>Details</label>
-              <b>Price: {{getPrice()}}</b>
+              <b>Price: {{getTotalPrice()}}</b>
           </div>
 
-        <input *ngIf="has_items" [disabled]="local_storage.cartContains(media)"  type="button" id="order_now"  routerLink=""  value="Order Now">
+        <input *ngIf="has_items" [disabled]="local_storage.cartContains(media)" type="button" id="order_now"  routerLink=""  value="Order Now">
 
         <div *ngIf="!has_items" id="empty_cart_pack">
             <!-- Make this look better..... -->
