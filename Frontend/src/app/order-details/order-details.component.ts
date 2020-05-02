@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { LocalstorageService } from '../localstorage.service';
 import { ApiService } from '../api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order-details',
@@ -13,7 +14,7 @@ export class OrderDetailsComponent implements OnInit {
   @Output() toggleChange: EventEmitter<boolean> = new EventEmitter();
 
 
-  constructor(private storage: LocalstorageService, public api: ApiService) { }
+  constructor(private storage: LocalstorageService, public api: ApiService, public router: Router) { }
 
   ngOnInit() {
   }
@@ -37,7 +38,8 @@ export class OrderDetailsComponent implements OnInit {
 
 
       this.api.createOrder(form).subscribe(result => {
-        console.log(result);
+        this.storage.clearCart();
+        this.router.navigate(['order_details']);
       });
 
     });

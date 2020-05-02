@@ -98,6 +98,12 @@ export class LocalstorageService {
     this.saveToStorage();
   }
 
+
+  clearCart() {
+    this._cart = [];
+    this.saveToStorage();
+  }
+
   syncStorage() {
     if (localStorage.getItem('cart')) {
       this._cart = JSON.parse(localStorage.getItem('cart'));

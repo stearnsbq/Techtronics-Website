@@ -5,17 +5,17 @@
 
             <div>
                 <label>Input the address for your order.</label>
-                <input ngModel name="address" #address="ngModel" type="text" placeholder="Address" class="order_info">
+                <input ngModel name="address" #address="ngModel" type="text" placeholder="Address" class="order_info" required>
             </div>
 
             <div>
                 <label>Input the state (or district) for your order.</label>
-                <input ngModel name="state" #state="ngModel" type="text" placeholder="State/District" class="order_info">
+                <input ngModel name="state" #state="ngModel" type="text" placeholder="State/District" class="order_info" required>
             </div>
 
             <div>
                 <label>Input the country for your order.</label>
-                <select ngModel name="country" #country="ngModel" class="order_info">
+                <select ngModel name="country" #country="ngModel" class="order_info" required>
                   <option value="" selected disabled>Please select your country</option>
                     <option value="AF">Afghanistan</option>
                     <option value="AX">Åland Islands</option>
@@ -271,7 +271,7 @@
 
             <div>
                 <label>Input the zipcode/postal code for your order.</label>
-                <input ngModel name="zipcode" #zipcode="ngModel" type="text" placeholder="Zip/Postal Code" class="order_info">
+                <input ngModel name="zipcode" #zipcode="ngModel" type="text" placeholder="Zip/Postal Code" class="order_info" required>
             </div>
 
 
