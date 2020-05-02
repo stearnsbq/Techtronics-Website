@@ -6,7 +6,7 @@
         <div class="image-container">
           <img *ngFor="let image of media.images | paginate: {  itemsPerPage: 1, currentPage: selectedImage, totalItems: media.images.length}" id = "product_image"  draggable="false" [src]="'http://3.234.246.29:8081/api/uploads/media/' + media.Media_ID + '/' + image">
           <pagination-controls *ngIf="media.images.length > 0" class="pagination-controls" (pageChange)="changeImage($event)"></pagination-controls>
-        </div>
+        </div> 
 
         <div id = "product_information">
 
@@ -55,17 +55,20 @@
             <div *ngIf="this.media.Type === 'Video'" class = "attribute_container">
                 <h3 class="product_attr_title"> MPAA Rating </h3>
                 <h3 id="product_price" class="product_attribute"> {{media.MPAA_Rating}} </h3>
-            </div>
+            </div> 
 
 
             <div class = "attribute_container">
                 <h3 class="product_attr_title"> User Rating </h3>
                 <div  class = "user_rating_container">
-                  <star-rating [value]="media.User_Rating" totalstars="5" checkedcolor="gold" uncheckedcolor="black" size="24px" readonly="false"></star-rating>
+                  <star-rating [value]="media.User_rating" totalstars="5" checkedcolor="gold" uncheckedcolor="black" size="24px" readonly="true"></star-rating>
                 </div>
             </div>
 
             <input *ngIf="is_logged_in" [disabled]="storage.cartContains(media)" type="button" id="add_to_cart" (click)="addToCart(media)" value="ADD TO CART">
+            
         </div>
     </div>
+
+    
 </div>

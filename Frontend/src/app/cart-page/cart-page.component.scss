@@ -110,12 +110,13 @@ h2, h3 {
 #empty_cart_pack {
     display: flex;
     justify-content: center;
+    flex: 0;
 }
 
 #empty_cart_msg {
     color: #171a21;
-    margin-left: 20px;
-    display: inline;
+    margin-left: 0px;
+    display: block;
     user-select: none;
   }
 
@@ -123,7 +124,7 @@ h2, h3 {
     position: relative;
     top: 10px;
     left: 10px;
-    display: inline-block;
+    display: block; 
 }
 
 #empty_cart_msg_icon fa-icon {
@@ -140,6 +141,6 @@ h2, h3 {
  #cart-details label{
   font-weight: bold;
   font-size: 20px;
-  margin: 5px;
+  margin: 0px;
+  color: rgb(146, 146, 146);
 }
-

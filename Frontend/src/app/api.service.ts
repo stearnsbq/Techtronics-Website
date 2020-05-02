@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Media } from './model/media';
+import { Order } from './model/order'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
@@ -14,6 +15,9 @@ export class ApiService {
 
   constructor(private http: HttpClient ) { }
 
+  public getOrders() {
+    return this.http.get<Order[]>(ApiService.API_URL + 'orders');
+  }
 
   public getMedia(pageNum= 1): Observable<Media[]> {
     const params = {
@@ -91,7 +95,6 @@ export class ApiService {
 
   }
 
-
   public createNewSpecial(special) {
     return this.http.post(`${ApiService.API_URL}media/specials/`, special, {responseType: 'text'});
   }
@@ -100,8 +103,6 @@ export class ApiService {
   public register(data) {
     return this.http.post(`${ApiService.API_URL}register`, data, {responseType: 'text'});
   }
-
-
 
 
 

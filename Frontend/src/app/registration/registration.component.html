@@ -8,17 +8,17 @@
 
   <label>Input your username.</label>
   <input placeholder="Username" class="signup_entry"
-  ngModel name="username" #username="ngModel"
+  ngModel name="Username" #username="ngModel"
   >
 
   <label>Input your password.</label>
   <input type="password" placeholder="Password" class="signup_entry"
-  ngModel name="password" #password="ngModel"
+  ngModel name="Password" #password="ngModel"
   >
 
   <label>Input your email.</label>
   <input type="email" placeholder="Email" class="signup_entry"
-  ngModel name="email" #email="ngModel"
+  ngModel name="Email" #email="ngModel"
   >
 
   <label>Input your first name.</label>
@@ -38,8 +38,9 @@
   <label>Input your Phone Number</label>
   <input ngModel name="phone_number" #phone_number="ngModel" type="text" class="signup_entry" placeholder="Phone Number">
 
+
   <div id="login_button">
-    <button id="register_button" type="submit">Register</button>
+    <button id="register_button" type="submit" routerLink="login">Register</button>
   </div>
 </form>
 

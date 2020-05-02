@@ -37,7 +37,7 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
       this.is_logged_in = true;
     }
 
-    this.route.params.subscribe((params) => {
+    this.route.params.subscribe((params) => { 
       const id = params.id;
 
       // asynchronously executing.
@@ -65,4 +65,6 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
   changeImage(selectedImage) {
     this.selectedImage = selectedImage;
   }
+
+
 }
