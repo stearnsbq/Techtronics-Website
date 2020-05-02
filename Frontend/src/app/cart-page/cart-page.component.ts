@@ -18,7 +18,7 @@ export class CartPageComponent implements OnInit {
   public has_items: boolean = false;  
   public surprise: IconDefinition = faSurprise;
 
-  ngOnInit() {}
+  ngOnInit() { } 
 
   constructor(public local_storage: LocalstorageService) {
     local_storage.cartSubject.subscribe(media => (this.allMedia = media));

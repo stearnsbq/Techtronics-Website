@@ -1,11 +1,11 @@
-<div *ngIf="media"  id = "product_page_container">
+<div *ngIf="loaded"  id = "product_page_container">
     <!-- this image will be a button -->
 
     <div  id ="main_content">
 
         <div class="image-container">
           <img *ngFor="let image of media.images | paginate: {  itemsPerPage: 1, currentPage: selectedImage, totalItems: media.images.length}" id = "product_image"  draggable="false" [src]="'http://3.234.246.29:8081/api/uploads/media/' + media.Media_ID + '/' + image">
-          <pagination-controls *ngIf="media.images.length > 0" class="pagination-controls" (pageChange)="changeImage($event)"></pagination-controls>
+          <pagination-controls id="img_pagination_ctrl" *ngIf="media.images.length > 0" class="pagination-controls" (pageChange)="changeImage($event)"></pagination-controls>
         </div>
 
         <div id = "product_information">
@@ -31,33 +31,26 @@
             </div>
 
             <!--  is_hardware and is_software -->
-            <div *ngIf="this.media.Type === 'Software' || this.media.Type ==='Hardware'" class = "attribute_container">
+            <div *ngIf="is_hardware || is_software" class = "attribute_container">
                 <h3 class="product_attr_title"> Type </h3>
-                <h3 id="product_price" class="product_attribute" *ngIf="this.media.Type === 'Software'"> {{media.Software_Type}} </h3>
-                <h3 id="product_price" class="product_attribute" *ngIf="this.media.Type === 'Hardware'"> {{media.Hardware_Type}} </h3>
+                <h3 id="product_price" class="product_attribute"> {{media.Type}} </h3>
             </div>
 
             <!--  is_game with concern for video-->
-            <div *ngIf="this.media.Type === 'Game' || this.media.Type ==='Video'" class = "attribute_container">
+            <div *ngIf="is_game || is_video" class = "attribute_container">
                 <h3 class="product_attr_title"> Genre </h3>
-                <h3 id="product_price" class="product_attribute" *ngIf="this.media.Type ==='Video'"> {{media.Video_Genre}} </h3>
-                <h3 id="product_price" class="product_attribute" *ngIf="this.media.Type === 'Game'"> {{media.Game_Genre}} </h3>
+                <h3 id="product_price" class="product_attribute"> {{media.Genre}} </h3>
             </div>
 
-            <div *ngIf="this.media.Type === 'Game'" class = "attribute_container">
+            <div *ngIf="is_game" class = "attribute_container">
                 <h3 class="product_attr_title"> ESRB Rating </h3>
                 <h3 id="product_price" class="product_attribute"> {{media.ESRB_Rating}} </h3>
             </div>
 
             <!--  is_dlc -->
 
-<<<<<<< HEAD
             <!--  is_video --> 
             <div *ngIf="is_video" ngclass = "attribute_container">
-=======
-            <!--  is_video -->
-            <div *ngIf="this.media.Type === 'Video'" class = "attribute_container">
->>>>>>> 9053c6861a045406791ceee81afa34af1ddb2ea5
                 <h3 class="product_attr_title"> MPAA Rating </h3>
                 <h3 id="product_price" class="product_attribute"> {{media.MPAA_Rating}} </h3>
             </div>
@@ -66,15 +59,14 @@
             <div class = "attribute_container">
                 <h3 class="product_attr_title"> User Rating </h3>
                 <div  class = "user_rating_container">
-<<<<<<< HEAD
                   <star-rating [value]="media.User_rating" totalstars="5" (rate)="onRate($event)" checkedcolor="gold" uncheckedcolor="black" size="24px" readonly="true"></star-rating>
-=======
-                  <star-rating [value]="media.User_Rating" totalstars="5" checkedcolor="gold" uncheckedcolor="black" size="24px" readonly="false"></star-rating>
->>>>>>> 9053c6861a045406791ceee81afa34af1ddb2ea5
                 </div>
             </div>
 
             <input *ngIf="is_logged_in" [disabled]="storage.cartContains(media)" type="button" id="add_to_cart" (click)="addToCart(media)" value="ADD TO CART">
-        </div>
+        </div> 
+
+
     </div>
+
 </div>
