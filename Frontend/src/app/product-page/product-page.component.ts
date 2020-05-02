@@ -32,9 +32,6 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
   public is_dlc = false;
   public is_video = false;
 
-
-
-
   constructor(
     public auth: AuthService,
     private route: ActivatedRoute,
@@ -65,13 +62,15 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
         this.media = media;
         this.loaded = true;
 
+        console.log(this.media);
         switch (this.media.Type) {
           case 'Game': {
             this.is_game = true;
             break;
           }
           case 'Video': {
-            this.is_game = true;
+            console.log("chickens");
+            this.is_video = true;
             break;
           }
           case 'Hardware': {
@@ -89,7 +88,7 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
         }
 
 
-
+        
 
       });
     });
@@ -108,4 +107,6 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
   changeImage(selectedImage) {
     this.selectedImage = selectedImage;
   }
+
+
 }

@@ -49,7 +49,7 @@
 
             <!--  is_dlc -->
 
-            <!--  is_video -->
+            <!--  is_video --> 
             <div *ngIf="is_video" ngclass = "attribute_container">
                 <h3 class="product_attr_title"> MPAA Rating </h3>
                 <h3 id="product_price" class="product_attribute"> {{media.MPAA_Rating}} </h3>
@@ -59,7 +59,7 @@
             <div class = "attribute_container">
                 <h3 class="product_attr_title"> User Rating </h3>
                 <div  class = "user_rating_container">
-                  <star-rating [value]="media.User_Rating" totalstars="5" checkedcolor="red" uncheckedcolor="black" size="24px" readonly="true"></star-rating>
+                  <star-rating [value]="media.User_rating" totalstars="5" (rate)="onRate($event)" checkedcolor="gold" uncheckedcolor="black" size="24px" readonly="true"></star-rating>
                 </div>
             </div>
 
