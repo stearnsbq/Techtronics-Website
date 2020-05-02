@@ -52,13 +52,12 @@ export class MediaInfoComponent implements OnInit {
 
   deleteItem() {
     this.api.deleteMedia(this.media.Media_ID).subscribe(result => {
-      this.router.navigate(['controlpanel']);
+      location.reload();
     });
   }
 
   update(field) {
     this.media[field] = this.control.value[field];
-    console.log(this.media);
   }
 
 

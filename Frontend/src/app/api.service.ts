@@ -9,7 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  public static API_URL = 'http://localhost:8081/api/';
+  public static API_URL = 'http://3.234.246.29:8081/api/';
   public loading = false;
 
 
@@ -35,8 +35,8 @@ export class ApiService {
     return this.http.get<Media>(ApiService.API_URL + 'media/' + id);
   }
 
-  public deleteMedia(id): Observable<Media> {
-    return this.http.delete<any>(ApiService.API_URL + 'media/' + id);
+  public deleteMedia(id) {
+    return this.http.delete(ApiService.API_URL + 'media/' + id, {responseType: 'text'});
   }
 
 

@@ -200,6 +200,7 @@ export class InventoryComponent implements OnInit {
       this.api.createNewMedia(newMedia).subscribe(result => {
         this.api.uploadFiles(this.images, result.Media_ID).subscribe(result => {
           this.createNewMediaModalShow = false;
+          location.reload();
         });
       });
     }
@@ -207,7 +208,9 @@ export class InventoryComponent implements OnInit {
 
 
   createNewSpecial(data) {
-    this.api.createNewSpecial(data).subscribe(result => {});
+    this.api.createNewSpecial(data).subscribe(result => {
+      location.reload();
+    });
   }
 
   getSpecialPrice(media) {
