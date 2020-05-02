@@ -101,6 +101,7 @@ export class LocalstorageService {
 
   clearCart() {
     this._cart = [];
+    this._cartSubject.next(this._cart);
     this.saveToStorage();
   }
 

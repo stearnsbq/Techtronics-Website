@@ -28,21 +28,20 @@ export class OrderDetailsComponent implements OnInit {
 
 
   onOrder(form) {
-    this.storage.cartSubject.subscribe(items => {
-      form.items = [];
-      form.count = items.length;
-      form.price = this.storage.getCartTotal();
-      for (const item of items) {
-        form.items.push(item.Media_ID);
+     const items = this.storage.cart;
+
+     form.items = [];
+     form.count = items.length;
+     form.price = this.storage.getCartTotal();
+     for (let i = 0 ; i < items.length; i++) {
+        form.items.push({Media_ID: items[i].Media_ID, Price: this.storage.getDiscountPrice(i)});
       }
 
-
-      this.api.createOrder(form).subscribe(result => {
-        this.storage.clearCart();
-        this.router.navigate(['order_details']);
-      });
-
+     this.api.createOrder(form).subscribe(result => {
+      this.storage.clearCart();
+      this.router.navigate(['order_details']);
     });
+
   }
 
 }

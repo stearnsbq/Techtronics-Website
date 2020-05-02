@@ -142,8 +142,8 @@ class Queries {
 	static _add_order_item(connection, order_id, item) {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				'INSERT INTO Order_Items (`Order`, Media) VALUES (?, ?)',
-				[ order_id, item ],
+				'INSERT INTO Order_Items (`Order`, Media, Price) VALUES (?, ?, ?)',
+				[ order_id, item['Media_ID'], item['Price'] ],
 				(err, results, fields) => {
 					return err ? reject(err) : resolve(results);
 				}
