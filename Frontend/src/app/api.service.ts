@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Media } from './model/media';
-import { Order } from './model/order'
+import { Order } from './model/order';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
@@ -9,7 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  public static API_URL = 'http://3.234.246.29:8081/api/';
+  public static API_URL = 'http://localhost:8081/api/';
   public loading = false;
 
 
@@ -102,6 +102,12 @@ export class ApiService {
 
   public register(data) {
     return this.http.post(`${ApiService.API_URL}register`, data, {responseType: 'text'});
+  }
+
+
+  public createOrder(order) {
+    return this.http.post(`${ApiService.API_URL}orders`, order)
+
   }
 
 

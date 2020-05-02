@@ -16,13 +16,30 @@ module.exports = function(connection) {
         }
 	});
 
+
+	router.get('/:id', expJwt({ secret: config.JWT.Secret}), async (req, res) => {
+		try{
+			if(req.user){
+				const person_id = req.user.Person_ID
+				const order_id = parseInt(req.params['id'])
+				res.send(await sql_queries.get_order_by_id(connection, person_id, order_id));
+			}else{
+				res.sendStatus(401);
+			}
+		}catch(err){
+			console.log(err)
+			res.send(err, 500);
+		}
+
+	});
+
 	router.post('/', expJwt({ secret: config.JWT.Secret}), async (req, res) => {
 		const body = req.body;
 		try{
-			connection.startTransaction();
+			connection.beginTransaction();
 			await sql_queries.create_new_order(
 				connection,
-				body['customer_id'],
+				req.user.Person_ID,
 				body['count'],
 				body['address'],
 				body['zipcode'],
@@ -31,8 +48,10 @@ module.exports = function(connection) {
 				body['items']
 			);
 			connection.commit()
-			res.sendStatus(200);
+			const order_id = await sql_queries.get_last_id(connection);
+			res.redirect(`./orders/${order_id}`);
 		}catch(error){
+			console.log(error)
 			connection.rollback();
 			res.sendStatus(500);
 		}

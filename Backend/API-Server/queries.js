@@ -7,6 +7,24 @@ const ITEMS_PER_PAGE = 12;
 
 class Queries {
 
+
+	static get_order_by_id(connection, person_id, order_id){
+		return new Promise((resolve, reject) =>{
+			connection.query("SELECT * FROM `Order` WHERE Order_ID = ?", [order_id], async (err ,results, fields) =>{
+				if(err){
+                    return reject(err);
+                }else{
+					console.log(results)
+					if(results[0].Customer !== person_id){
+						return reject(new Error("UnauthorizedError"))
+					}
+                    results[0]['items'] = await this._get_order_items(connection, results[0]['Order_ID']);
+                    return resolve(results);
+                }
+			})
+		})
+	}
+
     static get_orders(connection, person_id){
         return new Promise((resolve, reject) =>{
             connection.query('SELECT * FROM `Order` WHERE Customer=?', [person_id], async (err, results, fields) => {
@@ -100,14 +118,14 @@ class Queries {
 	static create_new_order(connection, customer_id, count, address, zipcode, state, country, items) {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				'INSERT INTO Orders (Customer, Media_Count, Address, Zip_code, State, Country) VALUES (?, ?, ?, ?, ?, ?)',
+				'INSERT INTO `Order` (Customer, Media_Count, Address, Zip_code, State, Country) VALUES (?, ?, ?, ?, ?, ?)',
 				[ customer_id, count, address, zipcode, state, country ],
 				async (err, results, fields) => {
 					if (err) {
 						return reject(err);
 					} else {
 						try {
-							const id = get_last_id(connection);
+							const id = await this.get_last_id(connection);
 							for (const item of items) {
 								await this._add_order_item(connection, id, item);
 							}
@@ -124,7 +142,7 @@ class Queries {
 	static _add_order_item(connection, order_id, item) {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				'INSERT INTO Order_Items (Order, Media) VALUES (?, ?)',
+				'INSERT INTO Order_Items (`Order`, Media) VALUES (?, ?)',
 				[ order_id, item ],
 				(err, results, fields) => {
 					return err ? reject(err) : resolve(results);

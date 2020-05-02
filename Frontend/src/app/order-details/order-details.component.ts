@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LocalstorageService } from '../localstorage.service';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-order-details',
@@ -7,9 +9,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderDetailsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private storage: LocalstorageService, public api: ApiService) { }
 
   ngOnInit() {
+  }
+
+
+
+
+  onOrder(form) {
+    this.storage.cartSubject.subscribe(items => {
+      form.items = [];
+      form.count = items.length;
+      for (const item of items) {
+        form.items.push(item.Media_ID);
+      }
+
+
+      this.api.createOrder(form).subscribe(result => {
+        console.log(result);
+      });
+
+    });
   }
 
 }

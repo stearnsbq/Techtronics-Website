@@ -1,21 +1,22 @@
-<div id="order_dest_container"> 
+<div id="order_dest_container">
     <div id="order_dest_content">
-        <form id="order_details_form" >
+        <form id="order_details_form" #form="ngForm" (ngSubmit)="onOrder(form.value)" >
             <h3 id="order_title">Add your order destination details...</h3>
-            
+
             <div>
                 <label>Input the address for your order.</label>
-                <input type="text" placeholder="State/District" class="order_info">
-            </div>
-            
-            <div>
-                <label>Input the state (or district) for your order.</label> 
-                <input type="text" placeholder="State/District" class="order_info">
+                <input ngModel name="address" #address="ngModel" type="text" placeholder="Address" class="order_info">
             </div>
 
-            <div> 
-                <label>Input the country for your order.</label> 
-                <select class="order_info">
+            <div>
+                <label>Input the state (or district) for your order.</label>
+                <input ngModel name="state" #state="ngModel" type="text" placeholder="State/District" class="order_info">
+            </div>
+
+            <div>
+                <label>Input the country for your order.</label>
+                <select ngModel name="country" #country="ngModel" class="order_info">
+                  <option value="" selected disabled>Please select your country</option>
                     <option value="AF">Afghanistan</option>
                     <option value="AX">Åland Islands</option>
                     <option value="AL">Albania</option>
@@ -270,22 +271,17 @@
 
             <div>
                 <label>Input the zipcode/postal code for your order.</label>
-                <input type="text" placeholder="Zip/Postal Code" class="order_info">  
+                <input ngModel name="zipcode" #zipcode="ngModel" type="text" placeholder="Zip/Postal Code" class="order_info">
             </div>
 
             <div>
-                <label>Input the phone number for your order.</label>
-                <input type="text" placeholder="Phone Number" class="order_info" pattern="\([0-9]{3}\)-[0-9]{3}-[0-9]{4}">  
+                <label>Input a comment for your order.</label>
+                <input ngModel name="order_comment" #order_comment="ngModel" type="text" id="comment_box" placeholder="Comment any related information..." class="order_info">
             </div>
 
-            <div>
-                <label>Input a comment for your order.</label> 
-                <input type="text" id="comment_box" placeholder="Comment any related information..." class="order_info">  
-            </div>
-            
-            <div id="submit_button_container"> 
+            <div id="submit_button_container">
               <button id="cancel_order_button" type="cancel">Cancel</button>
-              <button id="submit_order_button" type="submit">Submit</button> 
+              <button id="submit_order_button" type="submit">Submit</button>
             </div>
         </form>
 
