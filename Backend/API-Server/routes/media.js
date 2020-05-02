@@ -83,8 +83,8 @@ module.exports = function(connection, upload) {
 
 	router.get('/:id', async (req, res) => {
 		const id = req.params['id'];
-		const media = sql_queries.get_media_by_id(connection, id);
-
+		const media = await sql_queries.get_media_by_id(connection, id);
+		console.log(media);
 		if(Object.keys(media).length <= 0){
 			res.sendStatus(404);
 		}else{
