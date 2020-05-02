@@ -41,8 +41,49 @@ export class LocalstorageService {
     }
   }
 
+  getCartTotal() {
+    if (!this._cart) {
+      return 0;
+    }
+
+    let total = 0;
+    for (const media of this._cart) {
+
+      if (media.Specials && media.Specials.length > 0) {
+
+        for (const special of media.Specials) {
+           total += media.Price / (1 + (special.Percentage_off / 100));
+        }
+
+      } else {
+
+        total += media.Price;
+
+      }
+    }
+
+    return total.toFixed(2);
+  }
+
+  getDiscountPrice(index) {
+
+    if (!this.cart[index] || index > this.cart.length) {
+      return 0;
+    }
+
+    if (this.cart[index].Specials.length > 0) {
+      let total = 0;
+      for (const special of this.cart[index].Specials) {
+         total += this.cart[index].Price / (1 + (special.Percentage_off / 100));
+      }
+      return total.toFixed(2);
+    }
+    return this.cart[index].Price.toFixed(2);
+  }
+
+
   cartContains(media) {
-    if(!media){
+    if (!media) {
       return;
     }
     return this._cart.some((e) => e.Media_ID === media.Media_ID);

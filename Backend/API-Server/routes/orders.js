@@ -45,7 +45,8 @@ module.exports = function(connection) {
 				body['zipcode'],
 				body['state'],
 				body['country'],
-				body['items']
+				body['items'],
+				body['price']
 			);
 			connection.commit()
 			const order_id = await sql_queries.get_last_id(connection);

@@ -1,4 +1,4 @@
-<div id="order_dest_container">
+<div *ngIf="toggle" id="order_dest_container">
     <div id="order_dest_content">
         <form id="order_details_form" #form="ngForm" (ngSubmit)="onOrder(form.value)" >
             <h3 id="order_title">Add your order destination details...</h3>
@@ -274,13 +274,9 @@
                 <input ngModel name="zipcode" #zipcode="ngModel" type="text" placeholder="Zip/Postal Code" class="order_info">
             </div>
 
-            <div>
-                <label>Input a comment for your order.</label>
-                <input ngModel name="order_comment" #order_comment="ngModel" type="text" id="comment_box" placeholder="Comment any related information..." class="order_info">
-            </div>
 
             <div id="submit_button_container">
-              <button id="cancel_order_button" type="cancel">Cancel</button>
+              <button id="cancel_order_button" type="cancel" (click)="changeToggled()">Cancel</button>
               <button id="submit_order_button" type="submit">Submit</button>
             </div>
         </form>

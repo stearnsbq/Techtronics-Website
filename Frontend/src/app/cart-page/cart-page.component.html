@@ -11,7 +11,7 @@
                 <div class="all_attributes">
                     <div class="attribute_pack">
                         <h3 class="product_attr_title">Price</h3>
-                        <h3 class="product_attribute"> <h3 class="product_attribute" *ngIf="getDiscountPrice(i) !== media.Price.toFixed(2)" style="text-decoration: line-through;">{{media.Price}}</h3>  ${{getDiscountPrice(i)}}</h3>
+                        <h3 class="product_attribute"> <h3 class="product_attribute" *ngIf="local_storage.getDiscountPrice(i) !== media.Price.toFixed(2)" style="text-decoration: line-through;">{{media.Price}}</h3>  ${{local_storage.getDiscountPrice(i)}}</h3>
                     </div>
 
                     <div class="attribute_pack">
@@ -35,10 +35,10 @@
 
         <div *ngIf="has_items" class="cart_item" id="cart-details">
               <label id="total_price_label">Details</label>
-              <b>Price: {{getTotalPrice()}}</b>
+              <b>Total Price: {{local_storage.getCartTotal()}}</b>
           </div>
 
-        <input *ngIf="has_items" [disabled]="local_storage.cartContains(media)" type="button" id="order_now" value="Order Now">
+        <input *ngIf="has_items" [disabled]="local_storage.cartContains(media)" (click)="showOrderDetails = true" type="button" id="order_now" value="Order Now">
 
         <div *ngIf="!has_items" id="empty_cart_pack">
             <!-- Make this look better..... -->
@@ -53,4 +53,4 @@
 
 </div>
 
-<app-order-details></app-order-details>
+<app-order-details [(toggle)]="showOrderDetails"></app-order-details>

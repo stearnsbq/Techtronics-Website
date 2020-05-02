@@ -17,8 +17,9 @@ export class CartPageComponent implements OnInit {
   public star: IconDefinition = faStar;
   public has_items = false;
   public surprise: IconDefinition = faSurprise;
+  public showOrderDetails = false;
 
-  ngOnInit() { } 
+  ngOnInit() { }
 
   constructor(public local_storage: LocalstorageService) {
     local_storage.cartSubject.subscribe((media) => {
@@ -32,35 +33,6 @@ export class CartPageComponent implements OnInit {
     this.local_storage.removeItemFromCart(media);
   }
 
-  getDiscountPrice(index) {
 
-    if (this.allMedia[index].Specials.length > 0) {
-      let total = 0;
-      for (const special of this.allMedia[index].Specials) {
-         total += this.allMedia[index].Price / (1 + (special.Percentage_off / 100));
-      }
-      return total.toFixed(2);
-    }
-    return this.allMedia[index].Price.toFixed(2);
-  }
 
-  getTotalPrice() {
-    let total = 0;
-    for (const media of this.allMedia) {
-
-      if (media.Specials && media.Specials.length > 0) {
-
-        for (const special of media.Specials) {
-           total += media.Price / (1 + (special.Percentage_off / 100));
-        }
-
-      } else {
-
-        total += media.Price;
-
-      }
-    }
-
-    return total.toFixed(2);
-  }
 }

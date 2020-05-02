@@ -115,11 +115,11 @@ class Queries {
 
 
 
-	static create_new_order(connection, customer_id, count, address, zipcode, state, country, items) {
+	static create_new_order(connection, customer_id, count, address, zipcode, state, country, items, price) {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				'INSERT INTO `Order` (Customer, Media_Count, Address, Zip_code, State, Country) VALUES (?, ?, ?, ?, ?, ?)',
-				[ customer_id, count, address, zipcode, state, country ],
+				'INSERT INTO `Order` (Customer, Media_Count, Address, Zip_code, State, Country, Price) VALUES (?, ?, ?, ?, ?, ?, ?)',
+				[ customer_id, count, address, zipcode, state, country, price],
 				async (err, results, fields) => {
 					if (err) {
 						return reject(err);
