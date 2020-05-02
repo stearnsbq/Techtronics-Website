@@ -32,7 +32,6 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
   public is_dlc = false;
   public is_video = false;
 
-  public stars: number[];
 
 
 
@@ -48,7 +47,7 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
       this.is_logged_in = true;
     }
 
-    this.stars = [0, 0, 0, 0, 0];
+
 
 
   }
@@ -89,10 +88,8 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
           }
         }
 
-        this.media.User_Rating = 3;
-        for(let i = 0; i < this.media.User_Rating; i++){
-          this.stars[i] = 1;
-        }
+
+
 
       });
     });
