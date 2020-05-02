@@ -32,15 +32,26 @@ export class CartPageComponent implements OnInit {
     this.local_storage.removeItemFromCart(media);
   }
 
-  getPrice() {
+  getDiscountPrice(index) {
+
+    if (this.allMedia[index].Specials.length > 0) {
+      let total = 0;
+      for (const special of this.allMedia[index].Specials) {
+         total += this.allMedia[index].Price / (1 + (special.Percentage_off / 100));
+      }
+      return total.toFixed(2);
+    }
+    return this.allMedia[index].Price.toFixed(2);
+  }
+
+  getTotalPrice() {
     let total = 0;
-    console.log(this.allMedia)
     for (const media of this.allMedia) {
 
       if (media.Specials && media.Specials.length > 0) {
 
         for (const special of media.Specials) {
-          total /= 1 + (special.percentage_off / 100);
+           total += media.Price / (1 + (special.Percentage_off / 100));
         }
 
       } else {
@@ -50,6 +61,6 @@ export class CartPageComponent implements OnInit {
       }
     }
 
-    return total;
+    return total.toFixed(2);
   }
 }
