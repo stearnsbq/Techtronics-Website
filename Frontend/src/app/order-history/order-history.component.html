@@ -1,5 +1,7 @@
 <div id="order_history_content">
     <div *ngIf="allOrders" id="order_page_content">
+        <h3> Order History </h3> 
+
         <div *ngFor='let order of allOrders; let i = index'  class="order_item">
             <div class="order_information">
                 <div class="content_header">
