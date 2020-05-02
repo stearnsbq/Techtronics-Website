@@ -191,6 +191,10 @@ class Queries {
 						try {
 							// compare the password sent from the user and the hash in the database
 							if (await argon2.verify(results[0].Password, password)) {
+
+								
+
+
 								var token = jwt.sign(
 									{ Person_ID: results[0].Person_ID, Account_Level: results[0].Account_Level },
 									config.JWT.Secret,
@@ -340,11 +344,11 @@ class Queries {
 
 	// creates a new employee in the employee table based off the id
 
-	static create_employee(connection, id, hire_date) {
+	static create_employee(connection, id, hire_date, role) {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				`INSERT INTO Employee (Employee_ID, Hire_date) VALUES (?, ?)`,
-				[ id, hire_date ],
+				`INSERT INTO Employee (Employee_ID, Hire_date, Role) VALUES (?, ?, ?)`,
+				[ id, hire_date, role ],
 				(err, results, fields) => {
 					return err ? reject(err) : resolve(results);
 				}
