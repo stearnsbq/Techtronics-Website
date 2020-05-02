@@ -157,12 +157,13 @@ module.exports = function(connection, upload) {
 			
 			connection.beginTransaction();
 				
-			await sql_queries.update_media(connection, media);
+			await sql_queries.update_media(connection, req.body);
 	
 			connection.commit();
 			res.sendStatus(200);
 		}catch(err){
 			connection.rollback();
+			console.log(err)
 			res.sendStatus(500);
 		}
 

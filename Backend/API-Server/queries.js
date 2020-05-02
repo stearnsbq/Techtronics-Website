@@ -87,6 +87,10 @@ class Queries {
 	
 	static add_new_special_to_media(connection, special_id, media_id){
 		return new Promise((resolve, reject)=>{
+
+			connection.query("INSERT INTO Media_Specials (Special_ID, Media) VALUES (?, ?)", [special_id, media_id], (err, results, fields) =>{
+				return err ? reject(err) : resolve(results);
+			})
 			
 		})
 	}
@@ -228,7 +232,7 @@ class Queries {
 						return reject(err);
 					}else{
 						const special_id = await this.get_last_id(connection);
-						return resolve(await this._add_media_specials(connection, media_id, special_id))
+						return resolve(await this._add_specials(connection, media_id, special_id))
 					}
 					
 				}
@@ -239,7 +243,7 @@ class Queries {
 	static _add_media_specials(connection, media_id, special_id){
 		return new Promise((resolve, reject) => {
 
-			connection.query("INSERT INTO Media_Specials (Special_ID, Media) VALUES (?, ?)", [special_id, media_id], (err, results, fields) =>{
+			connection.query("SELECT * FROM Specials JOIN Media_Specials ", [special_id, media_id], (err, results, fields) =>{
 				return err ? reject(err) : resolve(results);
 			})
 
@@ -652,7 +656,7 @@ class Queries {
 
 	static _update_DLC(connection, DLC_ID, Game_ID){
 		return new Promise((resolve, reject) =>{
-			connection.query("UPDATE DLC SET DLC_ID = ? AND Game_ID = ?", [DLC_ID, Game_ID], (err, results, fields) =>{
+			connection.query("UPDATE DLC SET DLC_ID = ?, Game_ID = ?", [DLC_ID, Game_ID], (err, results, fields) =>{
 				return err ? reject(err) : resolve(results);
 			})
 		})
@@ -662,7 +666,7 @@ class Queries {
 
 	static _update_game(connection, media){
 		return new Promise((resolve, reject) =>{
-			connection.query("UPDATE Game SET ESRB_Rating = ? AND Genre= ? WHERE Game_ID = ?", [media['ESRB_Rating'], media['Game_Genre'], media['Media_ID']], (err, results, fields) => {
+			connection.query("UPDATE Game SET ESRB_Rating = ?, Genre= ? WHERE Game_ID = ?", [media['ESRB_Rating'], media['Game_Genre'], media['Media_ID']], (err, results, fields) => {
 				return err ? reject(err) : resolve(results);
 			})
 		})
@@ -670,7 +674,7 @@ class Queries {
 
 	static _update_video(connection, media){
 		return new Promise((resolve, reject) =>{
-			connection.query("UPDATE Video SET MPAA_Rating = ? AND Genre= ? WHERE Video_ID = ?", [media['MPAA_Rating'], media['Video_Genre'], media['Media_ID']], (err, results, fields) => {
+			connection.query("UPDATE Video SET MPAA_Rating = ?, Genre= ? WHERE Video_ID = ?", [media['MPAA_Rating'], media['Video_Genre'], media['Media_ID']], (err, results, fields) => {
 				return err ? reject(err) : resolve(results);
 			})
 		})
@@ -730,8 +734,6 @@ class Queries {
 				sorted = sorted + ' DESC'
 			}else if (sort == 'ASC'){
 				sorted = sorted + ' ASC'
-			}else{
-				return reject(new Error("invalid sort"))
 			}
 
 			const offset = (page - 1) * ITEMS_PER_PAGE;
@@ -769,7 +771,7 @@ class Queries {
 						result['images'] = await this._get_images_for_media(connection, result.Media_ID);
 						result['companyInfo'] = await this._add_companies(connection, result.Media_ID);
 						result['DLC'] = await this._add_DLC(connection, result.Media_ID);
-						result['Specials'] = await this._add_media_specials(connection, result.Media_ID);
+						result['Specials'] = await this._add_specials(connection, result.Media_ID);
 						send.push(result);
 					}
 
