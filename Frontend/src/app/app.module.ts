@@ -36,6 +36,7 @@ import { CartPageComponent } from './cart-page/cart-page.component';
 import { RatingModule } from 'ng-starrating';
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -62,7 +63,8 @@ export function tokenGetter() {
     ModalComponent,
     CartPageComponent,
     OrderHistoryComponent,
-    OrderDetailsComponent
+    OrderDetailsComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -87,8 +89,8 @@ export function tokenGetter() {
       {path: 'login', component: LoginModalComponent},
       {path: 'cart', component: CartPageComponent, canActivate: [AuthGuard]},
       {path: 'order_history', component: OrderHistoryComponent, canActivate: [AuthGuard]},
-      {path: 'order_details', component: OrderDetailsComponent},
-      {path: '**', redirectTo: ''} 
+      {path: 'order_details', component: OrderDetailsComponent}
+     // {path: '**', component: NotFoundComponent}
     ]),
     ReactiveFormsModule,
     FontAwesomeModule,

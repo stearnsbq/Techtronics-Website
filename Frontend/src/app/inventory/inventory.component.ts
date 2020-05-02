@@ -198,7 +198,9 @@ export class InventoryComponent implements OnInit {
       };
 
       this.api.createNewMedia(newMedia).subscribe(result => {
-        this.api.uploadFiles(this.images, result.Media_ID).subscribe(result => {});
+        this.api.uploadFiles(this.images, result.Media_ID).subscribe(result => {
+          this.createNewMediaModalShow = false;
+        });
       });
     }
   }

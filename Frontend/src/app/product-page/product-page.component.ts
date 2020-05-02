@@ -6,7 +6,7 @@ import {
   ViewChild,
   AfterContentInit,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Media } from '../model/media';
 import { ApiService } from '../api.service';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
@@ -29,7 +29,8 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
     public auth: AuthService,
     private route: ActivatedRoute,
     public storage: LocalstorageService,
-    private api: ApiService
+    private api: ApiService,
+    private router: Router
   ) {
     storage.syncStorage();
 
@@ -44,7 +45,11 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
       // asynchronously executing.
       this.api.getMediaByID(id).subscribe((media) => {
         this.media = media;
-        console.log(media)
+      }, err => {
+        console.log(err)
+        if (err.status && err.status === 404) {
+         // this.router.navigate(['notfound']);
+        }
       });
     });
 
