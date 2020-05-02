@@ -21,6 +21,7 @@ export class RegistrationComponent implements OnInit {
 
   onRegister(form) {
     console.log(form);
+    form.Account_Level = 'Customer';
 
   }
 

@@ -4,34 +4,52 @@ import { LocalstorageService } from '../localstorage.service';
 import { faMinus, faStar } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/free-regular-svg-icons';
 import { AuthService } from '../auth.service';
-import { faSurprise} from '@fortawesome/free-regular-svg-icons'
+import { faSurprise } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-cart-page',
   templateUrl: './cart-page.component.html',
-  styleUrls: ['./cart-page.component.scss']
+  styleUrls: ['./cart-page.component.scss'],
 })
 export class CartPageComponent implements OnInit {
   public allMedia: Media[];
   public minus: IconDefinition = faMinus;
-  public star: IconDefinition = faStar;  
-  public has_items: boolean = false;  
+  public star: IconDefinition = faStar;
+  public has_items = false;
   public surprise: IconDefinition = faSurprise;
 
   ngOnInit() { } 
 
   constructor(public local_storage: LocalstorageService) {
-    local_storage.cartSubject.subscribe(media => (this.allMedia = media));
+    local_storage.cartSubject.subscribe((media) => {
+      this.allMedia = media;
 
-    if (local_storage.itemsInCart() > 0) {
-      this.has_items = true;
-    } 
-
+      this.has_items = local_storage.itemsInCart() > 0;
+    });
   }
 
   remove_from_cart(media) {
     this.local_storage.removeItemFromCart(media);
   }
 
+  getPrice() {
+    let total = 0;
+    console.log(this.allMedia)
+    for (const media of this.allMedia) {
 
+      if (media.Specials && media.Specials.length > 0) {
+
+        for (const special of media.Specials) {
+          total /= 1 + (special.percentage_off / 100);
+        }
+
+      } else {
+
+        total += media.Price;
+
+      }
+    }
+
+    return total;
+  }
 }
