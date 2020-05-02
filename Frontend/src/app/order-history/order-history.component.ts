@@ -11,6 +11,7 @@ export class OrderHistoryComponent implements OnInit {
   public allOrders: Order; 
 
   constructor(public api: ApiService) { 
+    // based on the user_id. 
     this.api.getOrders(id).subscribe((media) => {
       this.media = media;
     });

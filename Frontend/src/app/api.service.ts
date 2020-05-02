@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Media } from './model/media';
+import { Order } from './model/order' 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
@@ -14,6 +15,9 @@ export class ApiService {
 
   constructor(private http: HttpClient ) { }
 
+  public getOrders() {
+    return this.http.get<Order[]>(ApiService.API_URL + 'orders');
+  }
 
   public getMedia(pageNum= 1): Observable<Media[]> {
     const params = {
@@ -90,7 +94,6 @@ export class ApiService {
     return this.http.post<any>(`${ApiService.API_URL}media/upload`, formData);
 
   }
-
 
   public createNewSpecial(special) {
     console.log(special);
