@@ -65,6 +65,15 @@ h2, h3 {
     margin: 0px;
 }
 
-tr {
-    margin-right: 10px;
+#table_header {
+    text-align: left;
+}
+
+table {
+    border-spacing: 10px;
+} 
+
+th, td {
+    white-space: nowrap;
+    border-bottom: 1px solid black;
 }
