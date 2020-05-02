@@ -9,7 +9,7 @@ export interface Media {
   Quantity?: number;
   Type: string;
   Specials: Special[];
-  User_Rating?: number;
+  User_rating?: number;
   Game_Genre?: string;
   ESRB_Rating?: string;
   Video_Genre?: string;

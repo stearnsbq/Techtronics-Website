@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  public static API_URL = 'http://3.234.246.29:8081/api/';
+  public static API_URL = 'http://localhost:8081/api/';
   public loading = false;
 
 
@@ -93,7 +93,8 @@ export class ApiService {
 
 
   public createNewSpecial(special) {
-    return this.http.post<Media>(`${ApiService.API_URL}specials/`, special);
+    console.log(special);
+    return this.http.post<Media>(`${ApiService.API_URL}media/specials/`, special);
   }
 
 

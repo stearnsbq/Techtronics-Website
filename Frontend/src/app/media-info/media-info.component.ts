@@ -22,6 +22,7 @@ export class MediaInfoComponent implements OnInit {
   constructor(public api: ApiService) {
 
 
+
   }
 
   ngOnInit() {
@@ -40,6 +41,8 @@ export class MediaInfoComponent implements OnInit {
       images: new FormControl(this.media.images),
       companyInfo: new FormControl(this.media.companyInfo),
     });
+
+    console.log(this.media);
 
 
 

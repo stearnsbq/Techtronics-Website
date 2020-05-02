@@ -85,7 +85,7 @@ class Queries {
 
 	}
 	
-	static add_new_special_to_media(connection, special_id, media_id){
+	static add_new_special_to_media(connection, media_id, special_id){
 		return new Promise((resolve, reject)=>{
 
 			connection.query("INSERT INTO Media_Specials (Special_ID, Media) VALUES (?, ?)", [special_id, media_id], (err, results, fields) =>{
@@ -232,7 +232,7 @@ class Queries {
 						return reject(err);
 					}else{
 						const special_id = await this.get_last_id(connection);
-						return resolve(await this._add_specials(connection, media_id, special_id))
+						return resolve(await this.add_new_special_to_media(connection, media_id, special_id))
 					}
 					
 				}
@@ -480,11 +480,15 @@ class Queries {
 
 	static get_media_by_id(connection, id) {
 		return new Promise((resolve, reject) => {
-			const query = `SELECT DISTINCT * FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID 
+			const query = `SELECT DISTINCT Media.Media_ID, Media.Type, Media.Quantity, Media.Name, Platform, User_rating, Price, \`Condition\`, Game.Genre AS 'Game_Genre', ESRB_Rating, Hardware.Type AS 'Hardware_Type', Video.Genre AS 'Video_Genre', MPAA_Rating, Software.Type AS 'Software Type'
+			FROM Media LEFT JOIN Video ON Video.Video_ID=Media.Media_ID 
 			LEFT JOIN Software ON Software.Software_ID=Media.Media_ID 
 			LEFT JOIN Game ON Game.Game_ID=Media.Media_ID 
 			LEFT JOIN Hardware ON Hardware.Hardware_ID=Media.Media_ID 
-			LEFT JOIN Media_Companies ON Media_Companies.Media=Media.Media_ID WHERE Media.Media_ID=? AND Media.deleted IS NULL `
+			LEFT JOIN Media_Companies ON (Media_Companies.Media = Media.Media_ID)
+			LEFT JOIN Company ON (Media_Companies.Company = Company.Company_ID) WHERE Media.Media_ID=? AND Media.deleted IS NULL `
+
+			
 
 
 			connection.query(query, [ id ], async (err, results, fields) => {
@@ -506,6 +510,7 @@ class Queries {
 						tmp['images'] = images ? images : [];
 						tmp['specials'] = await this._add_specials(connection, results[0].Media_ID);
 						tmp['DLC'] = await this._add_DLC(connection, results[0].Media_ID);
+						tmp['companyInfo'] = await this._add_companies(connection, results[0].Media_ID);
 					
 					return resolve(tmp);
 				}
@@ -639,7 +644,7 @@ class Queries {
 
 	static _add_specials(connection, media_id){
 		return new Promise((resolve, reject) =>{
-			connection.query("SELECT * FROM Specials JOIN Media_Specials ON (Specials.Specials_ID = Media_Specials.Special_ID) WHERE Media_Specials.Media = ?", [media_id], (err, results, fields) =>{
+			connection.query("SELECT End_date, Special_ID, Start_date, Percentage_off FROM Specials JOIN Media_Specials ON (Specials.Specials_ID = Media_Specials.Special_ID) WHERE Media_Specials.Media = ?", [media_id], (err, results, fields) =>{
 				return err ? reject(err) : resolve(results);
 			});
 		})
