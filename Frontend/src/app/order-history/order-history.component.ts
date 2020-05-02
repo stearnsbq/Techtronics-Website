@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../api.service'
+import { Order } from '../model/order'
 
 @Component({
   selector: 'app-order-history',
@@ -6,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./order-history.component.scss']
 })
 export class OrderHistoryComponent implements OnInit {
+  public allOrders: Order; 
 
-  constructor() { }
+  constructor(public api: ApiService) { 
+    this.api.getOrders(id).subscribe((media) => {
+      this.media = media;
+    });
 
-  ngOnInit() {
+  }
+
+  ngOnInit() { 
   }
 
 }

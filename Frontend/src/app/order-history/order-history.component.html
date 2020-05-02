@@ -1,1 +1,11 @@
-<p>order-history works!</p>
+<div id="order_history_content">
+    <div *ngIf="allOrders" id="cart_page_content">
+        <div *ngFor='let order of allOrders; let i = index'  class="order">
+
+        </div>
+
+
+    </div>
+
+
+</div>
