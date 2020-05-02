@@ -151,6 +151,14 @@ class Queries {
 		});
 	}
 
+	static get_employees(connection){
+		return new Promise((resolve, reject) => {
+			connection.query("SELECT Person_ID, Username, Email, CONCAT(First_name, ', ', Last_name) AS Name, Hire_date, Role FROM Person JOIN Employee ON (Person.Person_ID = Employee.Employee_ID)", (err, results, fields ) => {
+				return err ? reject(err) : resolve(results);
+			})
+		})
+	}
+
 	static get_user_info(connection, id) {
 		return new Promise((resolve, reject) => {
 			connection.query(

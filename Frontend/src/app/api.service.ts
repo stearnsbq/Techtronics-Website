@@ -114,6 +114,10 @@ export class ApiService {
 
   }
 
+  public getEmployees(){
+    return this.http.get<any>(`${ApiService.API_URL}user/employees`)
+  }
+
 
 
 

@@ -1,1 +1,29 @@
-<!-- Allow employees to manage other employee things here -->
+<div>
+
+  <table>
+
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Hire Date</th>
+    </tr>
+
+    <tr *ngFor="let employee of employees">
+
+      <td name="Employee_ID">{{employee.Person_ID}}</td>
+      <td name="Employee_Name">{{employee.Name}}</td>
+      <td name="Employee_Username">{{employee.Username}}</td>
+      <td name="Employee_Email">{{employee.Email}}</td>
+      <td name="Employee_Role">{{employee.Role}}</td>
+      <td name="Employee_Hire_Date">{{employee.Hire_Date}}</td>
+
+    </tr>
+
+  </table>
+
+
+
+</div>

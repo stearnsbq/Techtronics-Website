@@ -14,6 +14,15 @@ module.exports = function(connection) {
 		res.send(user);
 	});
 
+
+	router.get('/employees', expJwt({ secret: config.JWT.Secret}), async (req, res) =>{
+		if(req.user && (req.user.Account_Level === 'Employee' && req.user.Employee_Role && req.user.Employee_Role === 'Manager')){
+			res.send(await sql_queries.get_employees(connection));
+		}else{
+			res.sendStatus(401);
+		}
+	})
+
 	// TODO: Update user
 	router.put('/', expJwt({ secret: config.JWT.Secret}), async (req, res) => {});
 
