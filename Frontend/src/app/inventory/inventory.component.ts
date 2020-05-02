@@ -207,4 +207,14 @@ export class InventoryComponent implements OnInit {
   createNewSpecial(data) {
     this.api.createNewSpecial(data).subscribe(result => {});
   }
+
+  getSpecialPrice(media) {
+    let price = media.Price;
+    for (const special of media.Specials) {
+      price /= 1 + (special.Percentage_off / 100);
+    }
+    return price.toFixed(2);
+  }
+
+
 }
