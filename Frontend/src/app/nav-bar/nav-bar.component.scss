@@ -169,7 +169,8 @@
 // formats the look on mobile
 @media (max-width: 1160px) {
 	.desktop-nav {
-		display: none;
+    display: none;
+
 	}
 
 	.menu {
@@ -192,7 +193,8 @@
 	#header_content {
 		display: block;
 		margin-top: -10px;
-		height: 100px;
+    height: 100px;
+    box-shadow: 0px 6px 10px 0 rgba(0,0,0,.4);
 	}
 
 	.title {

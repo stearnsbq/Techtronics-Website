@@ -3,20 +3,30 @@ app-nav-bar { // should be out of document flow.
     z-index: 1;
 
     height: 50px;
-    width: 100vw; 
-    max-width: 100%;  
+    width: 100vw;
+    max-width: 100%;
 
-    box-shadow: 0px 6px 10px 0 rgba(0,0,0,.4); 
+    box-shadow: 0px 6px 10px 0 rgba(0,0,0,.4);
+}
+
+
+@media (max-width: 1160px) {
+  
+
+  .container{
+    margin-top: 50px;
+  }
+
 }
 
 .container{
-  background-color: rgb(255,255,255); 
+  background-color: rgb(255,255,255);
 }
 
 .router-outlet { // in document flow.
     flex: 1;
-    padding-top: 50px; 
-    min-height: calc(100vh - 155px); 
+    padding-top: 50px;
+    min-height: calc(100vh - 155px);
 
     position: relative;
 
@@ -25,7 +35,7 @@ app-nav-bar { // should be out of document flow.
     display: inline-block;
 
     width: 100vw;
-    max-width: 100%; 
+    max-width: 100%;
 
     background-color: rgb(255,255,255);
 }
@@ -36,7 +46,7 @@ app-nav-bar { // should be out of document flow.
     bottom: 0px;
 
     width: 100vw;
-    max-width: 100%; 
+    max-width: 100%;
     height: 100px;
 
 }
