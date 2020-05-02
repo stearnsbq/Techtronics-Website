@@ -36,11 +36,7 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
     if (auth.isAuthenticated()) {
       this.is_logged_in = true;
     }
-  }
 
-  ngOnInit() {}
-
-  ngAfterViewInit() {
     this.route.params.subscribe((params) => {
       const id = params.id;
 
@@ -49,6 +45,13 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
         this.media = media;
       });
     });
+
+  }
+
+  ngOnInit() {}
+
+  ngAfterViewInit() {
+
   }
 
   hoverEvent(event) {
