@@ -185,7 +185,7 @@ class Queries {
 	static _get_employee_role(connection, employee_id){
 		return new Promise((resolve, reject) => {
 			connection.query("SELECT Role FROM Employee WHERE Employee_ID =?", [employee_id], (err, results, fields) =>{
-				return err ? reject(err) : resolve(results);
+				return err ? reject(err) : resolve(results[0]['Role']);
 			})
 		})
 	}
@@ -202,7 +202,7 @@ class Queries {
 								let payload = { Person_ID: results[0].Person_ID, Account_Level: results[0].Account_Level };
 
 								if(results[0].Account_Level === 'Employee'){
-									payload['Employee_Role'] = this._get_employee_role(connection, results[0].Person_ID);
+									payload['Employee_Role'] = await this._get_employee_role(connection, results[0].Person_ID);
 								}
 
 								var token = jwt.sign(
