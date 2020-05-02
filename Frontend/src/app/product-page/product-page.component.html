@@ -1,17 +1,17 @@
-<div *ngIf="media" id = "product_page_container">
+<div *ngIf="loaded"  id = "product_page_container">
     <!-- this image will be a button -->
 
-    <div id = "main_content">
+    <div  id ="main_content">
 
         <div class="image-container">
           <img (mousemove)="hoverEvent($event)" *ngFor="let image of media.images | paginate: {  itemsPerPage: 1, currentPage: selectedImage, totalItems: media.images.length}" id = "product_image"  draggable="false" [src]="'http://3.234.246.29:8081/api/uploads/media/' + media.Media_ID + '/' + image">
           <pagination-controls *ngIf="media.images.length > 0" class="pagination-controls" (pageChange)="changeImage($event)"></pagination-controls>
-        </div> 
+        </div>
 
         <div id = "product_information">
 
             <div class = "attribute_container">
-                <h1 id = "product_name"> {{media.Name}} </h1> 
+                <h1 id = "product_name"> {{media.Name}} </h1>
                 <h2 id ="product_author" class="product_attribute">   </h2>
             </div>
 
@@ -27,49 +27,45 @@
 
             <div class = "attribute_container">
                 <h3 class="product_attr_title"> Condition </h3>
-                <h3 id="product_price" class="product_attribute"> ${{media.Condition}} </h3>
-            </div> 
+                <h3 id="product_price" class="product_attribute"> {{media.Condition}} </h3>
+            </div>
 
             <!--  is_hardware and is_software -->
-            <div ngIf="is_hardware || is_software" class = "attribute_container">
+            <div *ngIf="is_hardware || is_software" class = "attribute_container">
                 <h3 class="product_attr_title"> Type </h3>
-                <h3 id="product_price" class="product_attribute"> ${{media.Type}} </h3>
+                <h3 id="product_price" class="product_attribute"> {{media.Type}} </h3>
             </div>
 
-            <!--  is_game with concern for video--> 
-            <div ngIf="is_game || is_video" class = "attribute_container">
+            <!--  is_game with concern for video-->
+            <div *ngIf="is_game || is_video" class = "attribute_container">
                 <h3 class="product_attr_title"> Genre </h3>
-                <h3 id="product_price" class="product_attribute"> ${{media.Genre}} </h3>
+                <h3 id="product_price" class="product_attribute"> {{media.Genre}} </h3>
             </div>
 
-            <div ngIf="is_game" class = "attribute_container">
-                <h3 class="product_attr_title"> ESRB Rating </h3> 
-                <h3 id="product_price" class="product_attribute"> ${{media.ESRB_Rating}} </h3>
+            <div *ngIf="is_game" class = "attribute_container">
+                <h3 class="product_attr_title"> ESRB Rating </h3>
+                <h3 id="product_price" class="product_attribute"> {{media.ESRB_Rating}} </h3>
             </div>
 
             <!--  is_dlc -->
 
-            <!--  is_video --> 
-            <div ngIf="is_video" ngclass = "attribute_container">
-                <h3 class="product_attr_title"> MPAA Rating </h3> 
-                <h3 id="product_price" class="product_attribute"> ${{media.MPAA_Rating}} </h3> 
+            <!--  is_video -->
+            <div *ngIf="is_video" ngclass = "attribute_container">
+                <h3 class="product_attr_title"> MPAA Rating </h3>
+                <h3 id="product_price" class="product_attribute"> {{media.MPAA_Rating}} </h3>
             </div>
 
 
 
-            <div class = "attribute_container"> 
-                <h3 class="product_attr_title"> User Rating </h3>  
-                <div class = "user_rating_container">
-                    <fa-icon class="rating_star" #rating_star1 id= "rating_star1" [icon]="star"></fa-icon>
-                    <fa-icon class="rating_star" #rating_star2 id= "rating_star2" [icon]="star"></fa-icon>
-                    <fa-icon class="rating_star" #rating_star3 id= "rating_star3" [icon]="star"></fa-icon>
-                    <fa-icon class="rating_star" #rating_star4 id= "rating_star4" [icon]="star"></fa-icon>
-                    <fa-icon class="rating_star" #rating_star5 id= "rating_star5" [icon]="star"></fa-icon>
-                </div> 
-            </div> 
+            <div class = "attribute_container">
+                <h3 class="product_attr_title"> User Rating </h3>
+                <div  class = "user_rating_container">
+                    <p *ngFor="let star of stars" [style.color]="star === 1 ? 'yellow' : '#171a21' " [style.display]="star === 0 ? 'none' : 'inline'" class="rating_star" >⭐</p>
+                </div>
+            </div>
 
             <input *ngIf="is_logged_in" [disabled]="storage.cartContains(media)" type="button" id="add_to_cart" (click)="addToCart(media)" value="ADD TO CART">
-        </div> 
+        </div>
 
 
     </div>
