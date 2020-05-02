@@ -586,6 +586,7 @@ class Queries {
 						tmp['companyInfo'] = await this._add_companies(connection, result.Media_ID);	
 						tmp['images'] = await this._get_images_for_media(connection, result.Media_ID);;
 						tmp['DLC'] = await this._add_DLC(connection, result.Media_ID);
+						tmp['Specials'] = await this._add_specials(connection, result.Media_ID);
 						send.push(tmp);
 					}
 					// we got the data resolve the promise
