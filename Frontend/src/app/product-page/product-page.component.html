@@ -4,7 +4,7 @@
     <div  id ="main_content">
 
         <div class="image-container">
-          <img (mousemove)="hoverEvent($event)" *ngFor="let image of media.images | paginate: {  itemsPerPage: 1, currentPage: selectedImage, totalItems: media.images.length}" id = "product_image"  draggable="false" [src]="'http://3.234.246.29:8081/api/uploads/media/' + media.Media_ID + '/' + image">
+          <img *ngFor="let image of media.images | paginate: {  itemsPerPage: 1, currentPage: selectedImage, totalItems: media.images.length}" id = "product_image"  draggable="false" [src]="'http://3.234.246.29:8081/api/uploads/media/' + media.Media_ID + '/' + image">
           <pagination-controls *ngIf="media.images.length > 0" class="pagination-controls" (pageChange)="changeImage($event)"></pagination-controls>
         </div>
 
@@ -56,11 +56,10 @@
             </div>
 
 
-
             <div class = "attribute_container">
                 <h3 class="product_attr_title"> User Rating </h3>
                 <div  class = "user_rating_container">
-                    <p *ngFor="let star of stars" [style.color]="star === 1 ? 'yellow' : '#171a21' " [style.display]="star === 0 ? 'none' : 'inline'" class="rating_star" >⭐</p>
+                  <star-rating [value]="media.User_Rating" totalstars="5" checkedcolor="red" uncheckedcolor="black" size="24px" readonly="true"></star-rating>
                 </div>
             </div>
 
