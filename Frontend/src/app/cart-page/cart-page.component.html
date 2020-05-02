@@ -36,7 +36,7 @@
 
         </div> 
         
-        <input *ngIf="has_items" [disabled]="local_storage.cartContains(media)"  type="button" id="order_now"  routerLink=""  value="Order Now">
+        <input *ngIf="has_items" [disabled]="local_storage.cartContains(media)"  type="button" id="order_now"  routerLink="order_details"  value="Order Now">
         
         <div *ngIf="!has_items" id="empty_cart_pack">
             <!-- Make this look better..... -->

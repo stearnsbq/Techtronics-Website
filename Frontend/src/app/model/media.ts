@@ -8,8 +8,8 @@ export interface Media {
   Condition: string;
   Quantity?: number;
   Type: string;
-  Specials: Special[];
-  User_Rating?: number;
+  Specials: Special[]; 
+  User_Rating?: number; 
   Game_Genre?: string;
   ESRB_Rating?: string;
   Video_Genre?: string;

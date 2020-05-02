@@ -34,6 +34,7 @@ import { AuthService } from './auth.service';
 import { AuthInterceptor } from './AuthInterceptor';
 import { CartPageComponent } from './cart-page/cart-page.component';
 import { OrderHistoryComponent } from './order-history/order-history.component';
+import { OrderDetailsComponent } from './order-details/order-details.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -59,7 +60,8 @@ export function tokenGetter() {
     MediaInfoComponent,
     ModalComponent,
     CartPageComponent,
-    OrderHistoryComponent
+    OrderHistoryComponent,
+    OrderDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +85,8 @@ export function tokenGetter() {
       {path: 'login', component: LoginModalComponent},
       {path: 'cart', component: CartPageComponent, canActivate: [AuthGuard]},
       {path: 'order_history', component: OrderHistoryComponent, canActivate: [AuthGuard]},
-      {path: '**', redirectTo: ''}
+      {path: 'order_details', component: OrderDetailsComponent},
+      {path: '**', redirectTo: ''} 
     ]),
     ReactiveFormsModule,
     FontAwesomeModule,
