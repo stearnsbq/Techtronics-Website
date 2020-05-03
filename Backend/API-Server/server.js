@@ -175,7 +175,7 @@ app.post('/api/register', expJwt({secret: config.JWT.Secret, credentialsRequired
 				break;
 			case 'Employee':
 				if (req.user && (req.user.Account_Level === 'Employee' && req.user.Employee_Role === 'Manager')) {
-					await sql_queries.create_employee(connection, id, gen_date(), body['employee_role']);
+					await sql_queries.create_employee(connection, id, body['employee_role']);
 				} else {
 					throw new Error('UnauthorizedError');
 				}
