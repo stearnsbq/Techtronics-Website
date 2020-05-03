@@ -153,7 +153,7 @@ class Queries {
 			connection.query(
 				'INSERT INTO Order_Items (`Order`, Media, Price) VALUES (?, ?, ?)',
 				[ order_id, item['Media_ID'], item['Price'] ],
-				(err, results, fields) => {
+				async (err, results, fields) => {
 					if(err){
 						return reject(err);
 					}else{
