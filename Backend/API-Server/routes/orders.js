@@ -49,6 +49,11 @@ module.exports = function(connection) {
 			);
 			connection.commit()
 			const order_id = await sql_queries.get_last_id(connection);
+
+
+				
+
+
 			res.redirect(`./orders/${order_id}`);
 		}catch(error){
 			console.log(error)

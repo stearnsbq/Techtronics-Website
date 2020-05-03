@@ -857,6 +857,7 @@ class Queries {
 								LEFT JOIN Media_Companies ON (Media_Companies.Media = Media.Media_ID)
 								LEFT JOIN Company ON (Media_Companies.Company = Company.Company_ID)
 								WHERE (Media.Name LIKE ${searchQuery} 
+								OR Media.Media_ID LIKE ${searchQuery}
 								OR Platform LIKE ${searchQuery}
 								OR \`Condition\` LIKE ${searchQuery}
 								OR Game.Genre LIKE ${searchQuery} 
