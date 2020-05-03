@@ -14,7 +14,7 @@ var multer  = require('multer')
 var {v1} = require('uuid')
 var nodemailer = require("nodemailer");
 var util = require("./util.js")
-
+var expJwt = require('express-jwt');
 
 
 
