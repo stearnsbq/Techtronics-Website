@@ -432,7 +432,7 @@ class Queries {
 		return new Promise((resolve, reject) => {
 			connection.query(
 				`INSERT INTO Employee (Employee_ID, Hire_date, Role) VALUES (?, SYSDATE(), ?)`,
-				[ id, hire_date, role ],
+				[ id, role ],
 				(err, results, fields) => {
 					return err ? reject(err) : resolve(results);
 				}
