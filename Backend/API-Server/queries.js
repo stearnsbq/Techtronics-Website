@@ -14,12 +14,18 @@ class Queries {
 				if(err){
                     return reject(err);
                 }else{
-					console.log(results)
-					if(results[0].Customer !== person_id){
-						return reject(new Error("UnauthorizedError"))
+				
+					if(results.length > 0){
+
+						if(results[0].Customer !== person_id){
+							return reject(new Error("UnauthorizedError"))
+						}
+	
+
+						results[0]['items'] = await this._get_order_items(connection, results[0]['Order_ID']);
 					}
-                    results[0]['items'] = await this._get_order_items(connection, results[0]['Order_ID']);
-                    return resolve(results);
+
+					return resolve(results);
                 }
 			})
 		})

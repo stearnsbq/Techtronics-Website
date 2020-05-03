@@ -27,8 +27,7 @@ module.exports = function(connection) {
 				res.sendStatus(401);
 			}
 		}catch(err){
-			console.log(err)
-			res.send(err, 500);
+			res.send(err, 400);
 		}
 
 	});
@@ -54,7 +53,7 @@ module.exports = function(connection) {
 		}catch(error){
 			console.log(error)
 			connection.rollback();
-			res.sendStatus(500);
+			res.sendStatus(400);
 		}
 
     });
