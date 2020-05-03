@@ -428,10 +428,10 @@ class Queries {
 
 	// creates a new employee in the employee table based off the id
 
-	static create_employee(connection, id, hire_date, role) {
+	static create_employee(connection, id, role) {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				`INSERT INTO Employee (Employee_ID, Hire_date, Role) VALUES (?, ?, ?)`,
+				`INSERT INTO Employee (Employee_ID, Hire_date, Role) VALUES (?, SYSDATE(), ?)`,
 				[ id, hire_date, role ],
 				(err, results, fields) => {
 					return err ? reject(err) : resolve(results);
