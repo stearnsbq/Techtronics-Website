@@ -1,6 +1,6 @@
 <div id="order_history_content">
     <div *ngIf="allOrders" id="order_page_content">
-        <h3> Order History </h3> 
+        <h3 *ngIf="has_order_history" id="orderhist_title"> Order History </h3> 
 
         <div *ngFor='let order of allOrders; let i = index'  class="order_item">
             <div class="order_information">
@@ -41,5 +41,13 @@
             </div>
 
         </div>
+
+        <div *ngIf="!has_order_history" id="no_history_pack">
+            <h1 id="no_history_msg">You have no order history!</h1>  
+            <div id="no_history_msg_icon">
+              <fa-icon [icon]="smile_wink"> </fa-icon>
+            </div>
+      </div>
+
     </div>
 </div>

@@ -1,4 +1,5 @@
 .home_page_title_container {
+    /*
     margin-top: 25px;
     margin-left: 10px;
     margin-right: 10px;
@@ -11,17 +12,20 @@
     border-style: solid; 
     border-color: rgb(0,0,0); 
     border-width: 3px;
+    */
 }
 
-.home_page_title {
+#home_page_title {
     margin: auto;
     color: rgb(255,255,255); 
 }
 
-.home_page_container {
+#home_page_container {
+    display: flex; 
 }
 
-.home_page_content {
+#home_page_content {
+    /*
     margin-top: 25px;
     margin-left: 10px;
     margin-right: 10px;
@@ -32,4 +36,34 @@
     border-width: 3px;
 
     height: 10px;
+    */
 }
+
+.section {
+    padding: 25px;
+}
+
+#section1 > * {
+    display: flex; 
+    justify-content: left;
+}
+
+/*
+
+#section1 {
+    background-color: #508991;
+    height: 100px;
+
+} 
+
+#section2 {
+    background-color: #004346;
+    height: 100px;
+}
+
+#section3 {
+    background-color: #09BC8A;
+    height: 100px;
+} 
+
+*/

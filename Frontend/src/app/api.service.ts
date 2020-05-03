@@ -12,7 +12,6 @@ export class ApiService {
   public static API_URL = 'http://3.234.246.29:8081/api/';
   public loading = false;
 
-
   constructor(private http: HttpClient ) { }
 
   public getOrders() {

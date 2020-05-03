@@ -1,7 +1,7 @@
 <div id="cart_page_container">
 
     <div *ngIf="allMedia" id="cart_page_content">
-        <h3 *ngIf="has_items"> Cart </h3>
+        <h3 *ngIf="has_items" id="cart_page_title"> Your Cart </h3>
         <div *ngFor='let media of allMedia; let i = index'  class="cart_item">
             <div class="product_information">
                 <div class="content_header">
@@ -34,7 +34,7 @@
         </div>
 
 
-        <div *ngIf="has_items" class="cart_item" id="cart-details">
+        <div *ngIf="has_items" id="cart-details">
               <label id="total_price_label">Details</label>
               <b>Total Price: {{local_storage.getCartTotal()}}</b>
         </div>
