@@ -1,0 +1,97 @@
+table, th, td {
+  border: 1px solid black;
+}
+
+table, tr {
+  border-collapse: collapse;
+  max-height: 25px;
+  transition: 0.2s;
+}
+
+table tr:hover{
+  background-color: lightgray;
+}
+
+table tr:active{
+  background-color: gray;
+}
+
+
+
+th{
+  background-color: rgb(23,26,33);
+  color: white;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+
+.employee-list{
+  overflow: auto;
+  width: 100%;
+  height: 150px;
+}
+
+.employee-list table{
+  overflow: auto;
+  width: 80%;
+  margin: 0 auto;
+  height: 300px;
+}
+
+
+.table-header-options{
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.table-header-buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#total-items{
+  margin-left: 5px;
+}
+
+.table-header-buttons button{
+  width: 150px;
+  border: none;
+  font-size: 13px;
+  font-weight: bolder;
+  border-radius: 15px;
+  padding: 14px;
+  color: white;
+  background-color: #3535D0;
+  margin: 10px;
+  transition: 0.2s;
+}
+
+.table-header-buttons button:hover{
+  background-color: rgb(51, 45, 45);
+}
+
+
+
+
+.employee-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.employee-info select{
+  height:100%;
+  overflow: scroll;
+}
+
+.employee-info input, select {
+  margin: 5px;
+  flex: 1;
+}
+
+.employee-info label {
+  font-weight: bold;
+}

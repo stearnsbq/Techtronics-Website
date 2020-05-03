@@ -1,4 +1,20 @@
-<div>
+<div class="table_header">
+  <div class="table-header-options">
+    <input type="search" placeholder="Search" [(ngModel)]="query" (change)="search($event)">
+    <b id="total-items"> Total Employees: {{employees.length}} </b>
+  </div>
+
+
+  <div class="table-header-buttons">
+    <button  (click)="createNewEmployeeModal = true">Add New Employee</button>
+  </div>
+
+</div>
+
+
+
+<div class="employee-list">
+
 
   <table>
 
@@ -18,12 +34,54 @@
       <td name="Employee_Username">{{employee.Username}}</td>
       <td name="Employee_Email">{{employee.Email}}</td>
       <td name="Employee_Role">{{employee.Role}}</td>
-      <td name="Employee_Hire_Date">{{employee.Hire_Date}}</td>
+      <td name="Employee_Hire_Date">{{employee.Hire_date}}</td>
 
     </tr>
 
   </table>
 
-
-
 </div>
+
+
+
+
+
+
+<app-modal title="Create New Employee" [(toggle)]="createNewEmployeeModal">
+
+  <form ngNativeValidate #form="ngForm" (ngSubmit)="createNew(form.value)">
+
+    <div class="employee-info">
+      <label>Employee Username</label>
+      <input ngModel name="username" #username="ngModel" type="text" placeholder="Employee Username">
+
+      <label>Employee First Name</label>
+      <input ngModel name="first_name" #first_name="ngModel" type="text" placeholder="Employee First Name">
+
+      <label>Employee Last Name</label>
+      <input ngModel name="last_name" #last_name="ngModel" placeholder="Employee Last Name">
+
+      <label>Employee Email</label>
+      <input ngModel name="email" #email="ngModel" placeholder="Employee Email">
+
+      <label>Employee Role</label>
+      <select ngModel name="role" #role="ngModel">
+        <option value="" selected disabled>Select Employee Role</option>
+        <option>Manager</option>
+        <option>General</option>
+      </select>
+
+      <small> - Password is automatically generated</small>
+
+    </div>
+
+
+
+
+
+
+  </form>
+
+
+
+</app-modal>

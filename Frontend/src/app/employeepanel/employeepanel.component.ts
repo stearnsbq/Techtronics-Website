@@ -8,11 +8,14 @@ import { ApiService } from '../api.service';
 })
 export class EmployeepanelComponent implements OnInit {
   public employees: any[];
+
+  public createNewEmployeeModal = false;
   constructor(public api: ApiService) {
 
     this.api.getEmployees().subscribe(employees => {
       this.employees = employees;
     });
+
 
 
    }

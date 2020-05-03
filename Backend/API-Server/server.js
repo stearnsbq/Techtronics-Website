@@ -12,6 +12,19 @@ var jwt = require('jsonwebtoken'); // will need for login only endpoints
 const { gen_date } = require('./util.js');
 var multer  = require('multer')
 var {v1} = require('uuid')
+var nodemailer = require("nodemailer");
+var util = require("./util.js")
+
+
+
+
+var smtpTransport = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+        user: config.email.username,
+        pass: config.email.password
+    }
+});
 
 
 var app = express();
@@ -68,8 +81,10 @@ app.use('/api/user', user);
 // all order related endpoints
 app.use('/api/orders', orders);
 
-
+// all company related endpoints 
 app.use('/api/companies', companies);
+
+
 
 
 
@@ -79,6 +94,35 @@ app.get('/api/uploads/:type/:id/:filename', async (req, res) => {
 	const filename = req.params['filename']
 
 	res.sendFile(__dirname + `/uploads/${type}/${id}/${filename}`);
+
+})
+
+
+app.get('/api/verify', async (req, res) =>{
+	const email = req.query['email'];
+	const token = req.query['token'];
+
+	try{
+		if(email && token){
+
+			await sql_queries.verify_email(connection, email, token);
+
+			await sql_queries.set_verified(connection, email);
+
+			res.send({result: "success"})
+		}else{
+			res.sendStatus(400);
+		}
+	}catch(error){
+		if(error === "Expired"){
+			res.send({result: "failed", reason: "Expired"})
+		}else if (error === "Not Found"){
+			res.send({result: "failed", reason: "Not Found"})
+		}else{
+			res.send({result: "failed", reason: "general error"})
+		}
+	}
+
 
 })
 
@@ -127,7 +171,7 @@ app.post('/api/register', async (req, res) => {
 
 		switch (body['account_level']) {
 			case 'Customer':
-				await sql_queries.create_customer(connection, id, gen_date());
+				await sql_queries.create_customer(connection, id);
 				break;
 			case 'Employee':
 				if (req.user.Account_Level === 'Employee' && req.user.Employee_Role === 'Manager') {
@@ -142,6 +186,27 @@ app.post('/api/register', async (req, res) => {
 		// add any phone numbers
 		await sql_queries.add_phone_numbers(connection, id, body['phoneNumbers']);
 
+
+		// generate a new token to verification
+		const token = Math.floor((Math.random() * 100000) + 50000);
+
+		// add it into the database
+		await sql_queries._add_new_verification(connection, body['email'], token)
+
+
+		// build the email link
+		const emailLink = `http://localhost:4200/verify?token=${token}&email=${body.email}`
+
+		const mailOptions = {
+			to: body['email'],
+			subject: "Please confirm your Email",
+			html : `Hello,<br> Please Click on the link to verify your email.<br><a href="${emailLink}">Click here to verify</a>`
+		}
+
+
+		// send the email
+		await util.mail(smtpTransport, mailOptions);
+
 		connection.commit();
 		res.sendStatus(200);
 	} catch (error) {
@@ -151,6 +216,21 @@ app.post('/api/register', async (req, res) => {
 	}
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var httpsEnabled = false;
 
 // private key and certificate for HTTPS
@@ -158,6 +238,12 @@ var privateKey = fs.readFileSync(__dirname+'/cred/api.key');
 var certificate = fs.readFileSync(__dirname + '/cred/api.crt');
 
 var credentials = { key: privateKey, cert: certificate };
+
+
+
+
+
+
 
 if (httpsEnabled) {
 	var server = https.createServer(credentials, app);

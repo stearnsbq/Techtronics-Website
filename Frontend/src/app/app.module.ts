@@ -84,6 +84,7 @@ export function tokenGetter() {
     RouterModule.forRoot([
       {path: '', component: HomePageComponent},
       {path: 'search', component: ItemAreaComponent},
+      {path: 'verify', component: VerifyComponent},
       {path: 'product/:id',  component: ProductPageComponent},
       {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
       {path: 'register', component: RegistrationComponent},

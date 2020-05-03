@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS `Person` (
   `Email` varchar(255) UNIQUE NOT NULL,
   `First_name` varchar(50) NOT NULL,
   `Last_name` varchar(50) NOT NULL,
-  `Birth_date` date NOT NULL
+  `Birth_date` date NOT NULL,
+  `active`     varchar(3)
 );
 
 CREATE TABLE IF NOT EXISTS `Phone_numbers` (
@@ -119,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `Order` (
   `Zip_code`     char(5) NOT NULL,
   `State`        varchar(50) NOT NULL,
   `Country`      varchar(50) NOT NULL,
-  `Price`        FLOAT NOT NULL,
+  `Price`        FLOAT NOT NULL DEFAULT(0),
   `Ordered_date` date NOT NULL,
   FOREIGN KEY (`Customer`) REFERENCES `Customer` (`Customer_ID`)
 );
@@ -164,6 +165,14 @@ CREATE TABLE IF NOT EXISTS `Media_Specials` (
 );
 
 
+CREATE TABLE IF NOT EXISTS `verify_email_tokens`(
+`email`   varchar(255) NOT NULL ,
+`token`   varchar(255) NOT NULL,
+`expiry`  DATETIME NOT NULL,
+PRIMARY KEY (email)
+)
+
+
 
 
 
@@ -171,15 +180,15 @@ DELIMITER //
 CREATE TRIGGER update_dlc_before BEFORE UPDATE ON DLC_ID
 BEGIN
 
-IF EXISTS(SELECT * FROM DLC WHERE DLC.Game_ID = new.Game_ID) THEN
+  IF EXISTS(SELECT * FROM DLC WHERE DLC.Game_ID = new.Game_ID) THEN
 
-UPDATE DLC SET DLC_ID = new.DLC_ID AND Game_ID = new.Game_ID;
+    UPDATE DLC SET DLC_ID = new.DLC_ID AND Game_ID = new.Game_ID;
 
-ELSE
+  ELSE
 
-INSERT INTO DLC (DLC_ID, Game_ID) VALUES (new.Game_ID, new.Game_ID);
+    INSERT INTO DLC (DLC_ID, Game_ID) VALUES (new.Game_ID, new.Game_ID);
 
-END IF;
+  END IF;
 
 
 END//

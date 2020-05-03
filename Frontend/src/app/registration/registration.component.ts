@@ -23,7 +23,8 @@ export class RegistrationComponent implements OnInit {
 
   onRegister(form) {
     form.account_level = 'Customer';
-    form.phoneNumbers = [form.phone_number];
+    form.phoneNumbers = [form.phone_number + ''];
+    delete form.phone_number;
 
     this.api.register(form).subscribe(result => {
       this.router.navigate(['login']);

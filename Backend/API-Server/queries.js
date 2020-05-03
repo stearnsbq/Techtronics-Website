@@ -190,6 +190,53 @@ class Queries {
 		});
 	}
 
+
+	static set_verified(connection, email){
+		return new Promise((resolve, reject) =>{
+			connection.query("UPDATE Person SET active = 'Y' WHERE Email = ?", [email], (err, results, fields) =>{
+				return err ? reject(err) : resolve(results);
+			})
+		})
+	}
+
+
+	static verify_email(connection , email, token){
+		return new Promise((resolve, reject)=>{
+			connection.query("SELECT * FROM verify_email_tokens WHERE email=? AND token=?", [email, token], (err, results, field)=>{
+				if(err){
+					return reject(err);
+				}else{
+					if(results.length <= 0){
+						return reject(new Error("Not Found"))
+					}else{
+
+						var currentTime = new Date().getTime();
+						var expiry = new Date(results[0]['expiry']).getTime();
+
+
+						if(currentTime > expiry){
+							return reject(new Error("Expired"))
+						}else{
+							return resolve(results)
+						}
+
+					}
+
+				}
+			})
+		})
+	}
+
+
+	static _add_new_verification(connection, email, token){
+		return new Promise((resolve, reject) => {
+			connection.query("INSERT INTO verify_email_tokens (email, token, expiry) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 1 DAY))", [email, token], (err, results, fields) =>{
+				return err ? reject(err) : resolve(results);
+			})
+				
+		})
+	}
+
 	static _get_employee_role(connection, employee_id){
 		return new Promise((resolve, reject) => {
 			connection.query("SELECT Role FROM Employee WHERE Employee_ID =?", [employee_id], (err, results, fields) =>{
@@ -201,13 +248,13 @@ class Queries {
 	static login_person(connection, username, password) {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				`SELECT Password, Person_ID, Account_Level FROM Person WHERE Username=?`,[username],
+				`SELECT Password, Person_ID, Account_Level, Active FROM Person WHERE Username=?`,[username],
 				async (err, results, fields) => {
 					if (!err && results.length > 0) {
 						try {
 							// compare the password sent from the user and the hash in the database
 							if (await argon2.verify(results[0].Password, password)) {
-								let payload = { Person_ID: results[0].Person_ID, Account_Level: results[0].Account_Level };
+								let payload = { Person_ID: results[0].Person_ID, Account_Level: results[0].Account_Level, Verified: results[0].Active };
 
 								if(results[0].Account_Level === 'Employee'){
 									payload['Employee_Role'] = await this._get_employee_role(connection, results[0].Person_ID);
@@ -348,11 +395,11 @@ class Queries {
 		});
 	}
 
-	static create_customer(connection, id, register_date) {
+	static create_customer(connection, id) {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				`INSERT INTO Customer (Customer_ID, Registration_Date) VALUES (?, ?)`,
-				[ id, register_date ],
+				`INSERT INTO Customer (Customer_ID, Registration_Date) VALUES (?, SYSDATE())`,
+				[ id ],
 				(err, results, fields) => {
 					return err ? reject(err) : resolve(results);
 				}

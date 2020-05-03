@@ -9,7 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  public static API_URL = 'http://3.234.246.29:8081/api/';
+  public static API_URL = 'http://localhost:8081/api/';
   public loading = false;
 
 
@@ -114,8 +114,18 @@ export class ApiService {
 
   }
 
-  public getEmployees(){
-    return this.http.get<any>(`${ApiService.API_URL}user/employees`)
+  public getEmployees() {
+    return this.http.get<any>(`${ApiService.API_URL}user/employees`);
+  }
+
+
+  public verifyEmail(email, token) {
+    const params = {
+      email,
+      token
+      };
+
+    return this.http.get<any>(`${ApiService.API_URL}verify`, {params});
   }
 
 
