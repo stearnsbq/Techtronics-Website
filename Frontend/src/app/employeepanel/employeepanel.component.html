@@ -1,6 +1,7 @@
+<app-loading ></app-loading>
 <div class="table_header">
   <div class="table-header-options">
-    <input type="search" placeholder="Search" [(ngModel)]="query" (change)="search($event)">
+    <input type="search" placeholder="Search" (change)="search($event)">
     <b *ngIf="employees" id="total-items"> Total Employees: {{employees.length}} </b>
   </div>
 
@@ -15,6 +16,7 @@
   <table>
 
     <tr>
+      <th><input type="checkbox" (change)="checkAll($event)"></th>
       <th>ID</th>
       <th>Name</th>
       <th>Username</th>
@@ -23,8 +25,8 @@
       <th>Hire Date</th>
     </tr>
 
-    <tr *ngFor="let employee of employees">
-
+    <tr *ngFor="let employee of employees; let i = index">
+      <td id="checkbox"><input type="checkbox" [checked]="employee.delete" (change)="markEmployee(i)"></td>
       <td name="Employee_ID">{{employee.Person_ID}}</td>
       <td name="Employee_Name">{{employee.Name}}</td>
       <td name="Employee_Username">{{employee.Username}}</td>

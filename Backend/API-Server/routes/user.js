@@ -23,6 +23,22 @@ module.exports = function(connection) {
 		}
 	})
 
+	router.get('/employees/search', expJwt({ secret: config.JWT.Secret}), async (req, res) =>{
+		if(req.user && (req.user.Account_Level === 'Employee' && req.user.Employee_Role && req.user.Employee_Role === 'Manager')){
+			try{
+				const search_query = req.query['query'] || '';
+				const page = parseInt(req.query['page']) || 1;
+	
+				res.send(await sql_queries.search_employees(connection, page, search_query));
+			}catch(err){
+				res.sendStatus(400);
+			}
+
+		}else{
+			res.sendStatus(401);
+		}
+	})
+
 	// TODO: Update user
 	router.put('/', expJwt({ secret: config.JWT.Secret}), async (req, res) => {});
 

@@ -8,6 +8,8 @@ import { ApiService } from '../api.service';
 })
 export class EmployeepanelComponent implements OnInit {
   public employees: any[];
+  public employeesToDelete: any[];
+  public allChecked = false;
 
   public createNewEmployeeModal = false;
   constructor(public api: ApiService) {
@@ -23,8 +25,28 @@ export class EmployeepanelComponent implements OnInit {
   ngOnInit() {
   }
 
+  checkAll(event) {
+    const checked = event.target.checked;
+    this.employees.forEach(item => item.delete = checked);
+  }
 
-  createNew(form) {
+  markEmployee(index) {
+    if (this.employees[index].delete) {
+      this.employees[index].delete = false;
+    } else {
+      this.employees[index].delete = true;
+    }
+  }
+
+  search(event) {
+    const query = event.target.value;
+    this.api.searchEmployees(query).subscribe(result => {
+      this.employees = result;
+    });
+  }
+
+
+createNew(form) {
 
     form.account_level = 'Employee';
     form.phoneNumbers = [form.phone_number + ''];

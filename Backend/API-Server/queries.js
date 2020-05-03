@@ -838,6 +838,18 @@ class Queries {
 		})
 	}
 
+	static search_employees(connection, page=1, searchQuery = "'%%'", itemsPerPage= ITEMS_PER_PAGE){
+		return new Promise((resolve, reject) => {
+			const offset = (page - 1) * ITEMS_PER_PAGE;
+
+			const query = `SELECT Person_ID, Username, Email, CONCAT(First_name, ', ', Last_name) AS Name, Hire_date, Role FROM Person JOIN Employee ON( Person.Person_ID = Employee.Employee_ID ) WHERE Person_ID LIKE '%${searchQuery}%' OR Username LIKE '%${searchQuery}%' OR Email LIKE '%${searchQuery}%' OR CONCAT(First_name, ', ', Last_name) LIKE '%${searchQuery}%' OR Role LIKE '%${searchQuery}%' LIMIT ${offset} , ${itemsPerPage}`
+
+			connection.query(query, async (err, results, fi) => {
+				return err ? reject(err) : resolve(results);
+			})
+		})
+	}
+
 	static search(connection, page = 1, searchQuery = "'%%'", sort="'DESC'", itemsPerPage= ITEMS_PER_PAGE) {
 		return new Promise((resolve, reject) => {
 			let sorted = 'ORDER BY Price ';
