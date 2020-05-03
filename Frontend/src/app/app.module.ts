@@ -15,7 +15,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiService } from './api.service';
 import { SearchService } from './search.service';
 import { JwtModule } from '@auth0/angular-jwt';
-import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './auth.guard';
 import { RoleGuardService } from './role-guard.service';
 import { ControlpanelComponent } from './controlpanel/controlpanel.component';
@@ -30,7 +29,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { LocalstorageService } from './localstorage.service';
 import { MediaInfoComponent } from './media-info/media-info.component';
 import { ModalComponent } from './modal/modal.component';
-import { AuthService } from './auth.service';
+import { AuthService } from './auth.service'; 
 import { AuthInterceptor } from './AuthInterceptor';
 import { CartPageComponent } from './cart-page/cart-page.component';
 import { RatingModule } from 'ng-starrating';
@@ -51,7 +50,6 @@ export function tokenGetter() {
     ItemAreaComponent,
     ProductPageComponent,
     LoginModalComponent,
-    ProfileComponent,
     ControlpanelComponent,
     TabComponent,
     TabsComponent,
@@ -86,7 +84,6 @@ export function tokenGetter() {
       {path: 'search', component: ItemAreaComponent},
       {path: 'verify', component: VerifyComponent},
       {path: 'product/:id',  component: ProductPageComponent},
-      {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
       {path: 'register', component: RegistrationComponent},
       {path: 'controlpanel', component: ControlpanelComponent , canActivate: [RoleGuardService], data: {neededRole: 'Employee'} },
       {path: 'login', component: LoginModalComponent},
