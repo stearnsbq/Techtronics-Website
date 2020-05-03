@@ -37,6 +37,7 @@ import { OrderHistoryComponent } from './order-history/order-history.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { VerifyComponent } from './verify/verify.component';
+import { StarRatingComponent } from './star-rating/star-rating.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -64,7 +65,8 @@ export function tokenGetter() {
     OrderHistoryComponent,
     OrderDetailsComponent,
     NotFoundComponent,
-    VerifyComponent
+    VerifyComponent,
+    StarRatingComponent
   ],
   imports: [
     BrowserModule,
