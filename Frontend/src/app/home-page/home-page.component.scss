@@ -1,12 +1,25 @@
+#home_page_container {
+    width: 100%;
+}
+
 h1, h2, p {
     color: rgb(255,255,255); 
     margin: 0px;
+    user-select: none;
 }
 
 #twitter-timeline {
     display:block;
 }
 
+#twitter_link {
+    color: rgb(199, 193, 198); 
+    text-decoration: none; 
+}
+
+#twitter_link:hover {
+    color: rgb(131, 130, 131);
+}
 
 p {
     margin: 10px;
@@ -38,22 +51,12 @@ p {
 } 
 
 #home_page_container { 
+    overflow: hidden;
     display: flex; 
 }
 
 #home_page_content {
-    /*
-    margin-top: 25px;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-
-    border-style: solid; 
-    border-color: rgb(0,0,0); 
-    border-width: 3px;
-
-    height: 10px;
-    */
+    width: 100%;
 }
 
 .section { 
