@@ -37,17 +37,16 @@
         <div *ngIf="has_items" class="cart_item" id="cart-details">
               <label id="total_price_label">Details</label>
               <b>Total Price: {{local_storage.getCartTotal()}}</b>
-          </div>
+        </div>
 
         <input *ngIf="has_items" [disabled]="local_storage.cartContains(media)" (click)="showOrderDetails = true" type="button" id="order_now" value="Order Now">
 
         <div *ngIf="!has_items" id="empty_cart_pack">
-            <!-- Make this look better..... -->
               <h1 id="empty_cart_msg">Your cart is empty!</h1>
               <div id="empty_cart_msg_icon">
                 <fa-icon [icon]="surprise"> </fa-icon>
               </div>
-          </div>
+        </div>
 
 
     </div>

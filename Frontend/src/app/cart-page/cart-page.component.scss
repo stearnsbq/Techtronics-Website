@@ -3,11 +3,12 @@
 
     display: flex;
     justify-content: center;
+
 }
 
 #cart_page_content { 
     max-width: 1080px;
-    flex-grow: 0.8;
+    flex: 0.8;
 }
 
 h2, h3 {
