@@ -156,7 +156,7 @@ export class InventoryComponent implements OnInit {
 
     const reader = new FileReader();
 
-    reader.onload = e => this.imagePreviews.push(e.target.result);
+    reader.onload = e => this.imagePreviews.push(( e.target as FileReader).result);
 
     reader.readAsDataURL(images[0]);
   }

@@ -29,7 +29,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { LocalstorageService } from './localstorage.service';
 import { MediaInfoComponent } from './media-info/media-info.component';
 import { ModalComponent } from './modal/modal.component';
-import { AuthService } from './auth.service'; 
+import { AuthService } from './auth.service';
 import { AuthInterceptor } from './AuthInterceptor';
 import { CartPageComponent } from './cart-page/cart-page.component';
 import { RatingModule } from 'ng-starrating';
