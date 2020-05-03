@@ -32,7 +32,7 @@ export class EmployeepanelComponent implements OnInit {
 
 
     this.api.register(form).subscribe(result => {
-        console.log(result);
+        location.reload();
     });
   }
 

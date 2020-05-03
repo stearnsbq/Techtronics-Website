@@ -54,7 +54,6 @@ export class AuthService {
     const token = this.getToken();
 
     const decoded = this.jwt.decodeToken(token);
-    console.log(decoded)
 
     return decoded && this.isEmployee() ? decoded.Employee_Role === 'Manager' && this.isAuthenticated() : false;
   }

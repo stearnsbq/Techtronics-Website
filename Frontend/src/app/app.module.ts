@@ -97,6 +97,7 @@ export function tokenGetter() {
     NgxPaginationModule
   ],
   providers: [
+    AuthService,
     ApiService,
     SearchService,
     LocalstorageService,
