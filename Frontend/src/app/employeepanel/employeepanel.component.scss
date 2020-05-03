@@ -95,3 +95,32 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 .employee-info label {
   font-weight: bold;
 }
+
+
+#create-button{
+  //margin-left: 90%;
+  border: none;
+  padding: 15px;
+  color: white;
+  border-radius: 5px;
+  font-size: 20px;
+  background-color: green;
+  transition: 0.2s;
+}
+
+#create-button:hover {
+  background-color: darkgreen;
+}
+
+.modal-footer{
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  justify-content: end;
+
+
+}
+
+.modal-footer button{
+  margin-left: auto;
+}

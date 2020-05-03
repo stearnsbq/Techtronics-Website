@@ -47,8 +47,14 @@ module.exports = function(connection, upload) {
 
 
 	router.get('/specials/:id', async (req, res) => {
-		const special = await sql_queries.get_specials_by_id(connection);
-		res.send(special);
+		try{
+			const id = parseInt(req.params.id)
+			const special = await sql_queries.get_specials_by_id(connection, id);
+			res.send(special);
+		}catch(err){
+			res.send(400);
+		}
+		
 	});
 
 	router.get('/total', async (req, res) =>{

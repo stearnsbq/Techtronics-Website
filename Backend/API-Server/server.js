@@ -14,7 +14,7 @@ var multer  = require('multer')
 var {v1} = require('uuid')
 var nodemailer = require("nodemailer");
 var util = require("./util.js")
-
+var expJwt = require('express-jwt');
 
 
 
@@ -138,7 +138,7 @@ app.post('/api/auth', async (req, res) => {
 
 });
 
-app.post('/api/register', async (req, res) => {
+app.post('/api/register', expJwt({secret: config.JWT.Secret, credentialsRequired: false}),  async (req, res) => {
 	var body = req.body;
 
 	var JsonValidator = new Validator();
@@ -174,8 +174,8 @@ app.post('/api/register', async (req, res) => {
 				await sql_queries.create_customer(connection, id);
 				break;
 			case 'Employee':
-				if (req.user.Account_Level === 'Employee' && req.user.Employee_Role === 'Manager') {
-					await sql_queries.create_employee(connection, id, gen_date(), body['employee_role']);
+				if (req.user && (req.user.Account_Level === 'Employee' && req.user.Employee_Role === 'Manager')) {
+					await sql_queries.create_employee(connection, id, body['employee_role']);
 				} else {
 					throw new Error('UnauthorizedError');
 				}

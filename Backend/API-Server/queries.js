@@ -14,12 +14,18 @@ class Queries {
 				if(err){
                     return reject(err);
                 }else{
-					console.log(results)
-					if(results[0].Customer !== person_id){
-						return reject(new Error("UnauthorizedError"))
+				
+					if(results.length > 0){
+
+						if(results[0].Customer !== person_id){
+							return reject(new Error("UnauthorizedError"))
+						}
+	
+
+						results[0]['items'] = await this._get_order_items(connection, results[0]['Order_ID']);
 					}
-                    results[0]['items'] = await this._get_order_items(connection, results[0]['Order_ID']);
-                    return resolve(results);
+
+					return resolve(results);
                 }
 			})
 		})
@@ -422,11 +428,11 @@ class Queries {
 
 	// creates a new employee in the employee table based off the id
 
-	static create_employee(connection, id, hire_date, role) {
+	static create_employee(connection, id, role) {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				`INSERT INTO Employee (Employee_ID, Hire_date, Role) VALUES (?, ?, ?)`,
-				[ id, hire_date, role ],
+				`INSERT INTO Employee (Employee_ID, Hire_date, Role) VALUES (?, SYSDATE(), ?)`,
+				[ id, role ],
 				(err, results, fields) => {
 					return err ? reject(err) : resolve(results);
 				}

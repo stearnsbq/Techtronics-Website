@@ -45,8 +45,9 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
       // asynchronously executing.
       this.api.getMediaByID(id).subscribe((media) => {
         this.media = media;
+        console.log(media);
       }, err => {
-        console.log(err)
+
         if (err.status && err.status === 404) {
           this.router.navigate(['notfound']);
         }

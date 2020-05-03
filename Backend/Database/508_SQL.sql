@@ -178,6 +178,7 @@ PRIMARY KEY (email)
 
 DELIMITER //
 CREATE TRIGGER update_dlc_before BEFORE UPDATE ON DLC
+FOR EACH ROW
 BEGIN
 
   IF EXISTS(SELECT * FROM DLC WHERE DLC.Game_ID = new.Game_ID) THEN
@@ -198,18 +199,16 @@ DELIMITER ;
 
 
 DELIMITER //
-CREATE TRIGGER update_media_quantity BEFORE UPDATE ON MEDIA
+CREATE TRIGGER update_media_quantity BEFORE UPDATE ON Media
+FOR EACH ROW
 BEGIN
 
-
-  IF old.Quantity == 0 THEN
+  IF old.Quantity = 0 THEN
 
     SIGNAL SQLSTATE '45000'
     SET MESSAGE_TEXT = 'No stock to order!';
 
   END IF;
-
-
 
 
 END//
