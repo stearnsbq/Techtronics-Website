@@ -21,8 +21,9 @@ import { AuthService } from '../auth.service';
 export class ProductPageComponent implements OnInit, AfterViewInit {
   public media: Media;
   public star = faStar;
-  public selectedImage = 1;
+  public selectedImage: string;
   public is_logged_in = false;
+
 
 
   constructor(
@@ -45,7 +46,7 @@ export class ProductPageComponent implements OnInit, AfterViewInit {
       // asynchronously executing.
       this.api.getMediaByID(id).subscribe((media) => {
         this.media = media;
-        console.log(media);
+        this.selectedImage = this.media.images[0];
       }, err => {
 
         if (err.status && err.status === 404) {

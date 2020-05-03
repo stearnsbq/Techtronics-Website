@@ -1,0 +1,3 @@
+<div class="rating-container">
+  <span [style.font-size]="fontSize + 'px'" (mouseover)="select(i)" (mouseleave)="select(0)" (click)="setRating(i)" [ngClass]="{'selected': i <= rating || i <= selected}" *ngFor="let item of [].constructor(starCount); let i = index">&#9733;</span>
+</div>
