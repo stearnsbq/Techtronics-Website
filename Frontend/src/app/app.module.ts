@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { StarRatingModule } from 'angular-star-rating';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FooterBarComponent } from './footer-bar/footer-bar.component';
 import { ItemAreaComponent } from './item-area/item-area.component';
@@ -68,6 +69,7 @@ export function tokenGetter() {
   imports: [
     BrowserModule,
     HttpClientModule,
+    StarRatingModule.forRoot(),
     AppRoutingModule,
     FormsModule,
     JwtModule.forRoot({

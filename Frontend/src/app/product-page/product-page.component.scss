@@ -84,8 +84,14 @@
     border-radius: 4px;
     border-color: #171a21;
 
-    max-height: 350px;
-    max-width: 450px; // this as well.
+    max-width: 100%;
+    height: auto;
+
+    width: 450px;
+    height: 350px;
+
+    object-fit: contain;
+    position: relative;
 
     display: flex;
     flex: 0.8;

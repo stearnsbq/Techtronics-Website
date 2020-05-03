@@ -10,6 +10,18 @@
     flex-grow: 0.8;
 }
 
+
+@media (max-width: 600px) {
+  #order_page_content {
+    min-width: 0px;
+    margin: 5px;
+}
+
+
+}
+
+
+
 h2, h3 {
     margin: 0px;
 }
@@ -23,9 +35,12 @@ h2, h3 {
     min-height: 110px;
     max-height: 110px;
 
+    flex: 1;
+
     padding: 5px;
 
     margin-bottom: 10px;
+
 
     display: flex;
 
