@@ -32,7 +32,6 @@ import { ModalComponent } from './modal/modal.component';
 import { AuthService } from './auth.service';
 import { AuthInterceptor } from './AuthInterceptor';
 import { CartPageComponent } from './cart-page/cart-page.component';
-import { RatingModule } from 'ng-starrating';
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -68,7 +67,6 @@ export function tokenGetter() {
   ],
   imports: [
     BrowserModule,
-    RatingModule ,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
