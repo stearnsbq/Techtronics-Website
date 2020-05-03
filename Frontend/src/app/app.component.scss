@@ -35,9 +35,8 @@ app-nav-bar { // should be out of document flow.
 
     display: inline-block;
 
-    width: 100vw;
-    max-width: 100%;
-
+    width: 100vw; 
+    max-width: 100%; 
 }
 
 .footer { // Out of document flow. :)
