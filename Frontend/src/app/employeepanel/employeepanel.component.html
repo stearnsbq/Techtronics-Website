@@ -1,7 +1,7 @@
 <div class="table_header">
   <div class="table-header-options">
     <input type="search" placeholder="Search" [(ngModel)]="query" (change)="search($event)">
-    <b id="total-items"> Total Employees: {{employees.length}} </b>
+    <b *ngIf="employees" id="total-items"> Total Employees: {{employees.length}} </b>
   </div>
 
   <div class="table-header-buttons">
