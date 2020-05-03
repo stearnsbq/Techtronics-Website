@@ -23,4 +23,17 @@ export class EmployeepanelComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  createNew(form) {
+
+    form.account_level = 'Employee';
+    form.phoneNumbers = [form.phone_number + ''];
+    delete form.phone_number;
+
+
+    this.api.register(form).subscribe(result => {
+        console.log(result);
+    });
+  }
+
 }

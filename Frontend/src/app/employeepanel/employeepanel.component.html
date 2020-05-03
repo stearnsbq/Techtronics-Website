@@ -64,19 +64,35 @@
       <label>Employee Email</label>
       <input ngModel name="email" #email="ngModel" placeholder="Employee Email">
 
+      <label>Employee Birthdate</label>
+      <input type="date" ngModel name="birth_date" #birth_date="ngModel">
+
+      <label>Employee Phone number</label>
+      <input ngModel name="phone_number" #phone_number="ngModel" placeholder="Employee Phone">
+
       <label>Employee Role</label>
-      <select ngModel name="role" #role="ngModel">
+      <select ngModel name="employee_role" #employee_role="ngModel">
         <option value="" selected disabled>Select Employee Role</option>
         <option>Manager</option>
         <option>General</option>
       </select>
 
-      <small> - Password is automatically generated</small>
+
+
+      <label>Employee Password</label>
+      <input type="password" ngModel name="password" #password="ngModel" placeholder="Password">
+
+
 
     </div>
 
 
+    <hr>
 
+
+    <div class="modal-footer">
+      <button type="submit" id ="create-button">Create</button>
+    </div>
 
 
 
