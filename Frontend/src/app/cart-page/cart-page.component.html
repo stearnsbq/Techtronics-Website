@@ -1,7 +1,7 @@
 <div id="cart_page_container">
 
     <div *ngIf="allMedia" id="cart_page_content">
-        <h3 *ngIf="has_items"> Cart </h3> 
+        <h3 *ngIf="has_items"> Cart </h3>
         <div *ngFor='let media of allMedia; let i = index'  class="cart_item">
             <div class="product_information">
                 <div class="content_header">
@@ -23,7 +23,7 @@
                     <div class = "attribute_pack rating_attribute_pack">
                         <h3 class="product_attr_title">User Rating</h3>
                         <div class = "user_rating_container">
-                          <star-rating [value]="media.User_rating" totalstars="5" checkedcolor="gold" uncheckedcolor="black" size="24px" readonly="true"></star-rating>
+                          <!-- <star-rating [value]="media.User_rating" totalstars="5" checkedcolor="gold" uncheckedcolor="black" size="24px" readonly="true"></star-rating> -->
                         </div>
 
                     </div>
