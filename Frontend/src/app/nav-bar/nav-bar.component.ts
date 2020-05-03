@@ -37,7 +37,7 @@ export class NavBarComponent implements OnInit {
     this.router.navigate(['/search'], {queryParams: {query}});
   //  this.searchService.search(query);
 
-  }
+  } 
 
   public onLogOut() {
     this.auth.logout();

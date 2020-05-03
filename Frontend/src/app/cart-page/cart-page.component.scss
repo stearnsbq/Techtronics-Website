@@ -5,7 +5,7 @@
     justify-content: center;
 }
 
-#cart_page_content {
+#cart_page_content { 
     max-width: 1080px;
     flex-grow: 0.8;
 }
@@ -53,15 +53,16 @@ h2, h3 {
     padding-left: 10px;
 
     border-style: solid;
-    border-radius: 4px;
-    border-width: 2px;
+    border-radius: 30px;
+    border-width: 1px;
     border-color: rgb(0,0,0);
 
     font-size: 45px;
     margin-right: 10px;
 }
 
-.content_header {
+.remove_button:hover {
+	background-color: lightgrey;
 }
 
 .content_header > *{
@@ -134,7 +135,6 @@ h2, h3 {
     font-size: 60px;
     color: #171a21;
  }
-
 
  #cart-details{
    display: flex;
