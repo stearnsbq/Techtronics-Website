@@ -9,7 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  public static API_URL = 'http://localhost:8081/api/';
+  public static API_URL = 'http://3.234.246.29:8081/api/';
   public loading = false;
 
 
@@ -90,7 +90,6 @@ export class ApiService {
     formData.append('media', media_id);
 
     for (const file of files) {
-      console.log(file);
       formData.append('media_image', file, 'work boy');
     }
 

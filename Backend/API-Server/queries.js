@@ -114,6 +114,15 @@ class Queries {
 	}
 
 
+	static _update_inventory_count(connection, media_id){
+			return new Promise((resolve, reject) => {
+				connection.query("UPDATE Media SET Quantity = Quantity - 1 WHERE Media_ID = ?", [media_id], (err, results, fields) =>{
+					return err ? reject(err) : resolve(results);
+				})
+			})
+	}
+
+
 
 	static create_new_order(connection, customer_id, count, address, zipcode, state, country, items, price) {
 		return new Promise((resolve, reject) => {
@@ -145,7 +154,11 @@ class Queries {
 				'INSERT INTO Order_Items (`Order`, Media, Price) VALUES (?, ?, ?)',
 				[ order_id, item['Media_ID'], item['Price'] ],
 				(err, results, fields) => {
-					return err ? reject(err) : resolve(results);
+					if(err){
+						return reject(err);
+					}else{
+						return resolve(await this._update_inventory_count(connection, item['Media_ID']))
+					}
 				}
 			);
 		});
