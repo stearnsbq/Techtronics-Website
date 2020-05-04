@@ -8,6 +8,12 @@
    // flex-flow: column wrap;
 }
 
+.pagination ::ng-deep .ngx-pagination {
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+}
+
 #item_image{
   margin: 0 auto;
   max-height: 200px;
