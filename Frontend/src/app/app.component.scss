@@ -1,6 +1,6 @@
 app-nav-bar { // should be out of document flow.
     position: fixed;
-    z-index: 1;
+    z-index: 99;
 
     height: 50px;
     width: 100vw;
