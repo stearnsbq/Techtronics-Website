@@ -55,7 +55,7 @@ class Queries {
 
     static get_orders(connection, person_id){
         return new Promise((resolve, reject) =>{
-            connection.query('SELECT * FROM `Order` WHERE Customer=?', [person_id], async (err, results, fields) => {
+            connection.query('SELECT * FROM `Order` WHERE Customer=? ORDER BY Ordered_date DESC', [person_id], async (err, results, fields) => {
                 if(err){
                     return reject(err);
                 }else{
@@ -959,10 +959,13 @@ class Queries {
 		return new Promise((resolve, reject) => {
 			let sorted = 'ORDER BY Price ';
 
-			if(sort == 'DESC'){
+
+			if(sort.toUpperCase() === "DESC" ){
 				sorted = sorted + ' DESC'
-			}else if (sort == 'ASC'){
+			}else if (sort.toUpperCase() === "ASC"){
 				sorted = sorted + ' ASC'
+			}else{
+				return reject(new Error('Invalid Sort'))
 			}
 
 			const offset = (page - 1) * ITEMS_PER_PAGE;
@@ -981,7 +984,9 @@ class Queries {
 								OR Video.Genre LIKE ${searchQuery}
 								OR Software.Type LIKE ${searchQuery}
 								OR Hardware.Type LIKE ${searchQuery} 
-								OR Company.Name LIKE ${searchQuery}) AND Media.deleted IS NULL ${sorted} LIMIT ${offset} , ${itemsPerPage}`;
+								OR Company.Name LIKE ${searchQuery}) AND Media.deleted IS NULL ORDER BY Price ${sort} LIMIT ${offset} , ${itemsPerPage}`;
+
+					
 
 							
 
