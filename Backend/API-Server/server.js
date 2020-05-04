@@ -85,6 +85,99 @@ app.use('/api/orders', orders);
 app.use('/api/companies', companies);
 
 
+app.post('/api/resetpassword', expJwt({secret: config.JWT.Secret}), async (req, res)=>{
+	try{
+		const email = req.user.email;
+
+		if(email){
+
+			const hash = await argon2.hash(req.body['password'])
+
+			await sql_queries.reset_password(connection, hash, email);
+	
+			res.send({"result": "success"});
+
+		}else{
+			res.send(401);
+		}
+		
+	}catch(error){
+		res.sendStatus(400);
+	}
+
+})
+
+app.get('/api/forgotpassword', async(req, res) =>{
+	try{
+		const email = req.query.email;
+
+		if(email){
+
+			
+		const token = Math.floor((Math.random() * 100000) + 50000);
+
+		// add it into the database
+		await sql_queries.add_new_forgot_password_verification(connection, email, token)
+
+		const emailLink = `http://localhost:4200/forgotpassword?token=${token}&email=${email}`
+
+		const mailOptions = {
+			to: email,
+			subject: "Password Reset",
+			html : `Hello,<br> Please Click on the link to reset your password.<br><a href="${emailLink}">Click here to reset password</a>`
+		}
+
+
+		// send the email
+		await util.mail(smtpTransport, mailOptions);
+
+		res.sendStatus(200)
+
+		}else{
+			res.sendStatus(400)
+		}
+
+
+	}catch(error){
+		console.log(error)
+		res.sendStatus(400)
+	}
+})
+
+app.get('/api/verifyforgotpassword', async (req, res) => {
+	try{
+		const email = req.query['email'];
+		const token = req.query['token'];
+
+		if(email && token){
+
+			await sql_queries.verify_forgot_password(connection, email, token);
+
+
+			var reset_token = jwt.sign(
+				{email: email, token: token},
+				config.JWT.Secret,
+				{ expiresIn: '30m' }
+			); // send a JWT token for authentication
+
+			res.send({result: "success", 'reset-token': reset_token})
+		}else{
+			res.sendStatus(400);
+		}
+
+	}catch(error){
+		console.log(error)
+		if(error === "Expired"){
+			res.send({result: "failed", reason: "Expired"})
+		}else if (error === "Not Found"){
+			res.send({result: "failed", reason: "Not Found"})
+		}else{
+			res.send({result: "failed", reason: "general error"})
+		}
+	}
+});
+
+
 
 
 
@@ -195,7 +288,7 @@ app.post('/api/register', expJwt({secret: config.JWT.Secret, credentialsRequired
 
 
 		// build the email link
-		const emailLink = `http://localhost:4200/verify?token=${token}&email=${body.email}`
+		const emailLink = `http://3.234.246.29/~project_2/verify?token=${token}&email=${body.email}`
 
 		const mailOptions = {
 			to: body['email'],

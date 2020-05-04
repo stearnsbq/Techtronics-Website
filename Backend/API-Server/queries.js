@@ -8,6 +8,28 @@ const ITEMS_PER_PAGE = 12;
 class Queries {
 
 
+	static delete_employee(connection, id){
+		return new Promise((resolve, reject) =>{
+			connection.query("UPDATE Employee SET Leave_date = SYSDATE() WHERE Employee_ID = ?", [id], async (err, results, fields) =>{
+				if(err){
+					return reject(err);
+				}else{
+					return resolve(await this.delete_user(connection, id));
+				}
+			})
+		})
+	}
+
+
+	static delete_user(connection, id){
+		return new Promise((resolve, reject) => {
+			connection.query("UPDATE Person SET deleted = SYSDATE() WHERE Person_ID = ?", [id], (err, results, fields) => {
+				return err ? reject(err) : resolve(results);
+			})
+		})
+	}
+
+
 	static get_order_by_id(connection, person_id, order_id){
 		return new Promise((resolve, reject) =>{
 			connection.query("SELECT * FROM `Order` WHERE Order_ID = ?", [order_id], async (err ,results, fields) =>{
@@ -172,7 +194,7 @@ class Queries {
 
 	static get_employees(connection){
 		return new Promise((resolve, reject) => {
-			connection.query("SELECT Person_ID, Username, Email, CONCAT(First_name, ', ', Last_name) AS Name, Hire_date, Role FROM Person JOIN Employee ON (Person.Person_ID = Employee.Employee_ID)", (err, results, fields ) => {
+			connection.query("SELECT Person_ID, Username, Email, CONCAT(First_name, ', ', Last_name) AS Name, Hire_date, Role FROM Person JOIN Employee ON (Person.Person_ID = Employee.Employee_ID) WHERE Leave_date IS NULL", (err, results, fields ) => {
 				return err ? reject(err) : resolve(results);
 			})
 		})
@@ -247,7 +269,70 @@ class Queries {
 	}
 
 
-	static _add_new_verification(connection, email, token){
+	static validate_email(connection, email){
+		return new Promise((resolve, reject) => {
+			connection.query("SELECT EXISTS(SELECT Email FROM Person WHERE Email=?) AS `Exists`", [email], (err, results, field) =>{
+				if(err){
+					return reject(err);
+				}else{
+					console.log(!!results[0]['Exists']);
+					return resolve(!!results[0]['Exists']);
+				}
+			})
+		})
+	}
+
+
+	static reset_password(connection, newPasswordHash, email){
+		return new Promise((resolve, reject) =>{
+			connection.query("UPDATE Person SET Password=? WHERE Email = ?", [newPasswordHash, email], (err, results, field) =>{
+				return err ?  reject(err) : resolve(results);
+			})
+		})
+	}
+
+
+	static verify_forgot_password(connection, email, token){
+		return new Promise((resolve, reject)=>{
+			connection.query("SELECT * FROM forgot_password_tokens WHERE email=? AND token=?", [email, token], (err, results, field)=>{
+				if(err){
+					return reject(err);
+				}else{
+					if(results.length <= 0){
+						return reject(new Error("Not Found"))
+					}else{
+
+						var currentTime = new Date().getTime();
+						var expiry = new Date(results[0]['expiry']).getTime();
+
+
+						if(currentTime > expiry){
+							return reject(new Error("Expired"))
+						}else{
+
+							return resolve(results)
+						}
+
+					}
+
+				}
+			})
+		})
+
+	}
+
+
+	static add_new_forgot_password_verification(connection, email, token){
+		return new Promise((resolve, reject) => {
+			connection.query("INSERT INTO forgot_password_tokens (email, token, expiry) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 1 DAY))", [email, token], (err, results, fields) =>{
+				return err ? reject(err) : resolve(results);
+			})
+				
+		})
+	}
+
+
+	static add_new_verification(connection, email, token){
 		return new Promise((resolve, reject) => {
 			connection.query("INSERT INTO verify_email_tokens (email, token, expiry) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 1 DAY))", [email, token], (err, results, fields) =>{
 				return err ? reject(err) : resolve(results);
@@ -267,7 +352,7 @@ class Queries {
 	static login_person(connection, username, password) {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				`SELECT Password, Person_ID, Account_Level, Active FROM Person WHERE Username=?`,[username],
+				`SELECT Password, Person_ID, Account_Level, Active FROM Person WHERE Username=? AND deleted IS NULL`,[username],
 				async (err, results, fields) => {
 					if (!err && results.length > 0) {
 						try {
@@ -842,7 +927,7 @@ class Queries {
 		return new Promise((resolve, reject) => {
 			const offset = (page - 1) * ITEMS_PER_PAGE;
 
-			const query = `SELECT Person_ID, Username, Email, CONCAT(First_name, ', ', Last_name) AS Name, Hire_date, Role FROM Person JOIN Employee ON( Person.Person_ID = Employee.Employee_ID ) WHERE Person_ID LIKE '%${searchQuery}%' OR Username LIKE '%${searchQuery}%' OR Email LIKE '%${searchQuery}%' OR CONCAT(First_name, ', ', Last_name) LIKE '%${searchQuery}%' OR Role LIKE '%${searchQuery}%' LIMIT ${offset} , ${itemsPerPage}`
+			const query = `SELECT Person_ID, Username, Email, CONCAT(First_name, ', ', Last_name) AS Name, Hire_date, Role FROM Person JOIN Employee ON( Person.Person_ID = Employee.Employee_ID ) WHERE (Person_ID LIKE '%${searchQuery}%' OR Username LIKE '%${searchQuery}%' OR Email LIKE '%${searchQuery}%' OR CONCAT(First_name, ', ', Last_name) LIKE '%${searchQuery}%' OR Role LIKE '%${searchQuery}%') AND Leave_date IS NULL AND deleted is NULL LIMIT ${offset} , ${itemsPerPage}`
 
 			connection.query(query, async (err, results, fi) => {
 				return err ? reject(err) : resolve(results);

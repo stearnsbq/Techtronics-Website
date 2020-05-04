@@ -28,7 +28,13 @@ input {
   background-color: #3a3b3d;
 }
 
-.login { 
+.login {
+  width: 100%;
+  padding-top: 60px;
+  padding-bottom: 25px;
+}
+
+.forgot-password{
   width: 100%;
   padding-top: 60px;
   padding-bottom: 25px;
@@ -201,12 +207,12 @@ input {
   padding-top: 5px;
   text-align: center;
   transition: 0.2s;
-  
+
 }
 
 #register_box_msg {
-  cursor: pointer; 
-  
+  cursor: pointer;
+
 }
 
 #register_box_msg:hover{
