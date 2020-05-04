@@ -11,7 +11,7 @@ app-nav-bar { // should be out of document flow.
 
 
 @media (max-width: 1160px) {
-  
+
 
   .container{
     margin-top: 50px;
@@ -20,8 +20,8 @@ app-nav-bar { // should be out of document flow.
 }
 
 .container{
-  background-color: rgb(255,255,255);
-  //background-image: linear-gradient(#171A21, #75DDDD);
+  background-color: #f2f4f7;
+
 }
 
 .router-outlet { // in document flow.
@@ -35,8 +35,8 @@ app-nav-bar { // should be out of document flow.
 
     display: inline-block;
 
-    width: 100vw; 
-    max-width: 100%; 
+    width: 100vw;
+    max-width: 100%;
 }
 
 .footer { // Out of document flow. :)

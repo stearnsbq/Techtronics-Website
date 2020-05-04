@@ -243,7 +243,7 @@ class Queries {
 
 	static verify_email(connection , email, token){
 		return new Promise((resolve, reject)=>{
-			connection.query("SELECT * FROM verify_email_tokens WHERE email=? AND token=?", [email, token], (err, results, field)=>{
+			connection.query("SELECT * FROM verify_email_tokens WHERE email=? AND token=?", [email, token], async (err, results, field)=>{
 				if(err){
 					return reject(err);
 				}else{
@@ -258,6 +258,7 @@ class Queries {
 						if(currentTime > expiry){
 							return reject(new Error("Expired"))
 						}else{
+							await this.delete_verification_for_email(connection, email);
 							return resolve(results)
 						}
 
@@ -285,16 +286,23 @@ class Queries {
 
 	static reset_password(connection, newPasswordHash, email){
 		return new Promise((resolve, reject) =>{
-			connection.query("UPDATE Person SET Password=? WHERE Email = ?", [newPasswordHash, email], (err, results, field) =>{
-				return err ?  reject(err) : resolve(results);
+			connection.query("UPDATE Person SET Password=? WHERE Email = ?", [newPasswordHash, email], async (err, results, field) =>{
+				if(err){
+					return reject(err);
+				}else{
+					await this.delete_verification_for_password_reset(connection, email);
+					return resolve(results);
+				}
 			})
 		})
 	}
 
 
+
+
 	static verify_forgot_password(connection, email, token){
 		return new Promise((resolve, reject)=>{
-			connection.query("SELECT * FROM forgot_password_tokens WHERE email=? AND token=?", [email, token], (err, results, field)=>{
+			connection.query("SELECT * FROM forgot_password_tokens WHERE email=? AND token=?", [email, token], async (err, results, field)=>{
 				if(err){
 					return reject(err);
 				}else{
@@ -309,7 +317,7 @@ class Queries {
 						if(currentTime > expiry){
 							return reject(new Error("Expired"))
 						}else{
-
+						
 							return resolve(results)
 						}
 
@@ -841,6 +849,23 @@ class Queries {
 			});
 		})
 	}
+
+	static delete_verification_for_email(connection, email){
+		return new Promise((resolve, reject) =>{
+			connection.query("DELETE FROM verify_email_tokens WHERE email = ?", [email], (err, results, fields) =>{
+				return err ? reject(err) : resolve(err);
+			})
+		})
+	}
+
+	static delete_verification_for_password_reset(connection, email){
+		return new Promise((resolve, reject) =>{
+			connection.query("DELETE FROM forgot_password_tokens WHERE email = ?", [email], (err, results, fields) =>{
+				return err ? reject(err) : resolve(err);
+			})
+		})
+	}
+
 
 
 	static delete_media(connection, media_id){

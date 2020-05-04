@@ -119,6 +119,7 @@ input {
   max-height: 500px;
   justify-content: center;
 
+
 }
 
 #login_form {
@@ -221,3 +222,41 @@ input {
 
 
 // FORM END
+
+.forgot-password{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.forgot-password-parent{
+  display: inline-block;
+  background-color: white;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 15px;
+}
+
+#title{
+  margin-left: 15px;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+
+.submit-button{
+  border: none;
+  padding: 10px;
+  background-color: green;
+  color: white;
+  border-radius: 10px;
+  float: right;
+}
+
+.back-button{
+  border: none;
+  padding: 10px;
+  background-color: maroon;
+  color: white;
+  border-radius: 10px;
+}

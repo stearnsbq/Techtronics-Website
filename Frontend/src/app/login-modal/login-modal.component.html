@@ -1,3 +1,4 @@
+<app-loading></app-loading>
 <div *ngIf="!showForgotPassword" class="login">
 
   <div class="login_form_parent">
@@ -62,21 +63,24 @@
 
 
 <div *ngIf="showForgotPassword" class="forgot-password">
-  <div class="login_form_parent">
+  <div class="forgot-password-parent">
 
-    <h3>Forgot Password</h3>
+    <h3 id="title">Forgot Password</h3>
 
     <form id="login_form" #form="ngForm"  (ngSubmit)='validate(form.value)'>
       <input type="text" ngModel name="email" #email="ngModel" placeholder="Email">
-      <button type="submit">Submit</button>
+      <h4 h4 *ngIf="showEmailPrompt">Please check your email for a password reset link</h4>
+
+      <hr>
+      <button class= "back-button" (click)="showForgotPassword = false">Back</button>
+      <button class= "submit-button" type="submit">Submit</button>
+
     </form>
 
 
-    <a (click)="showForgotPassword = false">Back</a>
+
   </div>
 
-
-  <h4 *ngIf="showEmailPrompt">Please check your email for a password reset link</h4>
 
 </div>
 

@@ -9,7 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  public static API_URL = 'http://localhost:8081/api/';
+  public static API_URL = 'http://3.234.246.29:8081/api/';
   public loading = false;
 
   constructor(private http: HttpClient ) { }
@@ -157,7 +157,7 @@ export class ApiService {
       token
       };
 
-    return this.http.get(`${ApiService.API_URL}verifyforgotpassword`, {params});
+    return this.http.get<any>(`${ApiService.API_URL}verifyforgotpassword`, {params});
   }
 
   public forgotPassword(email) {
@@ -169,7 +169,9 @@ export class ApiService {
 
 
   public resetPassword(password, token) {
-    const headers = new HttpHeaders({Authorization: 'Bearer ' + token});
+    let headers = new HttpHeaders();
+    headers =  headers.append('Authorization', `Bearer ${token}`);
+
     return this.http.post(`${ApiService.API_URL}resetpassword`, {password}, {headers});
   }
 
