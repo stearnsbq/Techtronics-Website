@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `Person` (
   `Last_name` varchar(50) NOT NULL,
   `Birth_date` date NOT NULL,
   `active`     varchar(3)
+  `deleted`    date,
 );
 
 CREATE TABLE IF NOT EXISTS `Phone_numbers` (
@@ -21,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `Phone_numbers` (
 CREATE TABLE IF NOT EXISTS `Employee` (
   `Employee_ID` INT PRIMARY KEY,
   `Hire_date` date NOT NULL,
+  `Leave_date` date 
    FOREIGN KEY (`Employee_ID`) REFERENCES `Person` (`Person_ID`)
 );
 
@@ -133,21 +135,6 @@ CREATE TABLE IF NOT EXISTS `Order_Items` (
   FOREIGN KEY (`Order`) REFERENCES `Order` (`Order_ID`),
   FOREIGN KEY (`Media`) REFERENCES `Media` (`Media_ID`)
 );
-CREATE TABLE IF NOT EXISTS `Shipping` (
-  `Shipping_ID`     INT PRIMARY KEY AUTO_INCREMENT,
-  `Carrier`         varchar(50) NOT NULL,
-  `Shipped_date`    date NOT NULL,
-  `Tracking_Number` varchar(255)
-);
-
-CREATE TABLE IF NOT EXISTS `Shipped_Orders` (
-  `Order` INT,
-  `Shipping` INT,
-  PRIMARY KEY (`Order`, `Shipping`),
-  FOREIGN KEY (`Order`) REFERENCES `Order` (`Order_ID`),
-  FOREIGN KEY (`Shipping`) REFERENCES `Shipping` (`Shipping_ID`)
-);
-
 
 CREATE TABLE IF NOT EXISTS `Specials` (
   `Specials_ID` INT PRIMARY KEY  AUTO_INCREMENT,
@@ -169,6 +156,13 @@ CREATE TABLE IF NOT EXISTS `verify_email_tokens`(
 `email`   varchar(255) NOT NULL ,
 `token`   varchar(255) NOT NULL,
 `expiry`  DATETIME NOT NULL,
+PRIMARY KEY (email)
+)
+
+CREATE TABLE IF NOT EXISTS `forgot_password_tokens`(
+  `email`   varchar(255) NOT NULL ,
+  `token`   varchar(255) NOT NULL,
+   `expiry`  DATETIME NOT NULL,
 PRIMARY KEY (email)
 )
 
