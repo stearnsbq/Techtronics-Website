@@ -27,7 +27,7 @@
 <div id="product_info">
 
   <div (change)="update($event.target.name)" *ngIf="editMode" id="editMode">
-
+    <p>Name: <input name="Name" [formControl]="getField('Name')"></p>
     <p>Condition: <input name="Condition" [formControl]="getField('Condition')"></p>
     <p>Price: <input type="number" name="Price" [formControl]="getField('Price')"></p>
     <p>Quantity: <input type="number" name="Quantity" [formControl]="getField('Quantity')"></p>
@@ -52,9 +52,6 @@
     <div *ngIf="media.Type === 'Game'">
       <p>Genre: <input name="Game_Genre" [formControl]="getField('Game_Genre')"></p>
       <p>ESRB: <input name="ESRB_Rating" [formControl]="getField('ESRB_Rating')"></p>
-      <div *ngIf="media.DLC.length > 0">
-        <p *ngFor="let dlc of media.DLC">{{dlc.Name}}</p>
-      </div>
     </div>
 
     <div *ngIf="media.Type === 'Video'">
@@ -81,9 +78,6 @@
     <div *ngIf="media.Type === 'Game'">
       <p>Genre: {{media.Game_Genre}}</p>
       <p>ESRB: {{media.ESRB_Rating}}</p>
-      <div *ngIf="media.DLC.length > 0">
-        <p *ngFor="let dlc of media.DLC">{{dlc.Name}}</p>
-      </div>
     </div>
 
     <div *ngIf="media.Type === 'Video'">

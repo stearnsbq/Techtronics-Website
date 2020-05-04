@@ -174,6 +174,7 @@ module.exports = function(connection, upload) {
 		}
 
 		try{
+			console.log(req.body)
 			
 			connection.beginTransaction();
 				

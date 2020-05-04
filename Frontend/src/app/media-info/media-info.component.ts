@@ -29,6 +29,7 @@ export class MediaInfoComponent implements OnInit {
 
   ngOnInit() {
     this.control =  new FormGroup({
+      Name: new FormControl(this.media.Name),
       Condition: new FormControl(this.media.Condition),
       Price: new FormControl(this.media.Price),
       Quantity: new FormControl(this.media.Quantity),
@@ -44,10 +45,7 @@ export class MediaInfoComponent implements OnInit {
       companyInfo: new FormControl(this.media.companyInfo),
     });
 
-    console.log(this.media);
-
-
-
+   
   }
 
   deleteItem() {

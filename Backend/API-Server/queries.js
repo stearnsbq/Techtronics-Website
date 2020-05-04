@@ -912,7 +912,7 @@ class Queries {
 
 	static _update_hardware(connection, media){
 		return new Promise((resolve, reject) =>{
-			connection.query("UPDATE Hardware SET Hardware_Type=? WHERE Hardware_ID = ?", [media['Hardware_Type'], media['Media_ID']], (err, results, fields) => {
+			connection.query("UPDATE Hardware SET Type=? WHERE Hardware_ID = ?", [media['Hardware_Type'], media['Media_ID']], (err, results, fields) => {
 				return err ? reject(err) : resolve(results);
 			})
 		})
@@ -920,15 +920,10 @@ class Queries {
 
 	static update_media(connection, media){
 		return new Promise((resolve, reject)=>{
-			connection.query("UPDATE Media SET `Condition`=?, Name=?, Price=?, Platform=?, Quantity=?, Type=?  WHERE Media_ID=?", [media['Condition'], media['Name'], media['Price'], media['Platform'], media['Quantity'], media['Type'], media.Media_ID], async (err, results, fields) =>{
+			connection.query("UPDATE Media SET `Condition`=?, Name=?, Price=?, Platform=?, Quantity=?, Type=?  WHERE Media_ID=?", [media['Condition'], connection.escape(media['Name']), media['Price'], media['Platform'], media['Quantity'], media['Type'], media.Media_ID], async (err, results, fields) =>{
 				if(err){
 					return reject(err);
-				}else{
-					if(media['DLC'].length > 0){
-						for(const dlc of media['DLC']){
-							await this._update_DLC(connection, dlc.Media_ID, media.Media_ID)	
-						}
-					}
+				}else{	
 
 					switch(media['Type']){
 						case 'Game':
