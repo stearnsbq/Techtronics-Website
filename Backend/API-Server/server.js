@@ -284,7 +284,7 @@ app.post('/api/register', expJwt({secret: config.JWT.Secret, credentialsRequired
 		const token = Math.floor((Math.random() * 100000) + 50000);
 
 		// add it into the database
-		await sql_queries._add_new_verification(connection, body['email'], token)
+		await sql_queries.add_new_verification(connection, body['email'], token)
 
 
 		// build the email link
