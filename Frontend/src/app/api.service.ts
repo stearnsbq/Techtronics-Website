@@ -9,13 +9,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  public static API_URL = 'http://3.234.246.29:8081/api/';
+  public static API_URL = 'http://localhost:8081/api/';
   public loading = false;
 
   constructor(private http: HttpClient ) { }
 
   public getOrders() {
     return this.http.get<Order[]>(ApiService.API_URL + 'orders');
+  }
+
+  public deleteEmployee(id) {
+    return this.http.delete(`${ApiService.API_URL}user/employees/${id}`, {responseType: 'text'});
   }
 
   public getMedia(pageNum= 1): Observable<Media[]> {
@@ -127,6 +131,15 @@ export class ApiService {
   }
 
 
+  public validateEmail(email) {
+    const params = {
+      email
+      };
+
+    return this.http.get(`${ApiService.API_URL}user/validate`, {params, responseType: 'text'}, );
+  }
+
+
   public searchEmployees(query, page= 1) {
 
     const params = {
@@ -136,6 +149,28 @@ export class ApiService {
 
     return this.http.get<any>(`${ApiService.API_URL}user/employees/search`, {params});
 
+  }
+
+  public verifyForgotPassword(email, token) {
+    const params = {
+      email,
+      token
+      };
+
+    return this.http.get(`${ApiService.API_URL}verifyforgotpassword`, {params});
+  }
+
+  public forgotPassword(email) {
+    const params = {
+      email
+      };
+    return this.http.get(`${ApiService.API_URL}forgotpassword`, {params, responseType: 'text'});
+  }
+
+
+  public resetPassword(password, token) {
+    const headers = new HttpHeaders({Authorization: 'Bearer ' + token});
+    return this.http.post(`${ApiService.API_URL}resetpassword`, {password}, {headers});
   }
 
 

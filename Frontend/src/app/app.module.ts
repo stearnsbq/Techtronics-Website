@@ -39,6 +39,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { VerifyComponent } from './verify/verify.component';
 import { StarRatingComponent } from './star-rating/star-rating.component';
 import { OrderInformationComponent } from './order-information/order-information.component';
+import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -68,7 +69,8 @@ export function tokenGetter() {
     NotFoundComponent,
     VerifyComponent,
     StarRatingComponent,
-    OrderInformationComponent
+    OrderInformationComponent,
+    ForgotpasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -94,6 +96,7 @@ export function tokenGetter() {
       {path: 'cart', component: CartPageComponent, canActivate: [AuthGuard]},
       {path: 'order_history', component: OrderHistoryComponent, canActivate: [AuthGuard]},
       {path: 'order_details', component: OrderDetailsComponent},
+      {path: 'forgotpassword', component: ForgotpasswordComponent},
       {path: '**', component: NotFoundComponent}
     ]),
     ReactiveFormsModule,

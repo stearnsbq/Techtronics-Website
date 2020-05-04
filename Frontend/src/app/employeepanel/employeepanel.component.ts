@@ -46,6 +46,17 @@ export class EmployeepanelComponent implements OnInit {
   }
 
 
+  removeEmployees() {
+    const employeesToDelete = this.employees.filter(emp => emp.delete === true);
+    this.employees = this.employees.filter(emp => !emp.delete || emp.delete === false);
+
+    for (const employee of employeesToDelete) {
+      this.api.deleteEmployee(employee.Person_ID).subscribe(result => {});
+    }
+
+  }
+
+
 createNew(form) {
 
     form.account_level = 'Employee';

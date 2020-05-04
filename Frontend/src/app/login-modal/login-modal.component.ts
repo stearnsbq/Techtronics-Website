@@ -25,12 +25,15 @@ export class LoginModalComponent implements OnInit {
   public submitted: boolean;
   public invalid: boolean;
 
+  public showForgotPassword = false;
+  public showEmailPrompt = false;
+
   // icons for the login
   public user = faUser;
   public lock = faLock;
   public login_icon = faUserCircle;
 
-  constructor(public auth: AuthService, private router: Router) {
+  constructor(public auth: AuthService, private router: Router, public api: ApiService) {
     this.submitted = false;
     this.invalid = false;
   }
@@ -62,4 +65,18 @@ export class LoginModalComponent implements OnInit {
 
 
   }
+
+
+  public async validate(form) {
+    const email = form.email;
+    const result = await this.api.validateEmail(email).toPromise();
+
+    if (result) {
+     await this.api.forgotPassword(email).toPromise().then(result => {
+       this.showEmailPrompt = true;
+     });
+    }
+  }
+
+
 }
