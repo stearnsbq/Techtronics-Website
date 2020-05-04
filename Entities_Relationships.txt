@@ -1,0 +1,137 @@
+Entities and Relationships: 
+Person - (Overlapping and Total) - Customer and Employee
+Customer [is_favorited_by - has_a] Favorite 
+Special [is_a - encompases] Game, Video, Software, Hardware, DLC 
+Media - (Disjoint) - Game, Video, Software, Hardware, DLC 
+Game [extends_the - extended_by] DLC 
+Order [is_part_of - contain] Media 
+Customer [ordered_by - made_an] Order
+Video 
+Software 
+Hardware
+Person [owned_by - has] Phone_number  
+Company - (Overlapping and Total) - Developer, Publisher, Manufacter
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Attributes: 
+Person 
+- id
+- username
+- password 
+- email 
+- first_name
+- last_name
+- birth_date 
+
+Phone_number 
+- phone_number
+
+Company 
+- id
+- name
+- products
+
+Developer
+- Company.id
+- Company.name
+- Company.products
+
+Publisher 
+- Company.id
+- Company.name
+- Company.products
+- published_count
+
+Manufacturer 
+- Company.id
+- Company.name
+- Company.products
+- Company.name
+ 
+Customer 
+- Person.id
+- Person.username
+- Person.password 
+- Person.email 
+- Person.first_name
+- Person.last_name
+- Person.birth_date 
+
+Employee
+- Person.id
+- Person.username
+- Person.password 
+- Person.email 
+- Person.first_name
+- Person.last_name
+- Person.birth_date 
+- hire_date
+
+Special 
+- discount_percentage
+- start_date 
+- due_date 
+
+Order
+- order_id 
+- media_count 
+- address
+- zip_code
+- state 
+- country 
+
+Media
+- id 
+- name 
+- price 
+- copies 
+- condition 
+- platform 
+
+Game
+- Media.id
+- Media.name 
+- Media.price 
+- Media.copies
+- Media.condition 
+- Media.platform
+- Genre
+
+Video 
+- Media.id 
+- Media.name 
+- Media.price 
+- Media.copies
+- Media.condition 
+- Media.platform
+- Genre
+
+Software 
+- Media.id 
+- Media.name 
+- Media.price 
+- Media.copies
+- Media.condition 
+- Media.platform
+- Type
+
+Hardware
+- Media.name 
+- Media.price 
+- Media.copies
+- Media.condition 
+- Media.platform
+- Type
+
+DLC 
+- Media.name 
+- Media.price 
+- Media.copies
+- Media.condition 
+- Media.platform
+
+
+
+
+
+

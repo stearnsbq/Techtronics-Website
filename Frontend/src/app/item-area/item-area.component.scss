@@ -1,0 +1,121 @@
+.items {
+  width: 100%;
+    display: flex; // using flex so we can have a flexible grid layout for the media items
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;  // center the content so it doesn't look jank with uneven whitespace
+    align-items: center;
+   // flex-flow: column wrap;
+}
+
+#item_image{
+  margin: 0 auto;
+  max-height: 200px;
+  width: 100%;
+  object-fit: contain;
+  display:block;
+}
+
+hr{
+  border: 2px solid grey;
+  border-radius: 5px;
+}
+
+#price{
+  display: inline-block;
+}
+
+.item {
+  position: relative;
+  cursor: pointer;
+  padding: 12px;
+  min-width: 250px;
+  min-height: 250px;
+  flex-basis: 25%;
+  margin: 10px;
+
+
+  border-style: solid;
+  border-color: rgb(0,0,0);
+  border-radius: 4px;
+  border-width: 2px;
+
+  background-color: white;
+
+
+  transition: 0.2s; // background color transition
+}
+
+.out-of-stock{
+  z-index: 1;
+  position: absolute;
+  margin-right: auto;
+  height: 100%;
+  text-align: center;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(134, 134, 134, 0.596);
+}
+
+.out-of-stock h1{
+  margin-top:  50%;
+  font-size: 50px;
+
+}
+
+
+.item:hover {
+  background-color: gainsboro;
+}
+
+.item_attributes { // associated with div of attributes
+
+    overflow: hidden;
+}
+
+
+
+.price-section{
+  display: flex;
+  flex-direction: row;
+
+}
+
+#item_condition{
+  flex: 1;
+}
+
+.no_item_message {
+  color: #171a21;
+  margin-left: 20px;
+  display: inline;
+  user-select: none;
+}
+
+.no_item_msg_icon {
+  position: relative;
+  top: 10px;
+  left: 10px;
+  display: inline-block;
+}
+
+.no_item_msg_icon fa-icon {
+  font-size: 60px;
+  color: #171a21;
+}
+
+
+
+
+
+#item_name{
+  margin-bottom: 5px;
+}
+
+
+
+#item_platform{
+  margin-left: 5px;
+  font-size: small;
+}

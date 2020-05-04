@@ -1,0 +1,22 @@
+RELATIONAL MODELS:
+
+Person (Person_ID PRIMARY KEY, username NOT NULL UNIQUE, password NOT NULL, email NOT NULL UNIQUE, first_name NOT NULL, last_name NOT NULL, birth_date NOT NULL)
+Phone_Numbers (Person_ID REFERENCES Person.Person_ID PRIMARY KEY, phone_number PRIMARY KEY)
+Employee (Employee_ID REFERENCES Person.Person_ID PRIMARY KEY, Hire_date NOT NULL)
+Customer (Customer_ID REFERENCES Person.Person_ID PRIMARY KEY)
+
+Company (Company_ID PRIMARY KEY, Name NOT NULL, Num_Products NOT NULL) 
+Publisher (Publisher_ID REFERENCES Company.Company_ID PRIMARY KEY)
+Developer (Developer _ID REFERENCES Company.Company_ID PRIMARY KEY)
+Manufacturer (Manufacturer_ID REFERENCES Company.Company_ID PRIMARY KEY)
+
+Media (Media_ID PRIMARY KEY, Name NOT NULL, Platform NOT NULL, User_Rating , Price NOT NULL, Condition NOT NULL)
+Hardware (Hardware_ID REFERENCES Media.Media_ID PRIMARY KEY, Type NOT NULL)
+Software (Software_ID REFERENCES Media.Media_ID PRIMARY KEY, Type NOT NULL)
+Game (Game_ID REFERENCES Media.Media_ID PRIMARY KEY, ESRB_Rating NOT NULL, Genre NOT NULL)
+Video (Video_ID REFERENCES Media.Media_ID PRIMARY KEY, MPAA_Rating NOT NULL, Genre NOT NULL)
+Media_Companies (Media REFERENCES Media.Media_ID PRIMARY KEY, Company REFERENCES Company.Company_ID PRIMARY KEY)
+
+Order (Order_ID PRIMARY KEY, Customer REFERENCES Customer.Customer_ID NOT NULL, Media_Count NOT NULL, Address NOT NULL, Zip_Code NOT NULL, State NOT NULL, Country NOT NULL)
+Order_Items (Order REFERENCES Order.Order_ID PRIMARY KEY, Media REFERENCES Media.Media_ID PRIMARY KEY)
+

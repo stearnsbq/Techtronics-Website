@@ -1,0 +1,57 @@
+<div id="order_history_content">
+    <div *ngIf="allOrders" id="order_page_content">
+        <h3 *ngIf="has_order_history" id="orderhist_title"> Order History </h3> 
+
+        <div *ngFor='let order of allOrders; let i = index'  class="order_item">
+            <div class="order_information">
+                <div class="content_header">
+                    <h2 class="order_id">Order ID: #{{order.Order_ID}} </h2>
+                </div> 
+
+                <div class="all_attributes">
+                    <div class="attribute_pack">
+                        <h3 class="product_attr_title">Total Price</h3>
+                        <h3 class="product_attribute">${{order.Price}}</h3>
+                    </div>
+
+                    <div class="attribute_pack">
+                        <h3 class="product_attr_title">#Items</h3>
+                        <h3 class="product_attribute">{{order.Media_Count}}</h3> 
+                    </div> 
+                    <div class="attribute_pack">
+                        <h3 class="product_attr_title">Order Date and Time</h3>
+                        <h3 class="product_attribute">{{order.Ordered_date}}</h3> 
+                    </div> 
+                </div>
+
+
+            </div>
+
+            <div class="order_media_content"> <!-- issue when RESIZING, MUST BE FIXED -->
+                <table> 
+                    <tr id='table_header'>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Type</th>
+                    </tr>
+
+                    <tr *ngFor='let media of order.items ; let i = index'>
+                        <td>{{media.Name}}</td>
+                        <td>${{media.Price}}</td>
+                        <td>{{media.Type}}</td>
+                    </tr>
+
+                </table>
+            </div>
+
+        </div>
+
+        <div *ngIf="!has_order_history" id="no_history_pack">
+            <h1 id="no_history_msg">You have no order history!</h1>  
+            <div id="no_history_msg_icon">
+              <fa-icon [icon]="smile_wink"> </fa-icon>
+            </div>
+      </div>
+
+    </div>
+</div>

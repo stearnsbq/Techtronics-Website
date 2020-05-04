@@ -1,0 +1,100 @@
+<app-loading ></app-loading>
+<div class="table_header">
+  <div class="table-header-options">
+    <input type="search" placeholder="Search" (change)="search($event)">
+    <b *ngIf="employees" id="total-items"> Total Employees: {{employees.length}} </b>
+  </div>
+
+  <div class="table-header-buttons">
+    <button  (click)="createNewEmployeeModal = true">Add New Employee</button>
+    <button  (click)="removeEmployees()">Remove Checked Employees</button>
+  </div>
+
+</div>
+
+<div class="employee-list">
+
+  <table>
+
+    <tr>
+      <th><input type="checkbox" (change)="checkAll($event)"></th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Hire Date</th>
+    </tr>
+
+    <tr *ngFor="let employee of employees; let i = index">
+      <td id="checkbox"><input type="checkbox" [checked]="employee.delete" (change)="markEmployee(i)"></td>
+      <td name="Employee_ID">{{employee.Person_ID}}</td>
+      <td name="Employee_Name">{{employee.Name}}</td>
+      <td name="Employee_Username">{{employee.Username}}</td>
+      <td name="Employee_Email">{{employee.Email}}</td>
+      <td name="Employee_Role">{{employee.Role}}</td>
+      <td name="Employee_Hire_Date">{{employee.Hire_date}}</td>
+
+    </tr>
+
+  </table>
+
+</div>
+
+<app-modal title="Create New Employee" [(toggle)]="createNewEmployeeModal">
+
+  <form ngNativeValidate #form="ngForm" (ngSubmit)="createNew(form.value)">
+
+    <div class="employee-info">
+      <label>Employee Username</label>
+      <input ngModel name="username" #username="ngModel" type="text" placeholder="Employee Username">
+
+      <label>Employee First Name</label>
+      <input ngModel name="first_name" #first_name="ngModel" type="text" placeholder="Employee First Name">
+
+      <label>Employee Last Name</label>
+      <input ngModel name="last_name" #last_name="ngModel" placeholder="Employee Last Name">
+
+      <label>Employee Email</label>
+      <input ngModel name="email" #email="ngModel" placeholder="Employee Email">
+
+      <label>Employee Birthdate</label>
+      <input type="date" ngModel name="birth_date" #birth_date="ngModel">
+
+      <label>Employee Phone number</label>
+      <input ngModel name="phone_number" #phone_number="ngModel" placeholder="Employee Phone">
+
+      <label>Employee Role</label>
+      <select ngModel name="employee_role" #employee_role="ngModel">
+        <option value="" selected disabled>Select Employee Role</option>
+        <option>Manager</option>
+        <option>General</option>
+      </select>
+
+
+
+      <label>Employee Password</label>
+      <input type="password" ngModel name="password" #password="ngModel" placeholder="Password">
+
+
+
+    </div>
+
+
+    <hr>
+
+
+    <div class="modal-footer">
+      <button type="submit" id ="create-button">Create</button>
+    </div>
+
+
+
+  </form>
+
+
+
+</app-modal>
+
+
+

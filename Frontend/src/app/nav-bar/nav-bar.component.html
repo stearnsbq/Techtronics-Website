@@ -1,0 +1,54 @@
+<nav id="header_content">
+  
+    <div id="logo">
+      <h1 class="title" routerLink="">Techtronics</h1>
+    </div> 
+
+    <div id="search_container"> 
+        <input id="search_bar" #searchBox type="text" (keyup.enter)='search(searchBox.value)' placeholder="Search for product...">
+    </div>
+
+    <div class="navigation">
+
+      <div class="desktop-nav">
+
+        <a *ngIf="auth.isEmployee()" routerLink="controlpanel" class="navbutton">Control Panel</a>
+
+        <a *ngIf="!auth.isAuthenticated()" routerLink="login" class="navbutton">Login</a>
+        <a *ngIf="auth.isAuthenticated()" (click)="onLogOut()" class="navbutton">Logout</a>
+
+      </div>
+
+
+      <fa-icon [icon]="bars" (click)="menuShown = !menuShown" class="menu"></fa-icon>
+
+      <div *ngIf="!auth.isEmployee() && auth.isAuthenticated()" (mouseenter)="cartShown = true" routerLink="cart" (mouseout)="cartShown = false" class="shopping-cart-container">
+        <fa-icon [icon]="cart" id="shopping-cart"></fa-icon>
+        <span *ngIf="itemsInCart > 0" id="cart-count-icon">{{itemsInCart}}</span>
+
+      </div>
+
+      <div *ngIf="!auth.isEmployee() && auth.isAuthenticated()" routerLink="order_history" class="order-history-container">
+        <fa-icon [icon]="history" id="history_icon"></fa-icon>
+
+      </div>
+
+      <div class="dropdown"> 
+
+        <a [style.display]="menuShown ? 'block' : 'none'" *ngIf="auth.isEmployee()" routerLink="controlpanel" class="navbutton">Control Panel</a>
+
+        <a [style.display]="menuShown ? 'block' : 'none'" *ngIf="!auth.isAuthenticated()" routerLink="login" class="navbutton">Login</a>
+        <a [style.display]="menuShown ? 'block' : 'none'" *ngIf="auth.isAuthenticated()" (click)="onLogOut()" class="navbutton">Logout</a>
+
+      </div>
+
+    </div>
+
+
+
+
+
+
+
+
+</nav>

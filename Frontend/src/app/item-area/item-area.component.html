@@ -1,0 +1,77 @@
+<!-- shows loading spinner-->
+<app-loading ></app-loading>
+<!-- shows how many results and allows the user to sort the items -- make this look better -->
+<div *ngIf="totalMedia > 0" class="itemnav">
+  <p *ngIf="totalMedia === 1">{{totalMedia}} result</p>
+  <p *ngIf="totalMedia > 1">{{totalMedia}} results</p>
+  <select (change)="sortBy($event.target.value)">
+    <option value="best">Best match</option>
+    <option value="lth">Lowest to highest price</option>
+    <option value="htl">Highest to lowest price</option>
+  </select>
+</div>
+
+<div *ngIf="totalMedia <= 0 && !apiService.loading" class="noItems">
+  <!-- Make this look better..... -->
+  <span>
+    <h1 class="no_item_message">No items found</h1>
+    <div class="no_item_msg_icon">
+      <fa-icon [icon]="sadtear"> </fa-icon>
+    </div>
+  </span>
+</div>
+
+
+
+<div class="items">
+
+  <!-- Make this look better :) -->
+  <div
+    *ngFor="let media of allMedia | paginate: {  itemsPerPage: ITEMS_PER_PAGES, currentPage: page, totalItems: totalMedia}"
+    (click)="onRowClick(media.Media_ID)" class="item">
+
+
+    <div *ngIf="media.Quantity <= 0" class="out-of-stock">
+      <h1>Sold Out</h1>
+    </div>
+
+
+
+
+
+    <img id="item_image" draggable="false"
+      [src]="'http://3.234.246.29:8081/api/uploads/media/' + media.Media_ID + '/' + media.images[0]">
+    <hr>
+
+
+    <div id="item-title">
+      <h4 class="item_attributes" id="item_name">{{media.Name}}</h4>
+      <span class="item_attributes" id="item_platform"> {{media.Platform}} </span>
+    </div>
+
+    <p class="item_attributes" *ngIf="media.Hardware_Type" id="game_genre"> Hardware: {{media.Hardware_Type}}</p>
+    <p class="item_attributes" *ngIf="media.Software_Type" id="Software_Type"> Software: {{media.Software_Type}}</p>
+
+
+    <p class="item_attributes" *ngIf="media.Game_Genre" id="game_genre"> Genre: {{media.Game_Genre}}</p>
+    <p class="item_attributes" *ngIf="media.Video_Genre" id="video_genre"> Genre: {{media.Video_Genre}}</p>
+
+    <div class="price-section">
+      <p class="item_attributes" id="item_condition"> {{media.Condition}}</p>
+      <p class="item_attributes" id="item_price"> ${{media.Price}}</p>
+    </div>
+
+    <app-star-rating [fontSize]="25" [readOnly]="true" [rating]="media.User_rating" [starCount]="5"></app-star-rating>
+
+
+
+  </div>
+
+
+</div>
+
+<div class="pagination">
+  <!-- Pagination of the media items -->
+  <pagination-controls *ngIf="totalMedia > ITEMS_PER_PAGES" (pageChange)="gotoPage($event)"></pagination-controls>
+
+</div>

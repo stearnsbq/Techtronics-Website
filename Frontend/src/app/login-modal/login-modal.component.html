@@ -1,0 +1,87 @@
+<app-loading></app-loading>
+<div *ngIf="!showForgotPassword" class="login">
+
+  <div class="login_form_parent">
+
+  <!-- login form (still need to learn more about reactive form validation but whatever)-->
+
+  <form id="login_form" #form="ngForm" (ngSubmit)="onLogin(form.value)">
+
+    <div id="login_title">
+      <h3>Sign In</h3>
+    </div>
+
+
+    <!--Renders a Icon and login title-->
+
+    <div id="splash_icon">
+      <fa-icon [icon]="login_icon"></fa-icon>
+    </div>
+
+    <div *ngIf="invalid"  id ="error" >
+      <h3>Invalid Username or Password.</h3>
+    </div>
+
+    <!--Username input for login-->
+    <div class="login_info_space">
+    <label>Username</label>
+    <div id="username_input">
+      <input id="username" type="text" placeholder="Username" ngModel name="Username" #username="ngModel" required>
+
+      <fa-icon id="icon" [icon]="user"></fa-icon>
+    </div>
+
+    <!--Password input for login-->
+
+    <label>Password</label>
+    <div id="password_input">
+      <input id="password" type="password" placeholder="Password" ngModel name="Password" #password="ngModel" required>
+
+      <fa-icon id="icon" [icon]="lock"></fa-icon>
+    </div>
+
+    <div id="login_button">
+      <button class="button" id="login" type="submit">Login</button>
+    </div>
+
+    <div id="extra_options">
+      <a id="forgot_password_link" (click)="showForgotPassword = true">Forgot Password?</a>
+    </div>
+
+    <div id="register_box">
+      <b id="register_box_msg" routerLink="/register">Not a Member?</b>
+    </div>
+  </div>
+
+  </form>
+
+  </div>
+
+
+</div>
+
+
+
+<div *ngIf="showForgotPassword" class="forgot-password">
+  <div class="forgot-password-parent">
+
+    <h3 id="title">Forgot Password</h3>
+
+    <form id="login_form" #form="ngForm"  (ngSubmit)='validate(form.value)'>
+      <input type="text" ngModel name="email" #email="ngModel" placeholder="Email">
+      <h4 h4 *ngIf="showEmailPrompt">Please check your email for a password reset link</h4>
+
+      <hr>
+      <button class= "back-button" (click)="showForgotPassword = false">Back</button>
+      <button class= "submit-button" type="submit">Submit</button>
+
+    </form>
+
+
+
+  </div>
+
+
+</div>
+
+

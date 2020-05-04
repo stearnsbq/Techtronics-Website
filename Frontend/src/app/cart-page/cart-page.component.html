@@ -1,0 +1,56 @@
+<div id="cart_page_container">
+
+    <div *ngIf="allMedia" id="cart_page_content">
+        <h3 *ngIf="has_items" id="cart_page_title"> Your Cart </h3>
+        <div *ngFor='let media of allMedia; let i = index'  class="cart_item">
+            <div class="product_information">
+                <div class="content_header">
+                    <h2 class="product_name"> {{media.Name}} </h2>
+                    <fa-icon [icon]="minus" (click)="local_storage.removeItemFromCart(media.Media_ID)" class="remove_button">  </fa-icon>
+                </div>
+
+                <div class="all_attributes">
+                    <div class="attribute_pack">
+                        <h3 class="product_attr_title">Price</h3>
+                        <h3 class="product_attribute"> <h3 class="product_attribute" *ngIf="local_storage.getDiscountPrice(i) !== media.Price.toFixed(2)" style="text-decoration: line-through;">{{media.Price}}</h3>  ${{local_storage.getDiscountPrice(i)}}</h3>
+                    </div>
+
+                    <div class="attribute_pack">
+                        <h3 class="product_attr_title">Platform</h3>
+                        <h3 class="product_attribute">{{media.Platform}}</h3>
+                    </div>
+
+                    <div class = "attribute_pack rating_attribute_pack">
+                        <h3 class="product_attr_title">User Rating</h3>
+                        <div class = "user_rating_container">
+                          <app-star-rating [fontSize]="25" [readOnly]="true" [rating]="media.User_rating" [starCount]="5"></app-star-rating>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div *ngIf="has_items" id="cart-details">
+              <label id="total_price_label">Details</label>
+              <b>Total Price: {{local_storage.getCartTotal()}}</b>
+        </div>
+
+        <input *ngIf="has_items" [disabled]="local_storage.cartContains(media)" (click)="showOrderDetails = true" type="button" id="order_now" value="Order Now">
+
+        <div *ngIf="!has_items" id="empty_cart_pack">
+              <h1 id="empty_cart_msg">Your cart is empty!</h1>
+              <div id="empty_cart_msg_icon">
+                <fa-icon [icon]="surprise"> </fa-icon>
+              </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+<app-order-details [(toggle)]="showOrderDetails"></app-order-details>
