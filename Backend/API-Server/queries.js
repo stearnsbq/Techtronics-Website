@@ -920,7 +920,7 @@ class Queries {
 
 	static update_media(connection, media){
 		return new Promise((resolve, reject)=>{
-			connection.query("UPDATE Media SET `Condition`=?, Name=?, Price=?, Platform=?, Quantity=?, Type=?  WHERE Media_ID=?", [media['Condition'], connection.escape(media['Name']), media['Price'], media['Platform'], media['Quantity'], media['Type'], media.Media_ID], async (err, results, fields) =>{
+			connection.query("UPDATE Media SET `Condition`=?, Name=?, Price=?, Platform=?, Quantity=?, Type=?  WHERE Media_ID=?", [media['Condition'], media['Name'], media['Price'], media['Platform'], media['Quantity'], media['Type'], media.Media_ID], async (err, results, fields) =>{
 				if(err){
 					return reject(err);
 				}else{	
