@@ -1,0 +1,5 @@
+{
+  "description": "A website created as part of the CMSC 508: Database theory at VCU. The objective of the project was to implement a software interface with connectivity to a RDBMS system, in the case mySQL. My partner and I implemented the website using Angular as the frontend framework and nodeJS and express as the backend framework as a REST api, creating a three tier architecture. The website was created as a faux electronics website to allow customers to order items for delivery and for employees to edit, create, or remove items in the inventory, with the ability to create specials (% discounts). Customers are also able to view order history.",
+  "accomplishments": ["Implemented a website in a group environment using angular", "Implemented a backend REST api using nodeJS to connect with a mySQL database", "Implemented a login system and authenication system for customers and employees", "Implemented a efficient database schema to store orders, inventory and user accounts", "Implemented forgot password functionality", "Implemented email verification functionality "],
+  "technologies": ["Angular", "nodeJS", "mySQL", "REST"]
+}
