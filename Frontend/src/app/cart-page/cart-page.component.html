@@ -39,7 +39,7 @@
               <b>Total Price: {{local_storage.getCartTotal()}}</b>
         </div>
 
-        <input *ngIf="has_items" [disabled]="local_storage.cartContains(media)" (click)="showOrderDetails = true" type="button" id="order_now" value="Order Now">
+        <input *ngIf="has_items"  (click)="showOrderDetails = true" type="button" id="order_now" value="Order Now">
 
         <div *ngIf="!has_items" id="empty_cart_pack">
               <h1 id="empty_cart_msg">Your cart is empty!</h1>

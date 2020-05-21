@@ -5,7 +5,7 @@
 
       <h1 id="title">{{title}}</h1>
 
-      <span (click)="changeToggled()" class="close">&times;</span>
+      <span (click)="changeToggled(!toggle)" class="close">&times;</span>
 
     </div>
 
@@ -13,6 +13,6 @@
 
     <ng-content ></ng-content>
 
-    
+
   </div>
 </div>
