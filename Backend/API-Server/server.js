@@ -288,7 +288,7 @@ app.post('/api/register', expJwt({secret: config.JWT.Secret, credentialsRequired
 
 
 		// build the email link
-		const emailLink = `http://3.234.246.29/~project_2/verify?token=${token}&email=${body.email}`
+		const emailLink = `http://localhost:4200/verify?token=${token}&email=${body.email}`
 
 		const mailOptions = {
 			to: body['email'],

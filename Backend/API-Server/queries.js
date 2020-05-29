@@ -194,7 +194,7 @@ class Queries {
 
 	static get_employees(connection){
 		return new Promise((resolve, reject) => {
-			connection.query("SELECT Person_ID, Username, Email, CONCAT(First_name, ', ', Last_name) AS Name, Hire_date, Role FROM Person JOIN Employee ON (Person.Person_ID = Employee.Employee_ID) WHERE Leave_date IS NULL", (err, results, fields ) => {
+			connection.query("SELECT Person_ID, Username, Email, CONCAT(First_name, ', ', Last_name) AS Name, Hire_date, Employee_Role FROM Person JOIN Employee ON (Person.Person_ID = Employee.Employee_ID) WHERE Leave_date IS NULL", (err, results, fields ) => {
 				return err ? reject(err) : resolve(results);
 			})
 		})
@@ -351,8 +351,8 @@ class Queries {
 
 	static _get_employee_role(connection, employee_id){
 		return new Promise((resolve, reject) => {
-			connection.query("SELECT Role FROM Employee WHERE Employee_ID =?", [employee_id], (err, results, fields) =>{
-				return err ? reject(err) : resolve(results[0]['Role']);
+			connection.query("SELECT Employee_Role FROM Employee WHERE Employee_ID =?", [employee_id], (err, results, fields) =>{
+				return err ? reject(err) : resolve(results[0]['Employee_Role']);
 			})
 		})
 	}
@@ -360,7 +360,7 @@ class Queries {
 	static login_person(connection, username, password) {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				`SELECT Password, Person_ID, Account_Level, Active FROM Person WHERE Username=? AND deleted IS NULL`,[username],
+				`SELECT Password, Person_ID, Account_Level, active FROM Person WHERE Username=? AND deleted IS NULL`,[username],
 				async (err, results, fields) => {
 					if (!err && results.length > 0) {
 						try {

@@ -9,7 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  public static API_URL = 'https://projects.quinn50.dev/techtronics/api/';
+  public static API_URL = 'http://localhost:8081/api/';
   public loading = false;
 
   constructor(private http: HttpClient ) { }

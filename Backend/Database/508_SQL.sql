@@ -1,16 +1,35 @@
+DROP SCHEMA IF EXISTS project_2;
+CREATE SCHEMA IF NOT EXISTS project_2;
 USE project_2;
-
 CREATE TABLE IF NOT EXISTS `Person` (
   `Person_ID` INT PRIMARY KEY AUTO_INCREMENT,
   `Username` varchar(50) UNIQUE NOT NULL,
-  `Password` char(60) NOT NULL,
+  `Password` char(100) NOT NULL,
   `Email` varchar(255) UNIQUE NOT NULL,
   `First_name` varchar(50) NOT NULL,
   `Last_name` varchar(50) NOT NULL,
   `Birth_date` date NOT NULL,
-  `active`     varchar(3)
-  `deleted`    date,
+  `Account_Level` varchar(50),
+  `active`     varchar(3),
+  `deleted`    date
 );
+
+
+CREATE TABLE IF NOT EXISTS `verify_email_tokens`(
+`email`   varchar(255) NOT NULL ,
+`token`   varchar(255) NOT NULL,
+`expiry`  DATETIME NOT NULL,
+PRIMARY KEY (`email`)
+)
+
+CREATE TABLE IF NOT EXISTS `forgot_password_tokens`(
+  `email`   varchar(255) NOT NULL ,
+  `token`   varchar(255) NOT NULL,
+   `expiry`  DATETIME NOT NULL,
+	PRIMARY KEY (`email`)
+)
+
+
 
 CREATE TABLE IF NOT EXISTS `Phone_numbers` (
   `Person_ID` INT,
@@ -22,12 +41,13 @@ CREATE TABLE IF NOT EXISTS `Phone_numbers` (
 CREATE TABLE IF NOT EXISTS `Employee` (
   `Employee_ID` INT PRIMARY KEY,
   `Hire_date` date NOT NULL,
-  `Leave_date` date 
+  `Leave_date` date,
    FOREIGN KEY (`Employee_ID`) REFERENCES `Person` (`Person_ID`)
 );
 
 CREATE TABLE IF NOT EXISTS `Customer` (
   `Customer_ID` INT PRIMARY KEY,
+  `Registration_Date` DATE,
   FOREIGN KEY (`Customer_ID`) REFERENCES `Person` (`Person_ID`)
 );
 
@@ -152,19 +172,7 @@ CREATE TABLE IF NOT EXISTS `Media_Specials` (
 );
 
 
-CREATE TABLE IF NOT EXISTS `verify_email_tokens`(
-`email`   varchar(255) NOT NULL ,
-`token`   varchar(255) NOT NULL,
-`expiry`  DATETIME NOT NULL,
-PRIMARY KEY (email)
-)
 
-CREATE TABLE IF NOT EXISTS `forgot_password_tokens`(
-  `email`   varchar(255) NOT NULL ,
-  `token`   varchar(255) NOT NULL,
-   `expiry`  DATETIME NOT NULL,
-PRIMARY KEY (email)
-)
 
 
 
