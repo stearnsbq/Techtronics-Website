@@ -191,7 +191,7 @@ class Queries {
 			);
 		});
 	}
-
+ 
 	static get_employees(connection){
 		return new Promise((resolve, reject) => {
 			connection.query("SELECT Person_ID, Username, Email, CONCAT(First_name, ', ', Last_name) AS Name, Hire_date, Employee_Role FROM Person JOIN Employee ON (Person.Person_ID = Employee.Employee_ID) WHERE Leave_date IS NULL", (err, results, fields ) => {
